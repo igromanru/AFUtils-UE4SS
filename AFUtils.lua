@@ -1,4 +1,10 @@
 
+--[[
+    Author: Igromanru
+    Date: 19.08.2024
+    Description: Utility functions for the game Abiotic Factor
+]]
+
 -- AFUtils class
 local AFUtils = {}
 

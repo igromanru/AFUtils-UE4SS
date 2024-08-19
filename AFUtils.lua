@@ -81,4 +81,19 @@ function AFUtils.DisplayTextChatMessage(Message, Prefix, Color)
     end
 end
 
+---@param Inventory UAbiotic_InventoryComponent_C
+---@param SlotIndex integer
+---@return FAbiotic_InventoryItemSlotStruct?
+function AFUtils.GetInventoryItemSlot(Inventory, SlotIndex)
+    if not Inventory or not Inventory:IsValid() or not SlotIndex then return nil end
+
+    -- Lua array starts with 1, while TArray with 0
+    local index = SlotIndex + 1
+    if Inventory.CurrentInventory and #Inventory.CurrentInventory >= index then
+        return Inventory.CurrentInventory[index]
+    end
+
+    return nil
+end
+
 return AFUtils

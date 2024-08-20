@@ -14,9 +14,35 @@ local AFUtils = {}
 ------------------------
 local PlayerController = nil
 
+-- Exported variables --
+------------------------
+AFUtils.LiquidType = {
+    Water = 1,
+    Power = 7,
+    TaintedWater = 10
+}
+
+-- Static Classes --
+--------------------
+local AbioticDeployed_ParentBP_C_Class = nil
+function AFUtils.GetClassAbioticDeployed_ParentBP_C()
+    if not AbioticDeployed_ParentBP_C_Class then
+        AbioticDeployed_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/AbioticDeployed_ParentBP.AbioticDeployed_ParentBP_C")
+    end
+    return AbioticDeployed_ParentBP_C_Class
+end
+
+
+local Deployed_Battery_ParentBP_C_Class = nil
+function AFUtils.GetClassDeployed_Battery_ParentBP_C()
+    if not Deployed_Battery_ParentBP_C_Class then
+        Deployed_Battery_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/Misc/Deployed_Battery_ParentBP.Deployed_Battery_ParentBP_C")
+    end
+    return Deployed_Battery_ParentBP_C_Class
+end
+
 -- Exported functions --
 ------------------------
-
 ---Logs in debug scope all relevant properties of a FAbiotic_InventoryChangeableDataStruct to console 
 ---@param ChangeableData FAbiotic_InventoryChangeableDataStruct
 ---@param Prefix string? Prefix that should be added in front of each line
@@ -24,9 +50,7 @@ function AFUtils.LogInventoryChangeableDataStruct(ChangeableData, Prefix)
     if not ChangeableData then
         return
     end
-    if not Prefix then
-        Prefix = ""
-    end
+    Prefix = Prefix or ""
 
     if ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB then
         LogDebug(Prefix .. "AssetID: " .. ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB:ToString())
@@ -37,6 +61,49 @@ function AFUtils.LogInventoryChangeableDataStruct(ChangeableData, Prefix)
     LogDebug(Prefix .. "CurrentAmmoInMagazine: " .. ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D)
     LogDebug(Prefix .. "LiquidLevel: " .. ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A)
     LogDebug(Prefix .. "CurrentLiquid (enum): " .. ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109)
+end
+
+---Logs in debug scope all relevant properties of a URechargeableComponent_C to console 
+---@param RechargeableComponent URechargeableComponent_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogRechargeableComponent(RechargeableComponent, Prefix)
+    if not RechargeableComponent then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "LightSourceType: " .. RechargeableComponent.LightSourceType)
+    LogDebug(Prefix .. "RechargeableActive: " .. tostring(RechargeableComponent.RechargeableActive))
+    LogDebug(Prefix .. "LastBatteryLevel: " .. RechargeableComponent.LastBatteryLevel)
+    LogDebug(Prefix .. "DrainPerTick: " .. RechargeableComponent.DrainPerTick)
+    LogDebug(Prefix .. "ChargeMultiplier: " .. RechargeableComponent.ChargeMultiplier)
+    LogDebug(Prefix .. "Headlamp: " .. tostring(RechargeableComponent.Headlamp))
+    LogDebug(Prefix .. "HeadlampIndex: " .. RechargeableComponent.HeadlampIndex)
+    LogDebug(Prefix .. "LastItemChargePercentage: " .. RechargeableComponent.LastItemChargePercentage)
+    LogDebug(Prefix .. "BatteryNotRequiredToFireWeapon: " .. tostring(RechargeableComponent.BatteryNotRequiredToFireWeapon))
+    LogDebug(Prefix .. "OwnerSlotType: " .. RechargeableComponent.OwnerSlotType)
+    LogDebug(Prefix .. "PlayerOwned: " .. tostring(RechargeableComponent.PlayerOwned))
+end
+
+---Logs in debug scope all relevant properties of a ADeployed_Battery_ParentBP_C to console 
+---@param DeployedBattery ADeployed_Battery_ParentBP_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogDeployedBattery(DeployedBattery, Prefix)
+    if not DeployedBattery then return end
+    Prefix = Prefix or ""
+
+    LogDebug("PlugStripPowerSockets Count: " .. #DeployedBattery.PlugStripPowerSockets)
+    LogDebug("HasBatteryPower: " .. tostring(DeployedBattery.HasBatteryPower))
+    LogDebug("TimerMode: " .. DeployedBattery.TimerMode)
+    LogDebug("PowerTimerActive: " .. tostring(DeployedBattery.PowerTimerActive))
+    LogDebug("BatteryPercentage: " .. DeployedBattery.BatteryPercentage)
+    LogDebug("DevicesPullingPower: " .. DeployedBattery.DevicesPullingPower)
+    LogDebug("MaxBattery: " .. DeployedBattery.MaxBattery)
+    LogDebug("FreezeBatteryDrain: " .. tostring(DeployedBattery.FreezeBatteryDrain))
+    -- local outCount = {}
+    -- DeployedBattery:GetPluggedInDeviceCount(outCount)
+    -- if outCount and outCount.Count then
+    --     LogDebug("PluggedInDeviceCount: " .. outCount.Count)
+    -- end
+    AFUtils.LogRechargeableComponent(DeployedBattery.RechargeableComponent, Prefix .. "Rechargeable.")
 end
 
 ---Returns current AAbiotic_PlayerController_C or nil

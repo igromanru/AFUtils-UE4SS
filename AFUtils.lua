@@ -179,6 +179,13 @@ function AFUtils.DisplayTextChatMessage(Message, Prefix, Color)
     end
 end
 
+---Executes DisplayTextChatMessage with [ModName] as prefix
+---@param Message string
+function AFUtils.ModDisplayTextChatMessage(Message)
+    local prefix = GetModInfoPrefix()
+    AFUtils.DisplayTextChatMessage(Message, prefix)
+end
+
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@param SlotIndex integer
 ---@return FAbiotic_InventoryItemSlotStruct?

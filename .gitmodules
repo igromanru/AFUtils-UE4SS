@@ -1,0 +1,4 @@
+[submodule "BaseUtils"]
+	path = BaseUtils
+	url = https://github.com/igromanru/BaseUtils-UE4SS.git
+	branch = master

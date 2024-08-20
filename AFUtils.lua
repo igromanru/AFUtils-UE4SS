@@ -19,6 +19,7 @@ local PlayerControllerCache = nil
 AFUtils.LiquidType = {
     None = 0,
     Water = 1,
+    RadioactiveWaste = 3,
     Power = 7,
     TaintedWater = 10
 }

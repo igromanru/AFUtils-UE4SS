@@ -5,6 +5,8 @@
     Description: Utility functions for the game Abiotic Factor
 ]]
 
+local BaseUtils = require("AFUtils.BaseUtils.BaseUtils")
+
 -- AFUtils class
 local AFUtils = {}
 
@@ -14,6 +16,28 @@ local PlayerController = nil
 
 -- Exported functions --
 ------------------------
+
+---Logs in debug scope all relevant properties of a FAbiotic_InventoryChangeableDataStruct to console 
+---@param ChangeableData FAbiotic_InventoryChangeableDataStruct
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogInventoryChangeableDataStruct(ChangeableData, Prefix)
+    if not ChangeableData then
+        return
+    end
+    if not Prefix then
+        Prefix = ""
+    end
+
+    if ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB then
+        LogDebug(Prefix .. "AssetID: " .. ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB:ToString())
+    end
+    LogDebug(Prefix .. "CurrentItemDurability: " .. ChangeableData.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8)
+    LogDebug(Prefix .. "MaxItemDurability: " .. ChangeableData.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B)
+    LogDebug(Prefix .. "CurrentStack: " .. ChangeableData.CurrentStack_9_D443B69044D640B0989FD8A629801A49)
+    LogDebug(Prefix .. "CurrentAmmoInMagazine: " .. ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D)
+    LogDebug(Prefix .. "LiquidLevel: " .. ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A)
+    LogDebug(Prefix .. "CurrentLiquid (enum): " .. ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109)
+end
 
 ---Returns current AAbiotic_PlayerController_C or nil
 ---@return AAbiotic_PlayerController_C?

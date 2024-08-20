@@ -17,6 +17,7 @@ local PlayerController = nil
 -- Exported variables --
 ------------------------
 AFUtils.LiquidType = {
+    None = 0,
     Water = 1,
     Power = 7,
     TaintedWater = 10

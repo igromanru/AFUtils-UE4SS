@@ -12,7 +12,7 @@ local AFUtils = {}
 
 -- Module scope variables --
 ------------------------
-local PlayerController = nil
+local PlayerControllerCache = nil
 
 -- Exported variables --
 ------------------------
@@ -110,20 +110,20 @@ end
 ---Returns current AAbiotic_PlayerController_C or nil
 ---@return AAbiotic_PlayerController_C?
 function AFUtils.GetMyPlayerController()
-    if PlayerController and PlayerController:IsValid() then return PlayerController end
+    if PlayerControllerCache and PlayerControllerCache:IsValid() then return PlayerControllerCache end
+    PlayerControllerCache = nil
 
-    local PlayerControllers = FindAllOf("Abiotic_PlayerController_C")
-    if not PlayerControllers then return nil end
-    for _, Controller in pairs(PlayerControllers or {}) do
-        if Controller.MyPlayerCharacter:IsValid() and Controller.MyPlayerCharacter:IsPlayerControlled() then
-            PlayerController = Controller
-            break
+    local playerControllers = FindAllOf("Abiotic_PlayerController_C")
+    if playerControllers and type(playerControllers) == 'table' then 
+        for _, controller in pairs(playerControllers) do
+            if controller.MyPlayerCharacter and controller.MyPlayerCharacter:IsValid() and controller.MyPlayerCharacter:IsPlayerControlled() then
+                PlayerControllerCache = controller
+                break
+            end
         end
     end
-    if not PlayerController or not PlayerController:IsValid() then
-        PlayerController = nil
-    end
-    return PlayerController
+    
+    return PlayerControllerCache
 end
 
 ---Returns current controlled player or nil

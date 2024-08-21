@@ -324,7 +324,7 @@ end
 function AFUtils.SetItemLiquidLevel(Item, LiquidType, LiquidLevel)
     if Item and Item:IsValid() and Item:IsA(AFUtils.GetClassAbiotic_Item_ParentBP_C()) and Item.ItemData and Item.ChangeableData then
         if LiquidType then
-            if not IsAllowedLiquidTypeInItem(Item, LiquidType) then
+            if LiquidType <= AFUtils.LiquidType.None or not IsAllowedLiquidTypeInItem(Item, LiquidType) then
                 if DebugMode then
                     LogError("SetItemLiquidLevel: Failed, target LiquidType ("..LiquidType..") is not allowed for " .. Item.ItemData.ItemName_51_B88648C048EE5BC2885E4E95F3E13F0A:ToString())
                 end

@@ -50,6 +50,14 @@ function AFUtils.GetClassAbioticDeployed_ParentBP_C()
     return AbioticDeployed_ParentBP_C_Class
 end
 
+local RechargeableComponent_C_Class = nil
+function AFUtils.GetClassRechargeableComponent_C()
+    if not RechargeableComponent_C_Class then
+        RechargeableComponent_C_Class = StaticFindObject("/Game/Blueprints/Items/RechargeableComponent.RechargeableComponent_C")
+    end
+    return RechargeableComponent_C_Class
+end
+
 local Deployed_Battery_ParentBP_C_Class = nil
 function AFUtils.GetClassDeployed_Battery_ParentBP_C()
     if not Deployed_Battery_ParentBP_C_Class then
@@ -116,13 +124,13 @@ function AFUtils.LogInventoryItemStruct(InventoryItemStruct, Prefix)
     LogDebug(Prefix .. "ItemName: " .. InventoryItemStruct.ItemName_51_B88648C048EE5BC2885E4E95F3E13F0A:ToString())
     LogDebug(Prefix .. "ItemDescription: " .. InventoryItemStruct.ItemDescription_38_E5F7B38A4F3C41EB9DA52CA14654D303:ToString())
     LogDebug(Prefix .. "ItemFlavorText: " .. InventoryItemStruct.ItemFlavorText_39_12D05DD74EA145A5E7D1159C7F326177:ToString())
-    LogDebug(Prefix .. "ToInteractWith_Text: " .. InventoryItemStruct.ToInteractWith_Text_66_C2148289464D5AAA4D19BBA13F15FE41:ToString())
-    LogDebug(Prefix .. "ToLongInteractWith_Text: " .. InventoryItemStruct.ToLongInteractWith_Text_68_4FBE88F341B6A020E3216CA026A1E4E8:ToString())
-    LogDebug(Prefix .. "ToPackage_Text: " .. InventoryItemStruct.ToPackage_Text_71_5094104748FCB4BD2F90C99A2C4C49A8:ToString())
-    LogDebug(Prefix .. "ToLongPackage_Text: " .. InventoryItemStruct.ToLongPackage_Text_72_CB77853E49960F43E6422C90DC967508:ToString())
-    LogDebug(Prefix .. "Scale_WorldMesh: " .. InventoryItemStruct.Scale_WorldMesh_143_AF66D856410026FCC19E70AC421B3667)
-    LogDebug(Prefix .. "Scale_FirstPersonMesh: " .. InventoryItemStruct.Scale_FirstPersonMesh_146_6AFCDB94484AE7625E73C6AFB835D21F)
-    LogDebug(Prefix .. "Scale_TPHeldMesh: " .. InventoryItemStruct.Scale_TPHeldMesh_145_6826D00A4F30AEDBF62E02892E4261E6)
+    -- LogDebug(Prefix .. "ToInteractWith_Text: " .. InventoryItemStruct.ToInteractWith_Text_66_C2148289464D5AAA4D19BBA13F15FE41:ToString())
+    -- LogDebug(Prefix .. "ToLongInteractWith_Text: " .. InventoryItemStruct.ToLongInteractWith_Text_68_4FBE88F341B6A020E3216CA026A1E4E8:ToString())
+    -- LogDebug(Prefix .. "ToPackage_Text: " .. InventoryItemStruct.ToPackage_Text_71_5094104748FCB4BD2F90C99A2C4C49A8:ToString())
+    -- LogDebug(Prefix .. "ToLongPackage_Text: " .. InventoryItemStruct.ToLongPackage_Text_72_CB77853E49960F43E6422C90DC967508:ToString())
+    -- LogDebug(Prefix .. "Scale_WorldMesh: " .. InventoryItemStruct.Scale_WorldMesh_143_AF66D856410026FCC19E70AC421B3667)
+    -- LogDebug(Prefix .. "Scale_FirstPersonMesh: " .. InventoryItemStruct.Scale_FirstPersonMesh_146_6AFCDB94484AE7625E73C6AFB835D21F)
+    -- LogDebug(Prefix .. "Scale_TPHeldMesh: " .. InventoryItemStruct.Scale_TPHeldMesh_145_6826D00A4F30AEDBF62E02892E4261E6)
     LogDebug(Prefix .. "PlacementOrientationsAllowed enum: " .. InventoryItemStruct.PlacementOrientationsAllowed_122_75894D7C4B93F103C06AB18421167757)
     LogDebug(Prefix .. "CanLoseDurability: " .. tostring(InventoryItemStruct.CanLoseDurability_29_42EA515F4AC1EC69D8480DB36C01D5E1))
     LogDebug(Prefix .. "MaxItemDurability: " .. InventoryItemStruct.MaxItemDurability_31_6EBCEFC943F9E85DE9350BBC0E249447)
@@ -147,7 +155,7 @@ function AFUtils.LogRechargeableComponent(RechargeableComponent, Prefix)
     if not RechargeableComponent then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "LightSourceType: " .. RechargeableComponent.LightSourceType)
+    LogDebug(Prefix .. "LightSourceType enum: " .. RechargeableComponent.LightSourceType)
     LogDebug(Prefix .. "RechargeableActive: " .. tostring(RechargeableComponent.RechargeableActive))
     LogDebug(Prefix .. "LastBatteryLevel: " .. RechargeableComponent.LastBatteryLevel)
     LogDebug(Prefix .. "DrainPerTick: " .. RechargeableComponent.DrainPerTick)
@@ -181,6 +189,36 @@ function AFUtils.LogDeployedBattery(DeployedBattery, Prefix)
     --     LogDebug("PluggedInDeviceCount: " .. outCount.Count)
     -- end
     AFUtils.LogRechargeableComponent(DeployedBattery.RechargeableComponent, Prefix .. "Rechargeable.")
+end
+
+---Logs in debug scope all relevant properties of a AAbiotic_Item_ParentBP_C to console 
+---@param Item AAbiotic_Item_ParentBP_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogItemParentBP(Item, Prefix)
+    if not Item then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "ItemDataRow.RowName: " .. Item.ItemDataRow.RowName:ToString())
+    AFUtils.LogInventoryItemStruct(Item.ItemData, Prefix .. "ItemData.")
+    AFUtils.LogInventoryChangeableDataStruct(Item.ChangeableData, Prefix .. "ChangeableData.")
+    LogDebug(Prefix .. "HasBeenPickedUp: " .. tostring(Item.HasBeenPickedUp))
+    LogDebug(Prefix .. "To Interact with Text: " .. Item["To Interact with Text"]:ToString())
+    LogDebug(Prefix .. "NoPhysics: " .. tostring(Item.NoPhysics))
+    LogDebug(Prefix .. "NoCollision: " .. tostring(Item.NoCollision))
+    LogDebug(Prefix .. "PopupAfterSpawned: " .. tostring(Item.PopupAfterSpawned))
+    LogDebug(Prefix .. "ShouldSimulate: " .. tostring(Item.ShouldSimulate))
+    LogDebug(Prefix .. "ProjectilePredict_BaseSpeed: " .. Item.ProjectilePredict_BaseSpeed)
+    LogDebug(Prefix .. "ProjectilePredict_SpeedMultiplier: " .. Item.ProjectilePredict_SpeedMultiplier)
+    LogDebug(Prefix .. "Bounciness: " .. Item.Bounciness)
+    LogDebug(Prefix .. "Collision Radius: " .. Item["Collision Radius"])
+    LogDebug(Prefix .. string.format("ProjectilePredict_Velocity: X: %f Y: %f Z: %f", Item.ProjectilePredict_Velocity.X, Item.ProjectilePredict_Velocity.Y, Item.ProjectilePredict_Velocity.Z))
+    LogDebug(Prefix .. "ItemDecayInterval: " .. Item.ItemDecayInterval)
+    LogDebug(Prefix .. "Should Bounce: " .. tostring(Item["Should Bounce"]))
+    LogDebug(Prefix .. "SpawnedFromProjectileImpact: " .. tostring(Item.SpawnedFromProjectileImpact))
+    local rechargeableComponent = GetBlueprintCreatedComponentByClass(Item, AFUtils.GetClassRechargeableComponent_C())
+    if rechargeableComponent then
+        AFUtils.LogRechargeableComponent(rechargeableComponent, Prefix .. "RechargeableComponent.")
+    end
 end
 
 ---Returns current AAbiotic_PlayerController_C or nil

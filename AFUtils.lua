@@ -26,6 +26,14 @@ AFUtils.LiquidType = {
 
 -- Static Classes --
 --------------------
+local Abiotic_PlayerCharacter_C_Class = nil
+function AFUtils.GetClassAbiotic_PlayerCharacter_C()
+    if not Abiotic_PlayerCharacter_C_Class then
+        Abiotic_PlayerCharacter_C_Class = StaticFindObject("/Game/Blueprints/Characters/Abiotic_PlayerCharacter.Abiotic_PlayerCharacter_C")
+    end
+    return Abiotic_PlayerCharacter_C_Class
+end
+
 local Abiotic_Item_ParentBP_C_Class = nil
 function AFUtils.GetClassAbiotic_Item_ParentBP_C()
     if not Abiotic_Item_ParentBP_C_Class then
@@ -46,6 +54,7 @@ local Deployed_Battery_ParentBP_C_Class = nil
 function AFUtils.GetClassDeployed_Battery_ParentBP_C()
     if not Deployed_Battery_ParentBP_C_Class then
         Deployed_Battery_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/Misc/Deployed_Battery_ParentBP.Deployed_Battery_ParentBP_C")
+        LogDebug("Deployed_Battery_ParentBP_C_Class: " .. type(Deployed_Battery_ParentBP_C_Class))
     end
     return Deployed_Battery_ParentBP_C_Class
 end

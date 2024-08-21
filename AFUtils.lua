@@ -54,7 +54,6 @@ local Deployed_Battery_ParentBP_C_Class = nil
 function AFUtils.GetClassDeployed_Battery_ParentBP_C()
     if not Deployed_Battery_ParentBP_C_Class then
         Deployed_Battery_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/Misc/Deployed_Battery_ParentBP.Deployed_Battery_ParentBP_C")
-        LogDebug("Deployed_Battery_ParentBP_C_Class: " .. type(Deployed_Battery_ParentBP_C_Class))
     end
     return Deployed_Battery_ParentBP_C_Class
 end
@@ -232,6 +231,22 @@ function AFUtils.GetMyInventoryComponent()
         inventoryComponent = nil
     end
     return inventoryComponent
+end
+
+---Returns PlayerHUD
+---@return UW_PlayerHUD_Main_C?
+function AFUtils.GetMyPlayerHUD()
+    local playerController = AFUtils.GetMyPlayerController()
+    local playerHud = nil
+    if playerController then
+        playerHud = playerController.PlayerHUDRef
+    end
+
+    if not playerHud or not playerHud:IsValid() then
+        LogDebug("Couldn't get my PlayerHUD")
+        playerHud = nil
+    end
+    return playerHud
 end
 
 ---Prints a colored message to local player's chat (only visible to the player)

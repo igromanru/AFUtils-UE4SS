@@ -205,20 +205,50 @@ function AFUtils.LogItemParentBP(Item, Prefix)
     LogDebug(Prefix .. "To Interact with Text: " .. Item["To Interact with Text"]:ToString())
     LogDebug(Prefix .. "NoPhysics: " .. tostring(Item.NoPhysics))
     LogDebug(Prefix .. "NoCollision: " .. tostring(Item.NoCollision))
-    LogDebug(Prefix .. "PopupAfterSpawned: " .. tostring(Item.PopupAfterSpawned))
-    LogDebug(Prefix .. "ShouldSimulate: " .. tostring(Item.ShouldSimulate))
-    LogDebug(Prefix .. "ProjectilePredict_BaseSpeed: " .. Item.ProjectilePredict_BaseSpeed)
-    LogDebug(Prefix .. "ProjectilePredict_SpeedMultiplier: " .. Item.ProjectilePredict_SpeedMultiplier)
-    LogDebug(Prefix .. "Bounciness: " .. Item.Bounciness)
-    LogDebug(Prefix .. "Collision Radius: " .. Item["Collision Radius"])
-    LogDebug(Prefix .. string.format("ProjectilePredict_Velocity: X: %f Y: %f Z: %f", Item.ProjectilePredict_Velocity.X, Item.ProjectilePredict_Velocity.Y, Item.ProjectilePredict_Velocity.Z))
+    -- LogDebug(Prefix .. "PopupAfterSpawned: " .. tostring(Item.PopupAfterSpawned))
+    -- LogDebug(Prefix .. "ShouldSimulate: " .. tostring(Item.ShouldSimulate))
+    -- LogDebug(Prefix .. "ProjectilePredict_BaseSpeed: " .. Item.ProjectilePredict_BaseSpeed)
+    -- LogDebug(Prefix .. "ProjectilePredict_SpeedMultiplier: " .. Item.ProjectilePredict_SpeedMultiplier)
+    -- LogDebug(Prefix .. "Bounciness: " .. Item.Bounciness)
+    -- LogDebug(Prefix .. "Collision Radius: " .. Item["Collision Radius"])
+    -- LogDebug(Prefix .. string.format("ProjectilePredict_Velocity: X: %f Y: %f Z: %f", Item.ProjectilePredict_Velocity.X, Item.ProjectilePredict_Velocity.Y, Item.ProjectilePredict_Velocity.Z))
     LogDebug(Prefix .. "ItemDecayInterval: " .. Item.ItemDecayInterval)
-    LogDebug(Prefix .. "Should Bounce: " .. tostring(Item["Should Bounce"]))
-    LogDebug(Prefix .. "SpawnedFromProjectileImpact: " .. tostring(Item.SpawnedFromProjectileImpact))
-    local rechargeableComponent = GetBlueprintCreatedComponentByClass(Item, AFUtils.GetClassRechargeableComponent_C())
-    if rechargeableComponent then
-        AFUtils.LogRechargeableComponent(rechargeableComponent, Prefix .. "RechargeableComponent.")
+    -- LogDebug(Prefix .. "Should Bounce: " .. tostring(Item["Should Bounce"]))
+    -- LogDebug(Prefix .. "SpawnedFromProjectileImpact: " .. tostring(Item.SpawnedFromProjectileImpact))
+    -- local rechargeableComponent = GetBlueprintCreatedComponentByClass(Item, AFUtils.GetClassRechargeableComponent_C())
+    -- if rechargeableComponent then
+    --     AFUtils.LogRechargeableComponent(rechargeableComponent, Prefix .. "RechargeableComponent.")
+    -- end
+end
+
+---Logs in debug scope all relevant properties of a UAbiotic_InventoryComponent_C to console 
+---@param Inventory UAbiotic_InventoryComponent_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogInventoryComponent(Inventory, Prefix)
+    if not Inventory then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "CurrentInventory.Num: " .. #Inventory.CurrentInventory)
+    for i = 1, #Inventory.CurrentInventory, 1 do
+        local inventoryItemSlotStruct = Inventory.CurrentInventory[i]
+        AFUtils.LogInventoryItemSlotStruct(inventoryItemSlotStruct, Prefix .. "CurrentInventory["..i.."].")
     end
+    LogDebug(Prefix .. "MaxSlots: " .. Inventory.MaxSlots)
+    LogDebug(Prefix .. "InventorySlotType enum: " .. Inventory.InventorySlotType)
+    LogDebug(Prefix .. "DisplayName: " .. Inventory.DisplayName:ToString())
+    LogDebug(Prefix .. "ContainerType enum: " .. Inventory.ContainerType)
+    LogDebug(Prefix .. "SlotAppearance enum: " .. Inventory.SlotAppearance)
+    -- LogDebug(Prefix .. "DestroyParentWhenEmpty: " .. tostring(Inventory.DestroyParentWhenEmpty))
+    LogDebug(Prefix .. "EmptyItemRow.RowName: " .. Inventory.EmptyItemRow.RowName:ToString())
+    LogDebug(Prefix .. "InitialInventorySize: " .. Inventory.InitialInventorySize)
+    LogDebug(Prefix .. "CurrentTotalInventoryWeight: " .. Inventory.CurrentTotalInventoryWeight)
+    LogDebug(Prefix .. "CraftingCheck: " .. tostring(Inventory.CraftingCheck))
+    LogDebug(Prefix .. "ItemDecayInterval: " .. Inventory.ItemDecayInterval)
+    LogDebug(Prefix .. "InternalTemperature enum: " .. Inventory.InternalTemperature)
+    LogDebug(Prefix .. "AutoStartItemDecay: " .. tostring(Inventory.AutoStartItemDecay))
+    LogDebug(Prefix .. "CurrentRadiation: " .. Inventory.CurrentRadiation)
+    LogDebug(Prefix .. "RadioactiveShielding: " .. Inventory.RadioactiveShielding)
+    LogDebug(Prefix .. "InventoryUpdateLocked: " .. tostring(Inventory.InventoryUpdateLocked))
 end
 
 ---Returns current AAbiotic_PlayerController_C or nil

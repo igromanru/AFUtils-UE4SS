@@ -183,3 +183,77 @@ function AFUtils.LogInventoryComponent(Inventory, Prefix)
     LogDebug(Prefix .. "RadioactiveShielding: " .. Inventory.RadioactiveShielding)
     LogDebug(Prefix .. "InventoryUpdateLocked: " .. tostring(Inventory.InventoryUpdateLocked))
 end
+
+---Logs in debug scope all relevant properties of a AAbiotic_AIDirector_C to console 
+---@param AIDirector AAbiotic_AIDirector_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogAIDirector(AIDirector, Prefix)
+    if not AIDirector then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "CurrentFacilitySpawns: " .. tostring(AIDirector.CurrentFacilitySpawns))
+    LogDebug(Prefix .. "ActiveNPCSpawns.Num: " .. #AIDirector.ActiveNPCSpawns)
+    LogDebug(Prefix .. "DormantNPCSpawns.Num: " .. #AIDirector.DormantNPCSpawns)
+    LogDebug(Prefix .. "DirectorDebugOn: " .. tostring(AIDirector.DirectorDebugOn))
+    LogDebug(Prefix .. "DebugNoDayNightManager: " .. tostring(AIDirector.DebugNoDayNightManager))
+    LogDebug(Prefix .. "NPCArray.Num: " .. #AIDirector.NPCArray)
+    LogDebug(Prefix .. "NPCCap: " .. AIDirector.NPCCap)
+    LogDebug(Prefix .. "Assault_CurrentPhase (enum 1-6): " .. AIDirector.Assault_CurrentPhase)
+    -- ToDo Log Assault_CurrentData
+    LogDebug(Prefix .. "Assault_TimeLastSpawnedNPC: " .. AIDirector.Assault_TimeLastSpawnedNPC)
+    LogDebug(Prefix .. "Assault_BenchTargetLocation: " .. VectorToString(AIDirector.Assault_BenchTargetLocation))
+    LogDebug(Prefix .. "Assault_PatrolTargetLocation: " .. VectorToString(AIDirector.Assault_PatrolTargetLocation))
+    LogDebug(Prefix .. "Assault_CurrentRow: " .. AIDirector.Assault_CurrentRow:ToString())
+    LogDebug(Prefix .. "Assault_CurrentSpawnIndex: " .. AIDirector.Assault_CurrentSpawnIndex)
+    LogDebug(Prefix .. "Assault_TimeOfInitialWarning: " .. AIDirector.Assault_TimeOfInitialWarning)
+    -- LogDebug(Prefix .. "Assault_PreviousSpawnIndex: " .. AIDirector.Assault_PreviousSpawnIndex)
+    LogDebug(Prefix .. "TimeBeforeAssaults: " .. AIDirector.TimeBeforeAssaults)
+    LogDebug(Prefix .. "LeyakCooldown: " .. AIDirector.LeyakCooldown)
+    LogDebug(Prefix .. "ActiveLeyak IsValid: " .. tostring(AIDirector.ActiveLeyak:IsValid()))
+    LogDebug(Prefix .. "CurrentLeyakTarget IsValid: " .. tostring(AIDirector.CurrentLeyakTarget:IsValid()))
+    LogDebug(Prefix .. "LeyakSpawnAttempts: " .. AIDirector.LeyakSpawnAttempts)
+    LogDebug(Prefix .. "TimeLastLeyakSpawn: " .. AIDirector.TimeLastLeyakSpawn)
+    LogDebug(Prefix .. "MaxAssaultPortals: " .. AIDirector.MaxAssaultPortals)
+    LogDebug(Prefix .. "LeyakViewCounter: " .. AIDirector.LeyakViewCounter)
+    LogDebug(Prefix .. "CurrentAssaultPortals: " .. AIDirector.CurrentAssaultPortals)
+    LogDebug(Prefix .. "LeyakTauntCooldownMultiplier: " .. AIDirector.LeyakTauntCooldownMultiplier)
+    LogDebug(Prefix .. "DebugDisableNPCFreezing: " .. tostring(AIDirector.DebugDisableNPCFreezing))
+end
+
+---Logs in debug scope all relevant properties of a AAI_Controller_Leyak_C to console 
+---@param AIControllerLeyak AAI_Controller_Leyak_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogAIControllerLeyak(AIControllerLeyak, Prefix)
+    if not AIControllerLeyak then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "ValidTargets.Num: " .. #AIControllerLeyak.ValidTargets)
+    LogDebug(Prefix .. "SkipLeyakLevelCheck: " .. tostring(AIControllerLeyak.SkipLeyakLevelCheck))
+    LogDebug(Prefix .. "MaxLeyakChaseDistance: " .. AIControllerLeyak.MaxLeyakChaseDistance)
+    LogDebug(Prefix .. "LeyakAggroRange: " .. AIControllerLeyak.LeyakAggroRange)
+    LogDebug(Prefix .. "WantsToDespawn: " .. tostring(AIControllerLeyak.WantsToDespawn))
+    LogDebug(Prefix .. "MaxLeyakChaseDistance_Aggrod: " .. AIControllerLeyak.MaxLeyakChaseDistance_Aggrod)
+end
+
+---Logs in debug scope all relevant properties of a ANPC_Leyak_C to console 
+---@param Leyak ANPC_Leyak_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogNPCLeyak(Leyak, Prefix)
+    if not Leyak then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "Timeline_Dissolve_NewTrack: " .. Leyak.Timeline_Dissolve_NewTrack_1_039C1F844D7D7D0E8CA9FEBA672ECF59)
+    LogDebug(Prefix .. "Timeline_Dissolve__Direction (enum 1-2): " .. Leyak.Timeline_Dissolve__Direction_039C1F844D7D7D0E8CA9FEBA672ECF59)
+    LogDebug(Prefix .. "RequiredMegalightDuration: " .. Leyak.RequiredMegalightDuration)
+    LogDebug(Prefix .. "TargetPlayer IsValid: " .. tostring(Leyak.TargetPlayer:IsValid()))
+    LogDebug(Prefix .. "HasBeenXrayed: " .. tostring(Leyak.HasBeenXrayed))
+    LogDebug(Prefix .. "ViewedByTarget: " .. tostring(Leyak.ViewedByTarget))
+    LogDebug(Prefix .. "CachedTimeSeen: " .. Leyak.CachedTimeSeen)
+    LogDebug(Prefix .. "DistanceDifferenceToDespawn: " .. Leyak.DistanceDifferenceToDespawn)
+    LogDebug(Prefix .. "SeenDespawnTime: " .. Leyak.SeenDespawnTime)
+    LogDebug(Prefix .. "DealDamageInfront: " .. tostring(Leyak.DealDamageInfront))
+    LogDebug(Prefix .. "StuckStartTime: " .. Leyak.StuckStartTime)
+    LogDebug(Prefix .. "PotentiallyStuck: " .. tostring(Leyak.PotentiallyStuck))
+    LogDebug(Prefix .. "AbsolutelyStuck: " .. tostring(Leyak.AbsolutelyStuck))
+    LogDebug(Prefix .. "StuckStartTime: " .. Leyak.TimeAllowedToBeStuck)
+end

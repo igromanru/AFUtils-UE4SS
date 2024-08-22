@@ -242,6 +242,7 @@ function AFUtils.LogNPCLeyak(Leyak, Prefix)
     if not Leyak then return end
     Prefix = Prefix or ""
 
+    LogDebug(Prefix .. "ActorLocation: " .. VectorToString(Leyak:K2_GetActorLocation()))
     LogDebug(Prefix .. "Timeline_Dissolve_NewTrack: " .. Leyak.Timeline_Dissolve_NewTrack_1_039C1F844D7D7D0E8CA9FEBA672ECF59)
     LogDebug(Prefix .. "Timeline_Dissolve__Direction (enum 1-2): " .. Leyak.Timeline_Dissolve__Direction_039C1F844D7D7D0E8CA9FEBA672ECF59)
     LogDebug(Prefix .. "RequiredMegalightDuration: " .. Leyak.RequiredMegalightDuration)
@@ -255,5 +256,5 @@ function AFUtils.LogNPCLeyak(Leyak, Prefix)
     LogDebug(Prefix .. "StuckStartTime: " .. Leyak.StuckStartTime)
     LogDebug(Prefix .. "PotentiallyStuck: " .. tostring(Leyak.PotentiallyStuck))
     LogDebug(Prefix .. "AbsolutelyStuck: " .. tostring(Leyak.AbsolutelyStuck))
-    LogDebug(Prefix .. "StuckStartTime: " .. Leyak.TimeAllowedToBeStuck)
+    LogDebug(Prefix .. "TimeAllowedToBeStuck: " .. Leyak.TimeAllowedToBeStuck)
 end

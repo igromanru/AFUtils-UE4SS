@@ -19,9 +19,28 @@ local PlayerControllerCache = nil
 AFUtils.LiquidType = {
     None = 0,
     Water = 1,
+    Unknown2 = 2,
     RadioactiveWaste = 3,
+    Unknown4 = 4,
+    Unknown5 = 5,
+    Unknown6 = 6,
     Power = 7,
-    TaintedWater = 10
+    Unknown8 = 8,
+    Unknown9 = 9,
+    TaintedWater = 10,
+    Unknown11 = 11,
+    Unknown12 = 12,
+    Unknown13 = 13,
+    MAX = 14
+}
+
+AFUtils.CriticalityLevels = {
+    Green = 0,
+    Gray = 1,
+    Yellow = 2,
+    Red = 3,
+    Purple = 4,
+    MAX = 5
 }
 
 -- Static Classes --
@@ -164,11 +183,43 @@ function AFUtils.ModDisplayTextChatMessage(Message)
     AFUtils.DisplayTextChatMessage(Message, prefix)
 end
 
+---AAbiotic_PlayerCharacter_C function, that shows colored text at the top of the screen and can play a warning beep
+---@param Message string
+---@param CriticalityLevel ECriticalityLevels|AFUtils.CriticalityLevels|integer|nil Color of the message is based on the CriticalityLevel
+---@param WarningBeep boolean|nil Should a warning sound be played
+function AFUtils.ClientDisplayWarningMessage(Message, CriticalityLevel, WarningBeep)
+    if not Message then return end
+    -- Default values
+    CriticalityLevel = CriticalityLevel or AFUtils.CriticalityLevels.Green
+    WarningBeep = WarningBeep or false
+
+    local myPlayer = AFUtils.GetMyPlayer()
+    if myPlayer then
+        LogDebug("ClientDisplayWarningMessage: Message: "..Message.." CriticalityLevel: "..CriticalityLevel.." WarningBeep: "..tostring(WarningBeep))
+        myPlayer:Client_DisplayWarningMessage(FText(Message), CriticalityLevel, WarningBeep)
+    end
+end
+
+---UW_PlayerHUD_Main_C function, same as ClientDisplayWarningMessage but has no option for a warning beep
+---@param Message string
+---@param CriticalityLevel ECriticalityLevels|AFUtils.CriticalityLevels|integer|nil Color of the message is based on the CriticalityLevel
+function AFUtils.DisplayWarningMessage(Message, CriticalityLevel)
+    if not Message then return end
+    -- Default values
+    CriticalityLevel = CriticalityLevel or AFUtils.CriticalityLevels.Green
+
+    local playerHud = AFUtils.GetMyPlayerHUD()
+    if playerHud then
+        LogDebug("DisplayWarningMessage: Message: "..Message.." CriticalityLevel: "..CriticalityLevel)
+        playerHud:DisplayWarningMessage(FText(Message), CriticalityLevel)
+    end
+end
+
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@param SlotIndex integer
 ---@return FAbiotic_InventoryItemSlotStruct?
 function AFUtils.GetInventoryItemSlot(Inventory, SlotIndex)
-    if not Inventory or not Inventory:IsValid() or not SlotIndex then return nil end
+    if not Inventory or not Inventory:IsValid() or not SlotIndex or SlotIndex < 0 then return nil end
 
     -- Lua array starts with 1, while TArray with 0
     local index = SlotIndex + 1
@@ -181,7 +232,7 @@ end
 
 ---Checks if LiquidType exists in AllowedLiquids array of FAbiotic_LiquidStruct
 ---@param LiquidStruct FAbiotic_LiquidStruct
----@param LiquidType LiquidType|number
+---@param LiquidType number|AFUtils.LiquidType|E_LiquidType
 function AFUtils.IsAllowedLiquidType(LiquidStruct, LiquidType)
     if LiquidStruct and LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 and LiquidType then
         for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3, 1 do

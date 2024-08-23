@@ -1,6 +1,26 @@
 
 local AFUtils = require("AFUtils.AFUtils")
 
+---Logs in debug scope all relevant properties of FTimerHandle to console 
+---@param WorldContext UObject
+---@param TimerHandle FTimerHandle
+---@param Prefix string?
+function AFUtils.LogTimerHandle(WorldContext, TimerHandle, Prefix)
+    if not WorldContext or not TimerHandle or not TimerHandle.Handle then return end
+    Prefix = Prefix or ""
+
+    local timerHandle = { Handle = TimerHandle.Handle }
+    local isTimerValid = GetKismetSystemLibrary():K2_IsValidTimerHandle(timerHandle)
+    LogDebug(Prefix .. "IsValid: "..tostring(isTimerValid))
+    if isTimerValid then
+        LogDebug(Prefix .. "TimerExists: "..tostring(GetKismetSystemLibrary():K2_TimerExistsHandle(WorldContext, timerHandle)))
+        LogDebug(Prefix .. "IsTimerActive: "..tostring(GetKismetSystemLibrary():K2_IsTimerActiveHandle(WorldContext, timerHandle)))
+        LogDebug(Prefix .. "IsTimerPaused: "..tostring(GetKismetSystemLibrary():K2_IsTimerPausedHandle(WorldContext, timerHandle)))
+        LogDebug(Prefix .. "Elapsed: "..GetKismetSystemLibrary():K2_GetTimerElapsedTimeHandle(WorldContext, timerHandle))
+        LogDebug(Prefix .. "TimerRemaining: "..GetKismetSystemLibrary():K2_GetTimerRemainingTimeHandle(WorldContext, timerHandle))
+    end
+end
+
 ---Logs in debug scope all relevant properties of FAbiotic_InventoryChangeableDataStruct to console 
 ---@param ChangeableData FAbiotic_InventoryChangeableDataStruct
 ---@param Prefix string? Prefix that should be added in front of each line
@@ -191,6 +211,8 @@ function AFUtils.LogAIDirector(AIDirector, Prefix)
     if not AIDirector then return end
     Prefix = Prefix or ""
 
+    AFUtils.LogTimerHandle(AIDirector, AIDirector.Tick_PrioritySpawns, Prefix .. "Tick_PrioritySpawns.")
+    AFUtils.LogTimerHandle(AIDirector, AIDirector.Tick_DormantSpawns, Prefix .. "Tick_DormantSpawns.")
     LogDebug(Prefix .. "CurrentFacilitySpawns: " .. tostring(AIDirector.CurrentFacilitySpawns))
     LogDebug(Prefix .. "ActiveNPCSpawns.Num: " .. #AIDirector.ActiveNPCSpawns)
     LogDebug(Prefix .. "DormantNPCSpawns.Num: " .. #AIDirector.DormantNPCSpawns)
@@ -198,8 +220,10 @@ function AFUtils.LogAIDirector(AIDirector, Prefix)
     LogDebug(Prefix .. "DebugNoDayNightManager: " .. tostring(AIDirector.DebugNoDayNightManager))
     LogDebug(Prefix .. "NPCArray.Num: " .. #AIDirector.NPCArray)
     LogDebug(Prefix .. "NPCCap: " .. AIDirector.NPCCap)
+    AFUtils.LogTimerHandle(AIDirector, AIDirector.Assault_Timer, Prefix .. "Assault_Timer.")
     LogDebug(Prefix .. "Assault_CurrentPhase (enum 1-6): " .. AIDirector.Assault_CurrentPhase)
     -- ToDo Log Assault_CurrentData
+    AFUtils.LogTimerHandle(AIDirector, AIDirector.Assault_ActiveLogicTimer, Prefix .. "Assault_ActiveLogicTimer.")
     LogDebug(Prefix .. "Assault_TimeLastSpawnedNPC: " .. AIDirector.Assault_TimeLastSpawnedNPC)
     LogDebug(Prefix .. "Assault_BenchTargetLocation: " .. VectorToString(AIDirector.Assault_BenchTargetLocation))
     LogDebug(Prefix .. "Assault_PatrolTargetLocation: " .. VectorToString(AIDirector.Assault_PatrolTargetLocation))
@@ -208,11 +232,13 @@ function AFUtils.LogAIDirector(AIDirector, Prefix)
     LogDebug(Prefix .. "Assault_TimeOfInitialWarning: " .. AIDirector.Assault_TimeOfInitialWarning)
     -- LogDebug(Prefix .. "Assault_PreviousSpawnIndex: " .. AIDirector.Assault_PreviousSpawnIndex)
     LogDebug(Prefix .. "TimeBeforeAssaults: " .. AIDirector.TimeBeforeAssaults)
+    AFUtils.LogTimerHandle(AIDirector, AIDirector.LeyakTimer, Prefix .. "LeyakTimer.")
     LogDebug(Prefix .. "LeyakCooldown: " .. AIDirector.LeyakCooldown)
     LogDebug(Prefix .. "ActiveLeyak IsValid: " .. tostring(AIDirector.ActiveLeyak:IsValid()))
     LogDebug(Prefix .. "CurrentLeyakTarget IsValid: " .. tostring(AIDirector.CurrentLeyakTarget:IsValid()))
     LogDebug(Prefix .. "LeyakSpawnAttempts: " .. AIDirector.LeyakSpawnAttempts)
     LogDebug(Prefix .. "TimeLastLeyakSpawn: " .. AIDirector.TimeLastLeyakSpawn)
+    AFUtils.LogTimerHandle(AIDirector, AIDirector.CoworkerTimer, Prefix .. "CoworkerTimer.")
     LogDebug(Prefix .. "MaxAssaultPortals: " .. AIDirector.MaxAssaultPortals)
     LogDebug(Prefix .. "LeyakViewCounter: " .. AIDirector.LeyakViewCounter)
     LogDebug(Prefix .. "CurrentAssaultPortals: " .. AIDirector.CurrentAssaultPortals)

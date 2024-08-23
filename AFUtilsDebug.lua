@@ -258,3 +258,38 @@ function AFUtils.LogNPCLeyak(Leyak, Prefix)
     LogDebug(Prefix .. "AbsolutelyStuck: " .. tostring(Leyak.AbsolutelyStuck))
     LogDebug(Prefix .. "TimeAllowedToBeStuck: " .. Leyak.TimeAllowedToBeStuck)
 end
+
+---Logs in debug scope all relevant properties of a AWeapon_FishingRod_C to console 
+---@param FishingRod AWeapon_FishingRod_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogFishingRod(FishingRod, Prefix)
+    if not FishingRod then return end
+    Prefix = Prefix or ""
+
+    -- LogDebug(Prefix .. "FishingLocation: " .. VectorToString(FishingRod.FishingLocation))
+    -- LogDebug(Prefix .. "ActiveFishingLocation: " .. VectorToString(FishingRod.ActiveFishingLocation))
+    -- LogDebug(Prefix .. "ActiveCompletionZone: " .. VectorToString(FishingRod.ActiveCompletionZone))
+    -- LogDebug(Prefix .. "ActiveFishLocation: " .. VectorToString(FishingRod.ActiveFishLocation))
+    -- LogDebug(Prefix .. "ActivePlayerLocation: " .. VectorToString(FishingRod.ActivePlayerLocation))
+    LogDebug(Prefix .. "ActiveRodTension: " .. FishingRod.ActiveRodTension)
+    LogDebug(Prefix .. "NextDirectionChangeTime: " .. FishingRod.NextDirectionChangeTime)
+    LogDebug(Prefix .. "NextCooldownTime: " .. FishingRod.NextCooldownTime)
+    LogDebug(Prefix .. "FishCaptureProgress: " .. FishingRod.FishCaptureProgress)
+    LogDebug(Prefix .. "FishCaptureDistance: " .. FishingRod.FishCaptureDistance)
+    LogDebug(Prefix .. "FishCaptureStage: " .. FishingRod.FishCaptureStage)
+    LogDebug(Prefix .. "ActiveFishSpeed: " .. FishingRod.ActiveFishSpeed)
+    LogDebug(Prefix .. "TimeToStartMinigame: " .. FishingRod.TimeToStartMinigame)
+    LogDebug(Prefix .. "HasActiveFish: " .. tostring(FishingRod.HasActiveFish))
+    LogDebug(Prefix .. "ReelAnimTime: " .. FishingRod.ReelAnimTime)
+    LogDebug(Prefix .. "Reeling: " .. tostring(FishingRod.Reeling))
+    LogDebug(Prefix .. "HotspotActive: " .. tostring(FishingRod.HotspotActive))
+    LogDebug(Prefix .. "LastTimeFishingEnded: " .. FishingRod.LastTimeFishingEnded)
+    LogDebug(Prefix .. "CatchingJunk: " .. tostring(FishingRod.CatchingJunk))
+    LogDebug(Prefix .. "JunkReward.RowName: " .. FishingRod.JunkReward.RowName:ToString())
+    LogDebug(Prefix .. "FishReward.RowName: " .. FishingRod.FishReward.RowName:ToString())
+    LogDebug(Prefix .. "FishReward.DataTablePath: " .. FishingRod.FishReward.DataTablePath:ToString())
+    LogDebug(Prefix .. "RequiredCaptures: " .. FishingRod.RequiredCaptures)
+    LogDebug(Prefix .. "TackleboxActive: " .. tostring(FishingRod.TackleboxActive))
+    LogDebug(Prefix .. "LuckyHat: " .. tostring(FishingRod.LuckyHat))
+    LogDebug(Prefix .. "OwnerLastKnownLevel: " .. FishingRod.OwnerLastKnownLevel)
+end

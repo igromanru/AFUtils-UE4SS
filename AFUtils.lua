@@ -10,11 +10,6 @@ local BaseUtils = require("AFUtils.BaseUtils.BaseUtils")
 -- AFUtils class
 local AFUtils = {}
 
--- Module scope variables --
-------------------------
-local PlayerControllerCache = nil
-local PlayerCache = nil
-
 -- Exported variables --
 ------------------------
 AFUtils.LiquidType = {
@@ -89,6 +84,7 @@ end
 -- Exported functions --
 ------------------------
 
+local PlayerControllerCache = nil
 ---Returns current AAbiotic_PlayerController_C or nil
 ---@return AAbiotic_PlayerController_C?
 function AFUtils.GetMyPlayerController()
@@ -110,6 +106,7 @@ function AFUtils.GetMyPlayerController()
     return PlayerControllerCache
 end
 
+local PlayerCache = nil
 ---Returns current controlled player or nil
 ---@return AAbiotic_PlayerCharacter_C?
 function AFUtils.GetMyPlayer()
@@ -162,6 +159,57 @@ function AFUtils.GetMyPlayerHUD()
     end
 
     return playerHud
+end
+
+local SurvivalGameModeCache = nil
+---Returns current AAbiotic_Survival_GameMode_C or nil
+---@return AAbiotic_Survival_GameMode_C?
+function AFUtils.GetSurvivalGameMode()
+    if SurvivalGameModeCache and SurvivalGameModeCache:IsValid() then
+        return SurvivalGameModeCache
+    end
+    SurvivalGameModeCache = nil
+
+    local gameMode = FindFirstOf("Abiotic_Survival_GameMode_C")
+    if gameMode:IsValid() then 
+        SurvivalGameModeCache = gameMode
+    end
+    
+    return SurvivalGameModeCache
+end
+
+local AIDirectorCache = nil
+---Returns current AAbiotic_AIDirector_C or nil
+---@return AAbiotic_AIDirector_C?
+function AFUtils.GetAIDirector()
+    if AIDirectorCache and AIDirectorCache:IsValid() then
+        return AIDirectorCache
+    end
+    AIDirectorCache = nil
+
+    local gameMode = AFUtils.GetSurvivalGameMode()
+    if gameMode and gameMode.AI_Director:IsValid() then
+        AIDirectorCache = gameMode.AI_Director
+    end
+
+    return AIDirectorCache
+end
+
+local AIControllerLeyakCache = nil
+---Returns current AAI_Controller_Leyak_C or nil
+---@return AAI_Controller_Leyak_C?
+function AFUtils.GetAIControllerLeyak()
+    if AIControllerLeyakCache and AIControllerLeyakCache:IsValid() then
+        return AIControllerLeyakCache
+    end
+    AIControllerLeyakCache = nil
+
+    local instance = FindFirstOf("AI_Controller_Leyak_C")
+    if instance:IsValid() then 
+        AIControllerLeyakCache = instance
+    end
+    
+    return AIControllerLeyakCache
 end
 
 ---Prints a colored message to local player's chat (only visible to the player)

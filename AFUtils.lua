@@ -13,6 +13,7 @@ local AFUtils = {}
 -- Module scope variables --
 ------------------------
 local PlayerControllerCache = nil
+local PlayerCache = nil
 
 -- Exported variables --
 ------------------------
@@ -91,7 +92,9 @@ end
 ---Returns current AAbiotic_PlayerController_C or nil
 ---@return AAbiotic_PlayerController_C?
 function AFUtils.GetMyPlayerController()
-    if PlayerControllerCache and PlayerControllerCache:IsValid() then return PlayerControllerCache end
+    if PlayerControllerCache and PlayerControllerCache:IsValid() then
+        return PlayerControllerCache
+    end
     PlayerControllerCache = nil
 
     local playerControllers = FindAllOf("Abiotic_PlayerController_C")
@@ -110,16 +113,21 @@ end
 ---Returns current controlled player or nil
 ---@return AAbiotic_PlayerCharacter_C?
 function AFUtils.GetMyPlayer()
+    if PlayerCache and PlayerCache:IsValid() then
+        return PlayerCache
+    end
+    PlayerCache = nil
+
     local playerController = AFUtils.GetMyPlayerController()
-    local player = nil
     if playerController then
-        player = playerController.MyPlayerCharacter
+        PlayerCache = playerController.MyPlayerCharacter
     end
 
-    if not player or not player:IsValid() then
-        player = nil
+    if not PlayerCache or not PlayerCache:IsValid() then
+        PlayerCache = nil
     end
-    return player
+    
+    return PlayerCache
 end
 
 ---Returns current player's inventory or nil

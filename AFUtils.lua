@@ -126,7 +126,7 @@ function AFUtils.GetMyPlayer()
     if not PlayerCache or not PlayerCache:IsValid() then
         PlayerCache = nil
     end
-    
+
     return PlayerCache
 end
 
@@ -135,14 +135,15 @@ end
 function AFUtils.GetMyInventoryComponent()
     local myPlayer = AFUtils.GetMyPlayer()
     local inventoryComponent = nil
+
     if myPlayer then
         inventoryComponent = myPlayer.CharacterInventory
     end
 
     if not inventoryComponent or not inventoryComponent:IsValid() then
-        LogDebug("Couldn't get my inventory component")
         inventoryComponent = nil
     end
+    
     return inventoryComponent
 end
 
@@ -151,14 +152,15 @@ end
 function AFUtils.GetMyPlayerHUD()
     local playerController = AFUtils.GetMyPlayerController()
     local playerHud = nil
+
     if playerController then
         playerHud = playerController.PlayerHUDRef
     end
 
     if not playerHud or not playerHud:IsValid() then
-        LogDebug("Couldn't get my PlayerHUD")
         playerHud = nil
     end
+
     return playerHud
 end
 

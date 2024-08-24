@@ -113,15 +113,11 @@ function AFUtils.GetMyPlayer()
     if PlayerCache and PlayerCache:IsValid() then
         return PlayerCache
     end
+
     PlayerCache = nil
-
     local playerController = AFUtils.GetMyPlayerController()
-    if playerController then
+    if playerController and playerController.MyPlayerCharacter:IsValid() then
         PlayerCache = playerController.MyPlayerCharacter
-    end
-
-    if not PlayerCache or not PlayerCache:IsValid() then
-        PlayerCache = nil
     end
 
     return PlayerCache
@@ -131,34 +127,22 @@ end
 ---@return UAbiotic_InventoryComponent_C?
 function AFUtils.GetMyInventoryComponent()
     local myPlayer = AFUtils.GetMyPlayer()
-    local inventoryComponent = nil
-
-    if myPlayer then
-        inventoryComponent = myPlayer.CharacterInventory
+    if myPlayer and myPlayer.CharacterInventory:IsValid() then
+        return myPlayer.CharacterInventory
     end
 
-    if not inventoryComponent or not inventoryComponent:IsValid() then
-        inventoryComponent = nil
-    end
-    
-    return inventoryComponent
+    return nil
 end
 
 ---Returns PlayerHUD
 ---@return UW_PlayerHUD_Main_C?
 function AFUtils.GetMyPlayerHUD()
     local playerController = AFUtils.GetMyPlayerController()
-    local playerHud = nil
-
-    if playerController then
-        playerHud = playerController.PlayerHUDRef
+    if playerController and playerController.PlayerHUDRef:IsValid() then
+        return playerController.PlayerHUDRef
     end
 
-    if not playerHud or not playerHud:IsValid() then
-        playerHud = nil
-    end
-
-    return playerHud
+    return nil
 end
 
 local SurvivalGameModeCache = nil
@@ -168,13 +152,12 @@ function AFUtils.GetSurvivalGameMode()
     if SurvivalGameModeCache and SurvivalGameModeCache:IsValid() then
         return SurvivalGameModeCache
     end
-    SurvivalGameModeCache = nil
 
-    local gameMode = FindFirstOf("Abiotic_Survival_GameMode_C")
-    if gameMode:IsValid() then 
-        SurvivalGameModeCache = gameMode
+    SurvivalGameModeCache = FindFirstOf("Abiotic_Survival_GameMode_C")
+    if not SurvivalGameModeCache:IsValid() then 
+        SurvivalGameModeCache = nil
     end
-    
+
     return SurvivalGameModeCache
 end
 
@@ -185,13 +168,13 @@ function AFUtils.GetAIDirector()
     if AIDirectorCache and AIDirectorCache:IsValid() then
         return AIDirectorCache
     end
-    AIDirectorCache = nil
 
+    AIDirectorCache = nil
     local gameMode = AFUtils.GetSurvivalGameMode()
     if gameMode and gameMode.AI_Director:IsValid() then
         AIDirectorCache = gameMode.AI_Director
     end
-
+    
     return AIDirectorCache
 end
 

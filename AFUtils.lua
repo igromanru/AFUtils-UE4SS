@@ -195,6 +195,33 @@ function AFUtils.GetAIControllerLeyak()
     return AIControllerLeyakCache
 end
 
+---Returns struct that represents current selected slot in the hotbat aka. held item
+---@param playerCharacter AAbiotic_PlayerCharacter_C
+---@return FInventorySlotSelected_Struct?
+function AFUtils.GetCurrentHotbarSlotSelected(playerCharacter)
+    if playerCharacter and playerCharacter:IsValid() and playerCharacter.CurrentHotbarSlotSelected:IsValid() then
+        return playerCharacter.CurrentHotbarSlotSelected
+    end
+    return nil
+end
+
+---Retruns struct that represents the current selected Hotbar item slot, it's inventory component and SlotIndex. The item can be modified through ChangeableData.
+---@param playerCharacter AAbiotic_PlayerCharacter_C
+---@return FAbiotic_InventoryItemSlotStruct? # Can be used to modify item's data though ChangeableData
+---@return UAbiotic_InventoryComponent_C? # Parent InventoryComponent
+---@return integer? # Slot index
+function AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
+    local slotData = AFUtils.GetCurrentHotbarSlotSelected(playerCharacter)
+    if slotData and slotData.Inventory_2_B69CD60741EFD551F09ED5AFF44B1E46:IsValid() then
+        local inventory = slotData.Inventory_2_B69CD60741EFD551F09ED5AFF44B1E46
+        local luaIndex = slotData.Index_5_6BDC7B3944A5DE0B319F9FA20720872F + 1
+        if inventory.CurrentInventory and #inventory.CurrentInventory >= luaIndex then
+            return inventory.CurrentInventory[luaIndex], inventory.CurrentInventory, slotData.Index_5_6BDC7B3944A5DE0B319F9FA20720872F
+        end
+    end
+    return nil, nil, nil
+end
+
 ---Prints a colored message to local player's chat (only visible to the player)
 ---@param Message string Message that should be shown in chat
 ---@param Prefix string?
@@ -237,7 +264,12 @@ function AFUtils.ClientDisplayWarningMessage(Message, CriticalityLevel, WarningB
     local myPlayer = AFUtils.GetMyPlayer()
     if myPlayer then
         LogDebug("ClientDisplayWarningMessage: Message: "..Message.." CriticalityLevel: "..CriticalityLevel.." WarningBeep: "..tostring(WarningBeep))
-        myPlayer:Client_DisplayWarningMessage(FText(Message), CriticalityLevel, WarningBeep)
+        local fText = FText(Message)
+        if fText then
+            myPlayer:Client_DisplayWarningMessage(fText, CriticalityLevel, WarningBeep)
+        else
+            LogError('ClientDisplayWarningMessage: Couldn\'t get a FText out of "'..Message..'"')
+        end
     end
 end
 
@@ -252,7 +284,13 @@ function AFUtils.DisplayWarningMessage(Message, CriticalityLevel)
     local playerHud = AFUtils.GetMyPlayerHUD()
     if playerHud then
         LogDebug("DisplayWarningMessage: Message: "..Message.." CriticalityLevel: "..CriticalityLevel)
-        playerHud:DisplayWarningMessage(FText(Message), CriticalityLevel)
+        
+        local fText = FText(Message)
+        if fText then
+            playerHud:DisplayWarningMessage(fText, CriticalityLevel)
+        else
+            LogError('ClientDisplayWarningMessage: Couldn\'t get a FText out of "'..Message..'"')
+        end
     end
 end
 

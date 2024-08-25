@@ -148,7 +148,7 @@ end
 ---@param Item AAbiotic_Item_ParentBP_C
 ---@param Prefix string? Prefix that should be added in front of each line
 function AFUtils.LogItemParentBP(Item, Prefix)
-    if not Item then return end
+    if not Item or not Item:IsValid() then return end
     Prefix = Prefix or ""
 
     LogDebug(Prefix .. "ItemDataRow.RowName: " .. Item.ItemDataRow.RowName:ToString())

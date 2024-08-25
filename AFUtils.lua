@@ -20,12 +20,12 @@ AFUtils.LiquidType = {
     Unknown4 = 4,
     Unknown5 = 5,
     Unknown6 = 6,
-    Power = 7,
+    Energy = 7,
     Unknown8 = 8,
     Unknown9 = 9,
     TaintedWater = 10,
     Unknown11 = 11,
-    Unknown12 = 12,
+    LaserEnergy = 12,
     Unknown13 = 13,
     MAX = 14
 }
@@ -216,7 +216,7 @@ function AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
         local inventory = slotData.Inventory_2_B69CD60741EFD551F09ED5AFF44B1E46
         local luaIndex = slotData.Index_5_6BDC7B3944A5DE0B319F9FA20720872F + 1
         if inventory.CurrentInventory and #inventory.CurrentInventory >= luaIndex then
-            return inventory.CurrentInventory[luaIndex], inventory.CurrentInventory, slotData.Index_5_6BDC7B3944A5DE0B319F9FA20720872F
+            return inventory.CurrentInventory[luaIndex], inventory, slotData.Index_5_6BDC7B3944A5DE0B319F9FA20720872F
         end
     end
     return nil, nil, nil
@@ -309,6 +309,12 @@ function AFUtils.GetInventoryItemSlot(Inventory, SlotIndex)
     return nil
 end
 
+---Checks if the LiquidType is energy
+---@param LiquidType number|AFUtils.LiquidType|E_LiquidType
+function AFUtils.IsEnergyLiquidType(LiquidType)
+    return LiquidType == AFUtils.LiquidType.Energy or LiquidType == AFUtils.LiquidType.LaserEnergy
+end
+
 ---Checks if LiquidType exists in AllowedLiquids array of FAbiotic_LiquidStruct
 ---@param LiquidStruct FAbiotic_LiquidStruct
 ---@param LiquidType number|AFUtils.LiquidType|E_LiquidType
@@ -324,14 +330,41 @@ function AFUtils.IsAllowedLiquidType(LiquidStruct, LiquidType)
     return false
 end
 
----Checks if LiquidType is allowed in AAbiotic_Item_ParentBP_C derived object
----@param Item AAbiotic_Item_ParentBP_C
+---Checks if LiquidType is allowed in FAbiotic_InventoryItemStruct
+---@param ItemStruct FAbiotic_InventoryItemStruct
 ---@param LiquidType LiquidType|number
-function AFUtils.IsAllowedLiquidTypeInItem(Item, LiquidType)
-    if Item and Item:IsValid() and Item.ItemData and LiquidType then
-        return AFUtils.IsAllowedLiquidType(Item.ItemData.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0, LiquidType)
+function AFUtils.IsAllowedLiquidTypeInItemStruct(ItemStruct, LiquidType)
+    if ItemStruct and ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0 and LiquidType then
+        return AFUtils.IsAllowedLiquidType(ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0, LiquidType)
     end
     return false
+end
+
+---Checks if AllowedLiquidType array has only energy types in it
+---@param LiquidStruct FAbiotic_LiquidStruct
+---@return boolean # Returns true if only energy liquid types are allowed
+function AFUtils.IsOnlyEnergyLiquidTypeAllowed(LiquidStruct)
+    local result = false
+    if LiquidStruct and LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 then
+        for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3, 1 do
+            local allowedLiquid = LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[i]
+            result = AFUtils.IsEnergyLiquidType(allowedLiquid)
+            if not result then
+               break
+            end
+        end
+    end
+    return result
+end
+
+---Checks if AllowedLiquidType array has only energy types in it
+---@param ItemStruct FAbiotic_InventoryItemStruct
+---@return boolean # Returns true if only energy liquid types are allowed
+function AFUtils.IsOnlyEnergyLiquidTypeAllowedInItemStruct(ItemStruct)
+    if ItemStruct and ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0 then
+        return AFUtils.IsOnlyEnergyLiquidTypeAllowed(ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0)
+    end
+    return true
 end
 
 ---
@@ -347,11 +380,34 @@ function AFUtils.GetFirstAllowedLiquidType(LiquidStruct)
 end
 
 ---
----@param Item AAbiotic_Item_ParentBP_C
+---@param ItemStruct FAbiotic_InventoryItemStruct
 ---@return LiquidType|number #Returns first allowed LiquidType or None (0)
-function AFUtils.GetFirstAllowedLiquidTypeInItem(Item)
-    if Item and Item:IsValid() and Item.ItemData then
-        return AFUtils.GetFirstAllowedLiquidType(Item.ItemData.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0)
+function AFUtils.GetFirstAllowedLiquidTypeInItemStruct(ItemStruct)
+    if ItemStruct then
+        return AFUtils.GetFirstAllowedLiquidType(ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0)
+    end
+    return AFUtils.LiquidType.None
+end
+
+---
+---@param LiquidStruct FAbiotic_LiquidStruct
+---@return LiquidType|number #Returns last allowed LiquidType or None (0)
+function AFUtils.GetLastAllowedLiquidType(LiquidStruct)
+    if LiquidStruct and LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 then
+        local arrayCount = #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3
+        if arrayCount > 0 then
+            return LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[arrayCount]
+        end
+    end
+    return AFUtils.LiquidType.None
+end
+
+---
+---@param ItemStruct FAbiotic_InventoryItemStruct
+---@return LiquidType|number #Returns last allowed LiquidType or None (0)
+function AFUtils.GetLastAllowedLiquidTypeInItemStruct(ItemStruct)
+    if ItemStruct then
+        return AFUtils.GetLastAllowedLiquidType(ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0)
     end
     return AFUtils.LiquidType.None
 end
@@ -397,6 +453,30 @@ function AFUtils.SetItemLiquidLevel(Item, LiquidType, LiquidLevel)
         end
     end
     return false
+end
+
+---Fills current, in hotbar selected item with it's maximum allowed energy. If the item is drained, refills it with best allowed energy.<br>
+---Note: If the item was empty, the UI needs to be refreshed by switching to another item
+---@param playerCharacter AAbiotic_PlayerCharacter_C
+function AFUtils.FillHeldItemWithEnergy(playerCharacter)
+    if not playerCharacter or not playerCharacter.CurrentHeldItemExists then return end
+
+    local heldItemData = playerCharacter.CurrentHeldItemData
+    if AFUtils.IsOnlyEnergyLiquidTypeAllowedInItemStruct(heldItemData) then
+        local liquidData = heldItemData.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0
+        local itemSlotStruct = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
+        if liquidData and itemSlotStruct then
+            local changeableData = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313
+            if changeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 == AFUtils.LiquidType.None then
+                changeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = AFUtils.GetLastAllowedLiquidType(liquidData)
+            end
+            if AFUtils.IsEnergyLiquidType(changeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109)
+                and changeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A < liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4 then
+                
+                changeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4
+            end
+        end
+    end
 end
 
 return AFUtils

@@ -12,6 +12,7 @@ local AFUtils = {}
 
 -- Exported variables --
 ------------------------
+---@enum LiquidType
 AFUtils.LiquidType = {
     None = 0,
     Water = 1,
@@ -30,6 +31,7 @@ AFUtils.LiquidType = {
     MAX = 14
 }
 
+---@enum CriticalityLevels
 AFUtils.CriticalityLevels = {
     Green = 0,
     Gray = 1,
@@ -40,6 +42,7 @@ AFUtils.CriticalityLevels = {
 }
 
 -- Mapping for the CurrentInventory TArray in CharacterEquipSlotInventory (Lua based indexes aka. start with 1)
+---@enum GearInventoryIndex
 AFUtils.GearInventoryIndex = {
     ChestArmor = 1,
     HeadArmor = 2,
@@ -49,7 +52,7 @@ AFUtils.GearInventoryIndex = {
     FullBodySuit = 6,
     Headlamp = 7,
     Trinket = 8,
-    WristwatchOrPager = 9, -- Wristwatch or Pager
+    Wristwatch = 9, -- Wristwatch or Pager
     KeypadHacker = 10,
     OffHandShield = 11
 }
@@ -108,6 +111,7 @@ function AFUtils.GetMyPlayerController()
     end
     PlayerControllerCache = nil
 
+    ---@type AAbiotic_PlayerController_C[]?
     local playerControllers = FindAllOf("Abiotic_PlayerController_C")
     if playerControllers and type(playerControllers) == 'table' then 
         for _, controller in pairs(playerControllers) do
@@ -160,6 +164,7 @@ function AFUtils.GetMyPlayerHUD()
     return nil
 end
 
+---@type AAbiotic_Survival_GameMode_C?
 local SurvivalGameModeCache = nil
 ---Returns current AAbiotic_Survival_GameMode_C or nil
 ---@return AAbiotic_Survival_GameMode_C?
@@ -167,9 +172,9 @@ function AFUtils.GetSurvivalGameMode()
     if SurvivalGameModeCache and SurvivalGameModeCache:IsValid() then
         return SurvivalGameModeCache
     end
-
+    
     SurvivalGameModeCache = FindFirstOf("Abiotic_Survival_GameMode_C")
-    if not SurvivalGameModeCache:IsValid() then 
+    if not SurvivalGameModeCache or not SurvivalGameModeCache:IsValid() then 
         SurvivalGameModeCache = nil
     end
 
@@ -193,6 +198,7 @@ function AFUtils.GetAIDirector()
     return AIDirectorCache
 end
 
+ ---@type AAI_Controller_Leyak_C?
 local AIControllerLeyakCache = nil
 ---Returns current AAI_Controller_Leyak_C or nil
 ---@return AAI_Controller_Leyak_C?
@@ -200,11 +206,11 @@ function AFUtils.GetAIControllerLeyak()
     if AIControllerLeyakCache and AIControllerLeyakCache:IsValid() then
         return AIControllerLeyakCache
     end
-    AIControllerLeyakCache = nil
 
-    local instance = FindFirstOf("AI_Controller_Leyak_C")
-    if instance:IsValid() then 
-        AIControllerLeyakCache = instance
+    ---@type AAI_Controller_Leyak_C?
+    AIControllerLeyakCache = FindFirstOf("AI_Controller_Leyak_C")
+    if not AIControllerLeyakCache or not AIControllerLeyakCache:IsValid() then 
+        AIControllerLeyakCache = nil
     end
     
     return AIControllerLeyakCache
@@ -268,7 +274,7 @@ end
 
 ---AAbiotic_PlayerCharacter_C function, that shows colored text at the top of the screen and can play a warning beep
 ---@param Message string
----@param CriticalityLevel ECriticalityLevels|AFUtils.CriticalityLevels|integer|nil Color of the message is based on the CriticalityLevel
+---@param CriticalityLevel ECriticalityLevels|CriticalityLevels|integer|nil Color of the message is based on the CriticalityLevel
 ---@param WarningBeep boolean|nil Should a warning sound be played
 function AFUtils.ClientDisplayWarningMessage(Message, CriticalityLevel, WarningBeep)
     if not Message then return end
@@ -290,7 +296,7 @@ end
 
 ---UW_PlayerHUD_Main_C function, same as ClientDisplayWarningMessage but has no option for a warning beep
 ---@param Message string
----@param CriticalityLevel ECriticalityLevels|AFUtils.CriticalityLevels|integer|nil Color of the message is based on the CriticalityLevel
+---@param CriticalityLevel ECriticalityLevels|CriticalityLevels|integer|nil Color of the message is based on the CriticalityLevel
 function AFUtils.DisplayWarningMessage(Message, CriticalityLevel)
     if not Message then return end
     -- Default values
@@ -325,14 +331,23 @@ function AFUtils.GetInventoryItemSlot(Inventory, SlotIndex)
 end
 
 ---Checks if the LiquidType is energy
----@param LiquidType number|AFUtils.LiquidType|E_LiquidType
+---@param LiquidType number|LiquidType|E_LiquidType
 function AFUtils.IsEnergyLiquidType(LiquidType)
     return LiquidType == AFUtils.LiquidType.Energy or LiquidType == AFUtils.LiquidType.LaserEnergy
 end
 
+---Checks if the LiquidType is energy in FAbiotic_InventoryItemStruct
+---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct
+function AFUtils.IsEnergyLiquidTypeInItemSlotStruct(ItemSlotStruct)
+    if not ItemSlotStruct or not ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313 then
+        return false
+    end
+    return AFUtils.IsEnergyLiquidType(ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109)
+end
+
 ---Checks if LiquidType exists in AllowedLiquids array of FAbiotic_LiquidStruct
 ---@param LiquidStruct FAbiotic_LiquidStruct
----@param LiquidType number|AFUtils.LiquidType|E_LiquidType
+---@param LiquidType number|LiquidType|E_LiquidType
 function AFUtils.IsAllowedLiquidType(LiquidStruct, LiquidType)
     if LiquidStruct and LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 and LiquidType then
         for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3, 1 do
@@ -419,7 +434,7 @@ end
 
 ---
 ---@param ItemStruct FAbiotic_InventoryItemStruct
----@return LiquidType|number #Returns last allowed LiquidType or None (0)
+---@return LiquidType|E_LiquidType|number #Returns last allowed LiquidType or None (0)
 function AFUtils.GetLastAllowedLiquidTypeInItemStruct(ItemStruct)
     if ItemStruct then
         return AFUtils.GetLastAllowedLiquidType(ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0)
@@ -452,11 +467,39 @@ function AFUtils.FillDurabilityOfAllItemsInInvetory(Inventory)
     return result
 end
 
+---Fill liquid level of FAbiotic_InventoryItemSlotStruct with best allowed liquid type to maximum
+---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull infomation
+function AFUtils.FillItemSlotStructEnergy(ItemSlotStruct, ItemStruct)
+    if not ItemSlotStruct or not ItemStruct then return false end
+
+    local liquidData = ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0
+    if liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4 > 0 and AFUtils.IsOnlyEnergyLiquidTypeAllowedInItemStruct(ItemStruct) then
+        local currentLiquidType = ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109
+        if not AFUtils.IsEnergyLiquidType(currentLiquidType) then
+            currentLiquidType = AFUtils.GetLastAllowedLiquidTypeInItemStruct(ItemStruct)
+        end
+        ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = currentLiquidType
+        ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4
+    end
+
+    return false
+end
+
+---Fill liquid level of FAbiotic_InventoryItemSlotStruct with best allowed liquid type to maximum
+---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---@param Item AAbiotic_Item_ParentBP_C Source, ItemData.LiquidData will be used to pull infomation
+function AFUtils.FillItemSlotStructEnergyFromItem(ItemSlotStruct, Item)
+    if not ItemSlotStruct or not Item or not Item:IsValid() then return false end
+    
+    return AFUtils.FillItemSlotStructEnergy(ItemSlotStruct, Item.ItemData)
+end
+
 ---Fills current, in hotbar selected item with it's maximum allowed energy. If the item is drained, refills it with best allowed energy.<br>
 ---@param playerCharacter AAbiotic_PlayerCharacter_C
 function AFUtils.FillHeldItemWithEnergy(playerCharacter)
     if not playerCharacter or not playerCharacter.CurrentHeldItemExists then return end
-
+    
     local heldItemData = playerCharacter.CurrentHeldItemData
     if AFUtils.IsOnlyEnergyLiquidTypeAllowedInItemStruct(heldItemData) then
         local liquidData = heldItemData.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0
@@ -478,6 +521,35 @@ function AFUtils.FillHeldItemWithEnergy(playerCharacter)
             end
         end
     end
+end
+
+---@param playerCharacter AAbiotic_PlayerCharacter_C
+function AFUtils.FillAllEquippedItemsWithEnergy(playerCharacter)
+    if not playerCharacter or not playerCharacter.CharacterEquipSlotInventory:IsValid() or #playerCharacter.CharacterEquipSlotInventory.CurrentInventory < 11 then
+        return
+    end
+    local itemSlotStructs = playerCharacter.CharacterEquipSlotInventory.CurrentInventory
+    local chestArmorSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.ChestArmor]
+    local headArmorSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.HeadArmor]
+    local legArmorSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.LegArmor]
+    local backpackSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.Backpack]
+    local armArmorSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.ArmArmor]
+    local suitSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.FullBodySuit]
+    local headlampSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.Headlamp]
+    local trinketSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.Trinket]
+    local shieldSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.OffHandShield]
+    local wristwatchSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.Wristwatch]
+
+    AFUtils.FillItemSlotStructEnergyFromItem(chestArmorSlotStruct, playerCharacter.Gear_TorsoBP)
+    AFUtils.FillItemSlotStructEnergyFromItem(headArmorSlotStruct, playerCharacter.Gear_TorsoBP)
+    AFUtils.FillItemSlotStructEnergyFromItem(legArmorSlotStruct, playerCharacter.Gear_LegsBP)
+    AFUtils.FillItemSlotStructEnergyFromItem(backpackSlotStruct, playerCharacter.Gear_BackpackBP)
+    AFUtils.FillItemSlotStructEnergyFromItem(armArmorSlotStruct, playerCharacter.Gear_ArmsBP)
+    AFUtils.FillItemSlotStructEnergyFromItem(suitSlotStruct, playerCharacter.Gear_SuitBP)
+    AFUtils.FillItemSlotStructEnergyFromItem(headlampSlotStruct, playerCharacter.Gear_HeadlampBP)
+    AFUtils.FillItemSlotStructEnergyFromItem(trinketSlotStruct, playerCharacter.Gear_TrinketBP)
+    AFUtils.FillItemSlotStructEnergyFromItem(shieldSlotStruct, playerCharacter.Gear_ShieldBP)
+    AFUtils.FillItemSlotStructEnergyFromItem(wristwatchSlotStruct, playerCharacter.Gear_WristwatchBP)
 end
 
 return AFUtils

@@ -500,26 +500,9 @@ end
 function AFUtils.FillHeldItemWithEnergy(playerCharacter)
     if not playerCharacter or not playerCharacter.CurrentHeldItemExists then return end
     
-    local heldItemData = playerCharacter.CurrentHeldItemData
-    if AFUtils.IsOnlyEnergyLiquidTypeAllowedInItemStruct(heldItemData) then
-        local liquidData = heldItemData.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0
-        local itemSlotStruct = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
-        if liquidData and itemSlotStruct then
-            local changeableData = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313
-            local targetLiquidType = changeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109
-            local targetLiquidLevel = liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4
-            if targetLiquidType == AFUtils.LiquidType.None then
-                targetLiquidType = AFUtils.GetLastAllowedLiquidType(liquidData)
-            end
-            if AFUtils.IsEnergyLiquidType(targetLiquidType) then
-                changeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = targetLiquidType
-                changeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = targetLiquidLevel
-                if playerCharacter.ItemInHand_BP:IsValid() then
-                    playerCharacter.ItemInHand_BP.ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = targetLiquidType
-                    playerCharacter.ItemInHand_BP.ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = targetLiquidType
-                end
-            end
-        end
+    local itemSlotStruct = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
+    if itemSlotStruct then
+        AFUtils.FillItemSlotStructEnergyFromItem(itemSlotStruct, playerCharacter.ItemInHand_BP)
     end
 end
 

@@ -412,51 +412,7 @@ function AFUtils.GetLastAllowedLiquidTypeInItemStruct(ItemStruct)
     return AFUtils.LiquidType.None
 end
 
----comment
----@param Item AAbiotic_Item_ParentBP_C Any object that derives from AAbiotic_Item_ParentBP_C
----@param LiquidType LiquidType|integer|nil Target LiquidType to set. If nil it will take current liquid type
----@param LiquidLevel integer|nil Target LiquidLevel, if nil it will be set to item's max liquid level automatically
----@return boolean Success 
-function AFUtils.SetItemLiquidLevel(Item, LiquidType, LiquidLevel)
-    if Item and Item:IsValid() and Item:IsA(AFUtils.GetClassAbiotic_Item_ParentBP_C()) and Item.ItemData and Item.ChangeableData then
-        if LiquidType then
-            if LiquidType <= AFUtils.LiquidType.None or not AFUtils.IsAllowedLiquidTypeInItem(Item, LiquidType) then
-                if DebugMode then
-                    LogError("SetItemLiquidLevel: Failed, target LiquidType ("..LiquidType..") is not allowed for " .. Item.ItemData.ItemName_51_B88648C048EE5BC2885E4E95F3E13F0A:ToString())
-                end
-                return false
-            end
-        else
-            local currentLiquidType = Item.ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109
-            if currentLiquidType > AFUtils.LiquidType.None then
-                LiquidType = currentLiquidType
-            elseif #Item.ItemData.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 == 1 then
-                -- Set LiquidType to first allowed liquid type ONLY if 1 type is allowed (usually it's Power)
-                LiquidType = Item.ItemData.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[1]
-            end
-        end
-        if LiquidType then
-            if type(LiquidLevel) ~= "number" or LiquidLevel < 0 then
-                LiquidLevel = Item.ItemData.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4
-            end
-            Item.ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = LiquidType
-            Item.ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = LiquidLevel
-            if DebugMode then
-                LogInfo(string.format("SetItemLiquidLevel: Success. Item: %s, LiquidType: %s, LiquidLevel: %s",
-                            Item.ItemData.ItemName_51_B88648C048EE5BC2885E4E95F3E13F0A:ToString(), tostring(LiquidType), tostring(LiquidLevel)))
-            end
-            return true
-        end
-        if DebugMode then
-            LogError(string.format("SetItemLiquidLevel: Failed. Item: %s, LiquidType: %s, LiquidLevel: %s",
-                        Item.ItemData.ItemName_51_B88648C048EE5BC2885E4E95F3E13F0A:ToString(), tostring(LiquidType), tostring(LiquidLevel)))
-        end
-    end
-    return false
-end
-
 ---Fills current, in hotbar selected item with it's maximum allowed energy. If the item is drained, refills it with best allowed energy.<br>
----Note: If the item was empty, the UI needs to be refreshed by switching to another item
 ---@param playerCharacter AAbiotic_PlayerCharacter_C
 function AFUtils.FillHeldItemWithEnergy(playerCharacter)
     if not playerCharacter or not playerCharacter.CurrentHeldItemExists then return end
@@ -467,13 +423,18 @@ function AFUtils.FillHeldItemWithEnergy(playerCharacter)
         local itemSlotStruct = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
         if liquidData and itemSlotStruct then
             local changeableData = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313
-            if changeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 == AFUtils.LiquidType.None then
-                changeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = AFUtils.GetLastAllowedLiquidType(liquidData)
+            local targetLiquidType = changeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109
+            local targetLiquidLevel = liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4
+            if targetLiquidType == AFUtils.LiquidType.None then
+                targetLiquidType = AFUtils.GetLastAllowedLiquidType(liquidData)
             end
-            if AFUtils.IsEnergyLiquidType(changeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109)
-                and changeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A < liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4 then
-                
-                changeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4
+            if AFUtils.IsEnergyLiquidType(targetLiquidType) then
+                changeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = targetLiquidType
+                changeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = targetLiquidLevel
+                if playerCharacter.ItemInHand_BP:IsValid() then
+                    playerCharacter.ItemInHand_BP.ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = targetLiquidType
+                    playerCharacter.ItemInHand_BP.ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = targetLiquidType
+                end
             end
         end
     end

@@ -412,6 +412,31 @@ function AFUtils.GetLastAllowedLiquidTypeInItemStruct(ItemStruct)
     return AFUtils.LiquidType.None
 end
 
+---Sets CurrentItemDurability in ChangeableData to MaxItemDurability
+---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct
+---@return boolean Success
+function AFUtils.FillItemSlotStructDurability(ItemSlotStruct)
+   if not ItemSlotStruct or not ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313 then return false end 
+
+   local maxItemDurability = ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B
+   ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8 = maxItemDurability
+   return ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8 > 0
+end
+
+---@param Inventory UAbiotic_InventoryComponent_C
+---@return boolean Success
+function AFUtils.FillDurabilityOfAllItemsInInvetory(Inventory)
+    if not Inventory or not Inventory.CurrentInventory or #Inventory.CurrentInventory <= 0 then return false end
+
+    local result = true
+    for i = 1, #Inventory.CurrentInventory do
+        if not AFUtils.FillItemSlotStructDurability(Inventory.CurrentInventory[i]) then
+            result = false
+        end
+    end
+    return result
+end
+
 ---Fills current, in hotbar selected item with it's maximum allowed energy. If the item is drained, refills it with best allowed energy.<br>
 ---@param playerCharacter AAbiotic_PlayerCharacter_C
 function AFUtils.FillHeldItemWithEnergy(playerCharacter)

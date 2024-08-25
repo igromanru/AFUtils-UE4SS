@@ -27,8 +27,7 @@ AFUtils.LiquidType = {
     TaintedWater = 10,
     Unknown11 = 11,
     LaserEnergy = 12,
-    Unknown13 = 13,
-    MAX = 14
+    Unknown13 = 13
 }
 
 ---@enum CriticalityLevels
@@ -37,8 +36,7 @@ AFUtils.CriticalityLevels = {
     Gray = 1,
     Yellow = 2,
     Red = 3,
-    Purple = 4,
-    MAX = 5
+    Purple = 4
 }
 
 -- Mapping for the CurrentInventory TArray in CharacterEquipSlotInventory (Lua based indexes aka. start with 1)

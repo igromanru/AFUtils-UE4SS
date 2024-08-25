@@ -449,8 +449,11 @@ function AFUtils.FillItemSlotStructDurability(ItemSlotStruct)
    if not ItemSlotStruct or not ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313 then return false end 
 
    local maxItemDurability = ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B
-   ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8 = maxItemDurability
-   return ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8 > 0
+   if maxItemDurability > 0 then
+        ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8 = maxItemDurability
+        return true
+   end
+   return false
 end
 
 ---@param Inventory UAbiotic_InventoryComponent_C
@@ -467,20 +470,22 @@ function AFUtils.FillDurabilityOfAllItemsInInvetory(Inventory)
     return result
 end
 
----Fill liquid level of FAbiotic_InventoryItemSlotStruct with best allowed liquid type to maximum
----@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---Fill liquid level of FAbiotic_InventoryChangeableDataStruct with best allowed liquid type to maximum
+---@param ChangeableData FAbiotic_InventoryChangeableDataStruct Target
 ---@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull infomation
-function AFUtils.FillItemSlotStructEnergy(ItemSlotStruct, ItemStruct)
-    if not ItemSlotStruct or not ItemStruct then return false end
+---@return boolean Success
+function AFUtils.FillChangeableDataEnergy(ChangeableData, ItemStruct)
+    if not ChangeableData or not ItemStruct then return false end
 
     local liquidData = ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0
     if liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4 > 0 and AFUtils.IsOnlyEnergyLiquidTypeAllowedInItemStruct(ItemStruct) then
-        local currentLiquidType = ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109
+        local currentLiquidType = ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109
         if not AFUtils.IsEnergyLiquidType(currentLiquidType) then
             currentLiquidType = AFUtils.GetLastAllowedLiquidTypeInItemStruct(ItemStruct)
         end
-        ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = currentLiquidType
-        ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4
+        ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = currentLiquidType
+        ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4
+        return true
     end
 
     return false
@@ -488,22 +493,33 @@ end
 
 ---Fill liquid level of FAbiotic_InventoryItemSlotStruct with best allowed liquid type to maximum
 ---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
----@param Item AAbiotic_Item_ParentBP_C Source, ItemData.LiquidData will be used to pull infomation
+---@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull infomation
+---@return boolean Success
+function AFUtils.FillItemSlotStructEnergy(ItemSlotStruct, ItemStruct)
+    if not ItemSlotStruct or not ItemStruct then return false end
+    return AFUtils.FillChangeableDataEnergy(ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313, ItemStruct)
+end
+
+---Fill liquid level of FAbiotic_InventoryItemSlotStruct with best allowed liquid type to maximum
+---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.LiquidData will be used to pull infomation for ItemSlotStruct and Item.ChangeableData
+---@return boolean Success
 function AFUtils.FillItemSlotStructEnergyFromItem(ItemSlotStruct, Item)
     if not ItemSlotStruct or not Item or not Item:IsValid() then return false end
-    
-    return AFUtils.FillItemSlotStructEnergy(ItemSlotStruct, Item.ItemData)
+    return AFUtils.FillItemSlotStructEnergy(ItemSlotStruct, Item.ItemData) and AFUtils.FillChangeableDataEnergy(Item.ChangeableData, Item.ItemData)
 end
 
 ---Fills current, in hotbar selected item with it's maximum allowed energy. If the item is drained, refills it with best allowed energy.<br>
 ---@param playerCharacter AAbiotic_PlayerCharacter_C
+---@return boolean Success
 function AFUtils.FillHeldItemWithEnergy(playerCharacter)
-    if not playerCharacter or not playerCharacter.CurrentHeldItemExists then return end
+    if not playerCharacter then return end
     
     local itemSlotStruct = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
     if itemSlotStruct then
-        AFUtils.FillItemSlotStructEnergyFromItem(itemSlotStruct, playerCharacter.ItemInHand_BP)
+        return AFUtils.FillItemSlotStructEnergyFromItem(itemSlotStruct, playerCharacter.ItemInHand_BP)
     end
+    return false
 end
 
 ---@param playerCharacter AAbiotic_PlayerCharacter_C

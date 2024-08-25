@@ -178,7 +178,7 @@ end
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@param Prefix string? Prefix that should be added in front of each line
 function AFUtils.LogInventoryComponent(Inventory, Prefix)
-    if not Inventory then return end
+    if not Inventory or not Inventory:IsValid() then return end
     Prefix = Prefix or ""
 
     LogDebug(Prefix .. "CurrentInventory.Num: " .. #Inventory.CurrentInventory)

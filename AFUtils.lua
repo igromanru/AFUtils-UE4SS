@@ -39,6 +39,21 @@ AFUtils.CriticalityLevels = {
     MAX = 5
 }
 
+-- Mapping for the CurrentInventory TArray in CharacterEquipSlotInventory (Lua based indexes aka. start with 1)
+AFUtils.GearInventoryIndex = {
+    ChestArmor = 1,
+    HeadArmor = 2,
+    LegArmor = 3,
+    Backpack = 4,
+    ArmArmor = 5,
+    FullBodySuit = 6,
+    Headlamp = 7,
+    Trinket = 8,
+    WristwatchOrPager = 9, -- Wristwatch or Pager
+    KeypadHacker = 10,
+    OffHandShield = 11
+}
+
 -- Static Classes --
 --------------------
 local Abiotic_PlayerCharacter_C_Class = nil

@@ -208,7 +208,7 @@ end
 ---@param AIDirector AAbiotic_AIDirector_C
 ---@param Prefix string? Prefix that should be added in front of each line
 function AFUtils.LogAIDirector(AIDirector, Prefix)
-    if not AIDirector then return end
+    if not AIDirector or not AIDirector:IsValid() then return end
     Prefix = Prefix or ""
 
     -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Tick_PrioritySpawns, Prefix .. "Tick_PrioritySpawns.")
@@ -237,6 +237,8 @@ function AFUtils.LogAIDirector(AIDirector, Prefix)
     LogDebug(Prefix .. "ActiveLeyak IsValid: " .. tostring(AIDirector.ActiveLeyak:IsValid()))
     LogDebug(Prefix .. "CurrentLeyakTarget IsValid: " .. tostring(AIDirector.CurrentLeyakTarget:IsValid()))
     LogDebug(Prefix .. "LeyakSpawnAttempts: " .. AIDirector.LeyakSpawnAttempts)
+    LogDebug(Prefix .. "LeyakWorldFlag.RowName: " .. AIDirector.LeyakWorldFlag.RowName:ToString())
+    LogDebug(Prefix .. "LeyakWorldFlag.DataTablePath: " .. AIDirector.LeyakWorldFlag.DataTablePath:ToString())
     LogDebug(Prefix .. "TimeLastLeyakSpawn: " .. AIDirector.TimeLastLeyakSpawn)
     -- AFUtils.LogTimerHandle(AIDirector, AIDirector.CoworkerTimer, Prefix .. "CoworkerTimer.")
     LogDebug(Prefix .. "MaxAssaultPortals: " .. AIDirector.MaxAssaultPortals)

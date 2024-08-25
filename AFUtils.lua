@@ -263,7 +263,7 @@ function AFUtils.ClientDisplayWarningMessage(Message, CriticalityLevel, WarningB
 
     local myPlayer = AFUtils.GetMyPlayer()
     if myPlayer then
-        LogDebug("ClientDisplayWarningMessage: Message: "..Message.." CriticalityLevel: "..CriticalityLevel.." WarningBeep: "..tostring(WarningBeep))
+        -- LogDebug("ClientDisplayWarningMessage: Message: "..Message.." CriticalityLevel: "..CriticalityLevel.." WarningBeep: "..tostring(WarningBeep))
         local fText = FText(Message)
         if fText then
             myPlayer:Client_DisplayWarningMessage(fText, CriticalityLevel, WarningBeep)

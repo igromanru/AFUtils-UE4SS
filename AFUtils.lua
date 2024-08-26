@@ -59,7 +59,7 @@ AFUtils.GearInventoryIndex = {
 --------------------
 local Abiotic_PlayerCharacter_C_Class = nil
 function AFUtils.GetClassAbiotic_PlayerCharacter_C()
-    if not Abiotic_PlayerCharacter_C_Class then
+    if not Abiotic_PlayerCharacter_C_Class or not Abiotic_PlayerCharacter_C_Class:IsValid() then
         Abiotic_PlayerCharacter_C_Class = StaticFindObject("/Game/Blueprints/Characters/Abiotic_PlayerCharacter.Abiotic_PlayerCharacter_C")
     end
     return Abiotic_PlayerCharacter_C_Class
@@ -67,7 +67,7 @@ end
 
 local Abiotic_Item_ParentBP_C_Class = nil
 function AFUtils.GetClassAbiotic_Item_ParentBP_C()
-    if not Abiotic_Item_ParentBP_C_Class then
+    if not Abiotic_Item_ParentBP_C_Class or not Abiotic_Item_ParentBP_C_Class:IsValid() then
         Abiotic_Item_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Items/Abiotic_Item_ParentBP.Abiotic_Item_ParentBP_C")
     end
     return Abiotic_Item_ParentBP_C_Class
@@ -75,7 +75,7 @@ end
 
 local AbioticDeployed_ParentBP_C_Class = nil
 function AFUtils.GetClassAbioticDeployed_ParentBP_C()
-    if not AbioticDeployed_ParentBP_C_Class then
+    if not AbioticDeployed_ParentBP_C_Class or not AbioticDeployed_ParentBP_C_Class:IsValid() then
         AbioticDeployed_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/AbioticDeployed_ParentBP.AbioticDeployed_ParentBP_C")
     end
     return AbioticDeployed_ParentBP_C_Class
@@ -83,7 +83,7 @@ end
 
 local RechargeableComponent_C_Class = nil
 function AFUtils.GetClassRechargeableComponent_C()
-    if not RechargeableComponent_C_Class then
+    if not RechargeableComponent_C_Class or not RechargeableComponent_C_Class:IsValid() then
         RechargeableComponent_C_Class = StaticFindObject("/Game/Blueprints/Items/RechargeableComponent.RechargeableComponent_C")
     end
     return RechargeableComponent_C_Class
@@ -91,10 +91,18 @@ end
 
 local Deployed_Battery_ParentBP_C_Class = nil
 function AFUtils.GetClassDeployed_Battery_ParentBP_C()
-    if not Deployed_Battery_ParentBP_C_Class then
+    if not Deployed_Battery_ParentBP_C_Class or not Deployed_Battery_ParentBP_C_Class:IsValid() then
         Deployed_Battery_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/Misc/Deployed_Battery_ParentBP.Deployed_Battery_ParentBP_C")
     end
     return Deployed_Battery_ParentBP_C_Class
+end
+
+local Abiotic_Weapon_ParentBP_C_Class = nil
+function AFUtils.GetClassAbiotic_Weapon_ParentBP_C()
+    if not Abiotic_Weapon_ParentBP_C_Class or not Abiotic_Weapon_ParentBP_C_Class:IsValid() then
+        Abiotic_Weapon_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Items/Weapons/Abiotic_Weapon_ParentBP.Abiotic_Weapon_ParentBP_C")
+    end
+    return Abiotic_Weapon_ParentBP_C_Class
 end
 
 -- Exported functions --
@@ -528,10 +536,10 @@ function AFUtils.FillItemSlotStructEnergyFromItem(ItemSlotStruct, Item)
 end
 
 ---Fills current, in hotbar selected item with it's maximum allowed energy. If the item is drained, refills it with best allowed energy.<br>
----@param playerCharacter AAbiotic_PlayerCharacter_C
+---@param playerCharacter AAbiotic_PlayerCharacter_C Must be a valid object
 ---@return boolean Success
 function AFUtils.FillHeldItemWithEnergy(playerCharacter)
-    if not playerCharacter then return end
+    if not playerCharacter then return false end
     
     local itemSlotStruct = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
     if itemSlotStruct then
@@ -540,7 +548,7 @@ function AFUtils.FillHeldItemWithEnergy(playerCharacter)
     return false
 end
 
----@param playerCharacter AAbiotic_PlayerCharacter_C
+---@param playerCharacter AAbiotic_PlayerCharacter_C Must be a valid object
 function AFUtils.FillAllEquippedItemsWithEnergy(playerCharacter)
     if not playerCharacter or not playerCharacter.CharacterEquipSlotInventory:IsValid() or #playerCharacter.CharacterEquipSlotInventory.CurrentInventory < 11 then
         return
@@ -567,6 +575,62 @@ function AFUtils.FillAllEquippedItemsWithEnergy(playerCharacter)
     AFUtils.FillItemSlotStructEnergyFromItem(trinketSlotStruct, playerCharacter.Gear_TrinketBP)
     AFUtils.FillItemSlotStructEnergyFromItem(shieldSlotStruct, playerCharacter.Gear_ShieldBP)
     AFUtils.FillItemSlotStructEnergyFromItem(wristwatchSlotStruct, playerCharacter.Gear_WristwatchBP)
+end
+
+---Fill CurrentAmmoInMagazine of FAbiotic_InventoryChangeableDataStruct with maximum ammo
+---@param ChangeableData FAbiotic_InventoryChangeableDataStruct Target
+---@param ItemStruct FAbiotic_InventoryItemStruct Source, WeaponStruct will be used to pull infomation
+---@return boolean Filled # Returns true if CurrentAmmoInMagazine was modified, otherwise false
+function AFUtils.FillChangeableDataAmmo(ChangeableData, ItemStruct)
+    if not ChangeableData or not ItemStruct then return false end
+
+    local weaponData = ItemStruct.WeaponData_61_3C29CF6C4A7F9DD435F9318FEE4B033D
+    if weaponData.RequireAmmo_85_8BB1C1954D2A83BB1994549DDEEBA306 then
+        local currentAmmoInMagazine = ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D
+        local magazineSize = weaponData.MagazineSize_57_E890A3944240BB8D07EF0B9251F1FBD4
+        if currentAmmoInMagazine < magazineSize then
+            ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D = magazineSize
+            return true
+        end
+    end
+
+    return false
+end
+
+---Fill CurrentAmmoInMagazine of FAbiotic_InventoryChangeableDataStruct with maximum ammo
+---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull infomation
+---@return boolean Filled # Returns true if CurrentAmmoInMagazine was modified, otherwise false
+function AFUtils.FillItemSlotStructAmmo(ItemSlotStruct, ItemStruct)
+    if not ItemSlotStruct or not ItemStruct then return false end
+    return AFUtils.FillChangeableDataAmmo(ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313, ItemStruct)
+end
+
+---Fill CurrentAmmoInMagazine of FAbiotic_InventoryChangeableDataStruct with maximum ammo
+---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.WeaponData will be used to pull infomation for ItemSlotStruct and Item.ChangeableData
+---@return boolean Filled # Returns true if CurrentAmmoInMagazine was modified, otherwise false
+function AFUtils.FillItemSlotStructAmmoFromItem(ItemSlotStruct, Item)
+    if not ItemSlotStruct or not Item or not Item:IsValid() then return false end
+    return AFUtils.FillItemSlotStructAmmo(ItemSlotStruct, Item.ItemData) and AFUtils.FillChangeableDataAmmo(Item.ChangeableData, Item.ItemData)
+end
+
+---@param playerCharacter AAbiotic_PlayerCharacter_C Must be a valid object
+---@return boolean Filled # Returns true if ammo was modified, otherwise false
+function AFUtils.FillHeldWeaponWithAmmo(playerCharacter)
+    if not playerCharacter or not playerCharacter.ItemInHand_BP:IsValid() then return false end
+    
+    local weaponData = playerCharacter.ItemInHand_BP.ItemData.WeaponData_61_3C29CF6C4A7F9DD435F9318FEE4B033D
+    if not weaponData.RequireAmmo_85_8BB1C1954D2A83BB1994549DDEEBA306 then return false end
+
+    local itemSlotStruct, inventory, slotIndex = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
+    if itemSlotStruct and inventory and slotIndex then
+        if AFUtils.FillItemSlotStructAmmoFromItem(itemSlotStruct, playerCharacter.ItemInHand_BP) then
+            playerCharacter.ItemInHand_BP.CurrentRoundsInMagazine = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D
+            return true
+        end
+    end
+    return false
 end
 
 return AFUtils

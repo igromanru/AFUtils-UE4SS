@@ -468,6 +468,26 @@ function AFUtils.FillDurabilityOfAllItemsInInvetory(Inventory)
     return result
 end
 
+---Uses Request_RepairItem to repair all items, which also works on servers as guest
+---@param PlayerCharacter AAbiotic_PlayerCharacter_C
+---@param Inventory UAbiotic_InventoryComponent_C
+---@return boolean Success
+function AFUtils.RepairAllItemsInInvetory(PlayerCharacter, Inventory)
+    if not PlayerCharacter or not Inventory or not PlayerCharacter:IsValid() or not Inventory.CurrentInventory or #Inventory.CurrentInventory < 1 then return false end
+
+    for i = 1, #Inventory.CurrentInventory do
+        local itemSlotStruct = Inventory.CurrentInventory[i]
+        if itemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName:GetComparisonIndex() > 0 then
+            local currentItemDurability = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8
+            local maxItemDurability = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B
+            if maxItemDurability > 0 and currentItemDurability < maxItemDurability then
+                PlayerCharacter:Request_RepairItem(Inventory, i - 1, maxItemDurability - currentItemDurability, false)
+            end
+        end
+    end
+    return true
+end
+
 ---Fill liquid level of FAbiotic_InventoryChangeableDataStruct with best allowed liquid type to maximum
 ---@param ChangeableData FAbiotic_InventoryChangeableDataStruct Target
 ---@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull infomation

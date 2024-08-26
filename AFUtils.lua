@@ -321,6 +321,15 @@ function AFUtils.DisplayWarningMessage(Message, CriticalityLevel)
     end
 end
 
+---Get current combined health of all limbs
+---@param playerCharacter AAbiotic_Character_ParentBP_C
+function AFUtils.GetCurrentCombinedHealth(playerCharacter)
+    if not playerCharacter then return 0 end
+    return playerCharacter.CurrentHealth_Head + playerCharacter.CurrentHealth_Torso
+            + playerCharacter.CurrentHealth_LeftArm + playerCharacter.CurrentHealth_RightArm
+            + playerCharacter.CurrentHealth_LeftLeg + playerCharacter.CurrentHealth_RightLeg
+end
+
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@param SlotIndex integer
 ---@return FAbiotic_InventoryItemSlotStruct?

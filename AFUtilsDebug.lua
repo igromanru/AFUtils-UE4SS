@@ -21,6 +21,33 @@ function AFUtils.LogTimerHandle(WorldContext, TimerHandle, Prefix)
     end
 end
 
+---@param Timeline FTimeline
+---@param Prefix string?
+function AFUtils.LogTimeline(Timeline, Prefix)
+    if not Timeline then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "LengthMode (enum 0-1): " .. Timeline.LengthMode)
+    LogDebug(Prefix .. "bLooping: " .. tostring(Timeline.bLooping))
+    LogDebug(Prefix .. "bReversePlayback: " .. tostring(Timeline.bReversePlayback))
+    LogDebug(Prefix .. "Length: " .. Timeline.Length)
+    LogDebug(Prefix .. "Events.Num: " .. #Timeline.Events)
+    LogDebug(Prefix .. "InterpVectors.Num: " .. #Timeline.InterpVectors)
+    LogDebug(Prefix .. "InterpFloats.Num: " .. #Timeline.InterpFloats)
+    LogDebug(Prefix .. "InterpLinearColors.Num: " .. #Timeline.InterpLinearColors)
+    LogDebug(Prefix .. "DirectionPropertyName: " .. Timeline.DirectionPropertyName:ToString())
+end
+
+---@param TimelineComponent UTimelineComponent
+---@param Prefix string?
+function AFUtils.LogTimelineComponent(TimelineComponent, Prefix)
+    if not TimelineComponent or not TimelineComponent:IsValid() then return end
+    Prefix = Prefix or ""
+
+    AFUtils.LogTimeline(TimelineComponent.TheTimeline, Prefix .. "TheTimeline.")
+    LogDebug(Prefix .. "bIgnoreTimeDilation: " .. tostring(TimelineComponent.bIgnoreTimeDilation))
+end
+
 ---Logs in debug scope all relevant properties of FAbiotic_InventoryChangeableDataStruct to console 
 ---@param ChangeableData FAbiotic_InventoryChangeableDataStruct
 ---@param Prefix string? Prefix that should be added in front of each line
@@ -67,6 +94,33 @@ function AFUtils.LogLiquidStruct(LiquidStruct, Prefix)
     LogDebug(Prefix .. "LiquidToStartWith.Num: " .. #LiquidStruct.LiquidToStartWith_15_F7D753A24D2130B92AF312AB9192AD9C)
 end
 
+---Logs in debug scope all relevant properties of FAbiotic_WeaponStruct to console 
+---@param WeaponStruct FAbiotic_WeaponStruct
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogWeaponStruct(WeaponStruct, Prefix)
+    if not WeaponStruct then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "Melee: " .. tostring(WeaponStruct.Melee_1_AB17935A4F944DCEEB1AB3A5B598E702))
+    LogDebug(Prefix .. "MeleeSwingData.RowName: " .. WeaponStruct.MeleeSwingData_80_EA5C63F44178A08106BE41B8F7D8DE36.RowName:ToString())
+    LogDebug(Prefix .. "TimeBetweenShots: " .. tostring(WeaponStruct.TimeBetweenShots_8_71ACC9414B36314DEF34B3A54649941C))
+    LogDebug(Prefix .. "MaximumHitscanRange: " .. tostring(WeaponStruct.MaximumHitscanRange_26_F36D29CA48831A6C3AD49EB94F5D2BE2))
+    LogDebug(Prefix .. "DamagePerHit: " .. tostring(WeaponStruct.DamagePerHit_16_F95199D1425C37191C55CDA0DC07BDDC))
+    LogDebug(Prefix .. "BulletSpread_Min: " .. tostring(WeaponStruct.BulletSpread_Min_38_08ADC0BA4BEA02135BE0438A60AE5725))
+    LogDebug(Prefix .. "BulletSpread_Max: " .. tostring(WeaponStruct.BulletSpread_Max_39_4AE2E5744A934A3FFCEC2A9D7A1A6963))
+    LogDebug(Prefix .. "RecoilAmount: " .. tostring(WeaponStruct.RecoilAmount_42_85AFA9834A1CABF8183C088D857840EE))
+    LogDebug(Prefix .. "PelletCount: " .. tostring(WeaponStruct.PelletCount_77_4504318146345E7029C78790B317E074))
+    LogDebug(Prefix .. "MagazineSize: " .. tostring(WeaponStruct.MagazineSize_57_E890A3944240BB8D07EF0B9251F1FBD4))
+    LogDebug(Prefix .. "RequireAmmo: " .. tostring(WeaponStruct.RequireAmmo_85_8BB1C1954D2A83BB1994549DDEEBA306))
+    LogDebug(Prefix .. "AmmoType.RowName: " .. WeaponStruct.AmmoType_54_D19EDD9E48E4252D492757BFAAC23A73.RowName:ToString())
+    LogDebug(Prefix .. "AmmoTypes.Num: " .. #WeaponStruct.AmmoTypes_99_6514B50249092C020B24F9ABF9AF0E37)
+    LogDebug(Prefix .. "SecondaryAttack (enum 0-5): " .. WeaponStruct.SecondaryAttack_82_0ADE2DC74388F34F125F0DB6D9AAC1CD)
+    LogDebug(Prefix .. "LoudnessOnPrimaryUse: " .. WeaponStruct.LoudnessOnPrimaryUse_74_7829648A4C3F44A62DCA09B3817DF796)
+    LogDebug(Prefix .. "LoudnessOnSecondaryUse: " .. WeaponStruct.LoudnessOnSecondaryUse_73_89AB59C84EBC77DEB5DD2C9C88E9C237)
+    LogDebug(Prefix .. "UnderwaterState (enum 0-2): " .. WeaponStruct.UnderwaterState_95_972463794CBCCEA48AC987A7FA4C0118)
+    LogDebug(Prefix .. "BurstFireCount: " .. WeaponStruct.BurstFireCount_102_880FB81B4CA5EC7F7B5D6FBDE68275B8)
+end
+
 ---Logs in debug scope all relevant properties of FAbiotic_InventoryItemStruct to console 
 ---@param InventoryItemStruct FAbiotic_InventoryItemStruct
 ---@param Prefix string?
@@ -93,7 +147,7 @@ function AFUtils.LogInventoryItemStruct(InventoryItemStruct, Prefix)
     LogDebug(Prefix .. "Weight: " .. InventoryItemStruct.Weight_119_CE7DB430417207921D739CAF458D4D7C)
     LogDebug(Prefix .. "TryPlaceInHotbar: " .. tostring(InventoryItemStruct.TryPlaceInHotbar_128_F78F6AA34A238AEAB278F48066C080BF))
     LogDebug(Prefix .. "IsWeapon: " .. tostring(InventoryItemStruct.IsWeapon_63_57F6A703413EA260B1455CA81F2D4911))
-    -- ToDo log FAbiotic_WeaponStruct, InventoryItemStruct.WeaponData_61_3C29CF6C4A7F9DD435F9318FEE4B033D
+    AFUtils.LogWeaponStruct(InventoryItemStruct.WeaponData_61_3C29CF6C4A7F9DD435F9318FEE4B033D, Prefix .. "WeaponData.")
     -- ToDo log FAbiotic_Equipment_Struct, InventoryItemStruct.EquipmentData_100_576D05464F36104AFE501B878255E318
     -- ToDo log FAbiotic_Consumable_Struct, InventoryItemStruct.ConsumableData_84_757B6B114FF23016981BEF888A31C670
     -- ToDo log FAbiotic_CookableStruct, InventoryItemStruct.CookableData_94_7EFD1F0A4A7EFB44D3D8B9B14581BF36

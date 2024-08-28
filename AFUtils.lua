@@ -58,29 +58,31 @@ AFUtils.GearInventoryIndex = {
 ---@enum CharacterSkills
 AFUtils.CharacterSkills = {
     None = 0,
-    NewEnumerator0 = 1,
-    NewEnumerator1 = 2,
-    NewEnumerator2 = 3,
-    NewEnumerator3 = 4,
-    NewEnumerator4 = 5,
-    NewEnumerator5 = 6,
-    NewEnumerator6 = 7,
-    NewEnumerator7 = 8,
-    NewEnumerator8 = 9,
-    NewEnumerator9 = 10,
-    NewEnumerator10 = 11,
-    NewEnumerator11 = 12,
-    NewEnumerator12 = 13,
-    NewEnumerator13 = 14,
-    NewEnumerator14 = 15,
-    NewEnumerator15 = 16,
-    NewEnumerator16 = 17
+    Sprinting = 1,
+    Accuracy = 2,
+    Reloading = 3,
+    Sneaking = 4,
+    SharpMeele = 5,
+    BluntMelee = 6,
+    Fishing = 7,
+    Crafting = 8,
+    Construction = 9,
+    FirstAid = 10,
+    Agriculture = 11,
+    Cooking = 12,
+    Unknown1 = 13,
+    Fortitude = 14,
+    Strength = 15,
+    Throwing = 16,
+    Unknown2 = 17
 }
 
 ---Map of weather events
----@type { [string]: string }
+---@enum WeatherEvents
 AFUtils.WeatherEvents = {
-    Fog = "Fog"
+    Fog = "Fog",
+    RadLeak = "RadLeak",
+    Spores = "Spores"
 }
 
 -- Static Classes --
@@ -139,6 +141,18 @@ function AFUtils.GetClassAbiotic_Weapon_ParentBP_C()
         Abiotic_Weapon_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Items/Weapons/Abiotic_Weapon_ParentBP.Abiotic_Weapon_ParentBP_C")
     end
     return Abiotic_Weapon_ParentBP_C_Class
+end
+
+
+---- Default objects ---
+------------------------
+
+local WeatherEventHandleFunctionLibraryCache = nil
+function AFUtils.GetWeatherEventHandleFunctionLibrary()
+    if not WeatherEventHandleFunctionLibraryCache or not WeatherEventHandleFunctionLibraryCache:IsValid() then
+        WeatherEventHandleFunctionLibraryCache = StaticFindObject("/Script/AbioticFactor.Default__WeatherEventHandleFunctionLibrary")
+    end
+    return WeatherEventHandleFunctionLibraryCache
 end
 
 -- Exported functions --
@@ -690,6 +704,44 @@ function AFUtils.FillHeldWeaponWithAmmo(playerCharacter)
         if AFUtils.FillItemSlotStructAmmoFromItem(itemSlotStruct, playerCharacter.ItemInHand_BP) then
             playerCharacter.ItemInHand_BP.CurrentRoundsInMagazine = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D
             return true
+        end
+    end
+    return false
+end
+
+---Converts FWeatherEventRowHandle to userdata
+---@param EventRow FWeatherEventRowHandle
+---@return FWeatherEventRowHandle # It creates userdata that represent FWeatherEventRowHandle
+function AFUtils.CovnertWeatherEventRowHandleToUserdata(EventRow)
+    return {
+        RowName = EventRow.RowName,
+        DataTablePath = EventRow.DataTablePath
+    }
+end
+
+---Triggers a weather event
+---@param EventName string|WeatherEvents
+---@return boolean Success
+function AFUtils.TriggerWeatherEvent(EventName)
+    if type(EventName) ~= "string" then return false end
+
+    local weatherEventHandleFunctionLibrary = AFUtils.GetWeatherEventHandleFunctionLibrary()
+    local myPlayerController = AFUtils.GetMyPlayerController()
+    if weatherEventHandleFunctionLibrary and myPlayerController and myPlayerController.DayNightManager:IsValid() then
+        ---@type table<RemoteUnrealParam>
+        local outRowHandles = {}
+        weatherEventHandleFunctionLibrary:GetAllWeatherEventRowHandles(outRowHandles)
+        for i = 1, #outRowHandles, 1 do
+            ---@type FWeatherEventRowHandle
+            local rowHandle = outRowHandles[i]:get()
+            local rowName = rowHandle.RowName:ToString()
+            if rowName == EventName then
+                LogDebug("rowHandle type: "..rowHandle:type())
+                LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
+                myPlayerController.DayNightManager:TriggerWeatherEvent(rowHandle)
+                -- myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.CovnertWeatherEventRowHandleToUserdata(rowHandle))
+                return true
+            end
         end
     end
     return false

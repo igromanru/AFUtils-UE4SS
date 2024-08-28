@@ -712,11 +712,11 @@ end
 ---Converts FWeatherEventRowHandle to userdata
 ---@param EventRow FWeatherEventRowHandle
 ---@return FWeatherEventRowHandle # It creates userdata that represent FWeatherEventRowHandle
-function AFUtils.CovnertWeatherEventRowHandleToUserdata(EventRow)
-    return {
+function AFUtils.ConvertWeatherEventRowHandleToUserdata(EventRow)
+    return { 
         RowName = EventRow.RowName,
         DataTablePath = EventRow.DataTablePath
-    }
+     }
 end
 
 ---Triggers a weather event
@@ -728,18 +728,22 @@ function AFUtils.TriggerWeatherEvent(EventName)
     local weatherEventHandleFunctionLibrary = AFUtils.GetWeatherEventHandleFunctionLibrary()
     local myPlayerController = AFUtils.GetMyPlayerController()
     if weatherEventHandleFunctionLibrary and myPlayerController and myPlayerController.DayNightManager:IsValid() then
-        ---@type table<RemoteUnrealParam>
+        ---@type table<LocalUnrealParam>
         local outRowHandles = {}
         weatherEventHandleFunctionLibrary:GetAllWeatherEventRowHandles(outRowHandles)
         for i = 1, #outRowHandles, 1 do
+            local param = outRowHandles[i]
+            LogDebug(i..": "..param:type())
+
             ---@type FWeatherEventRowHandle
-            local rowHandle = outRowHandles[i]:get()
+            local rowHandle = param:get()
             local rowName = rowHandle.RowName:ToString()
             if rowName == EventName then
-                LogDebug("rowHandle type: "..rowHandle:type())
-                LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
-                myPlayerController.DayNightManager:TriggerWeatherEvent(rowHandle)
-                -- myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.CovnertWeatherEventRowHandleToUserdata(rowHandle))
+                myPlayerController.DayNightManager.RequiredDaysBetweenWeather = 0
+                myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName = rowHandle.RowName
+                LogDebug("Weather_RequestByPlayer.RowName: "..myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName:ToString())
+                -- myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToUserdata(rowHandle))
+                -- LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
                 return true
             end
         end

@@ -55,6 +55,12 @@ AFUtils.GearInventoryIndex = {
     OffHandShield = 11
 }
 
+---Map of weather events
+---@type { [string]: string }
+AFUtils.WeatherEvents = {
+    Fog = "Fog"
+}
+
 -- Static Classes --
 --------------------
 local Abiotic_PlayerCharacter_C_Class = nil

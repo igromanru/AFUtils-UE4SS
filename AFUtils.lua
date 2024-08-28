@@ -97,6 +97,14 @@ function AFUtils.GetClassDeployed_Battery_ParentBP_C()
     return Deployed_Battery_ParentBP_C_Class
 end
 
+local Abiotic_Item_Dropped_C_Class = nil
+function AFUtils.GetClassAbiotic_Item_Dropped_C()
+    if not Abiotic_Item_Dropped_C_Class or not Abiotic_Item_Dropped_C_Class:IsValid() then
+        Abiotic_Item_Dropped_C_Class = StaticFindObject("/Game/Blueprints/Items/Abiotic_Item_Dropped.Abiotic_Item_Dropped_C")
+    end
+    return Abiotic_Item_Dropped_C_Class
+end
+
 local Abiotic_Weapon_ParentBP_C_Class = nil
 function AFUtils.GetClassAbiotic_Weapon_ParentBP_C()
     if not Abiotic_Weapon_ParentBP_C_Class or not Abiotic_Weapon_ParentBP_C_Class:IsValid() then
@@ -146,6 +154,23 @@ function AFUtils.GetMyPlayer()
     end
 
     return PlayerCache
+end
+
+local PlayerStateCache = nil
+---Returns player state of current player
+---@return AAbiotic_PlayerState_C?
+function AFUtils.GetMyPlayerState()
+    if PlayerStateCache and PlayerStateCache:IsValid() then
+        return PlayerStateCache
+    end
+
+    PlayerStateCache = nil
+    local myPlayer = AFUtils.GetMyPlayer()
+    if myPlayer and myPlayer.MyPlayerState:IsValid() then
+        PlayerStateCache = myPlayer.MyPlayerState
+    end
+
+    return PlayerStateCache
 end
 
 ---Returns current player's inventory or nil

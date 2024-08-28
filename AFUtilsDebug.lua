@@ -375,3 +375,44 @@ function AFUtils.LogFishingRod(FishingRod, Prefix)
     LogDebug(Prefix .. "LuckyHat: " .. tostring(FishingRod.LuckyHat))
     LogDebug(Prefix .. "OwnerLastKnownLevel: " .. FishingRod.OwnerLastKnownLevel)
 end
+
+---Logs in debug scope all relevant properties of a ADayNightManager_C to console 
+---@param DayNightManager ADayNightManager_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogDayNightManager(DayNightManager, Prefix)
+    if not DayNightManager or not DayNightManager:IsValid() then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "DefaultStartingHour: " .. DayNightManager.DefaultStartingHour)
+    LogDebug(Prefix .. "MorningStartHour: " .. DayNightManager.MorningStartHour)
+    LogDebug(Prefix .. "NightfallStartHour: " .. DayNightManager.NightfallStartHour)
+    LogDebug(Prefix .. "AssaultCheckHour: " .. DayNightManager.AssaultCheckHour)
+    LogDebug(Prefix .. "WeatherCheckHour: " .. DayNightManager.WeatherCheckHour)
+    LogDebug(Prefix .. "CurrentTimeInSeconds: " .. DayNightManager.CurrentTimeInSeconds)
+    LogDebug(Prefix .. "24HoursInSeconds: " .. DayNightManager["24HoursInSeconds"])
+    LogDebug(Prefix .. "SecondsPerRealSecond_Day: " .. DayNightManager.SecondsPerRealSecond_Day)
+    LogDebug(Prefix .. "DoNotModify!DayNightTickRate: " .. DayNightManager["DoNotModify!DayNightTickRate"])
+    LogDebug(Prefix .. "CurrentDay: " .. DayNightManager.CurrentDay)
+    LogDebug(Prefix .. "IsNight: " .. tostring(DayNightManager.IsNight))
+    LogDebug(Prefix .. "LastKnownHour: " .. DayNightManager.LastKnownHour)
+    LogDebug(Prefix .. "SecondsPerRealSecond_Night: " .. DayNightManager.SecondsPerRealSecond_Night)
+    LogDebug(Prefix .. "CurrentAnnouncementIndex: " .. DayNightManager.CurrentAnnouncementIndex)
+    LogDebug(Prefix .. "AmbientTemperature_Day: " .. DayNightManager.AmbientTemperature_Day)
+    LogDebug(Prefix .. "AmbientTemperature_Night: " .. DayNightManager.AmbientTemperature_Night)
+    LogDebug(Prefix .. "CurrentAnnouncementJournals.Num: " .. #DayNightManager.CurrentAnnouncementJournals)
+    LogDebug(Prefix .. "HavePlayersLeftStartingZone: " .. tostring(DayNightManager.HavePlayersLeftStartingZone))
+    LogDebug(Prefix .. "LastAssaultDay: " .. DayNightManager.LastAssaultDay)
+    LogDebug(Prefix .. "IsAssaultDay: " .. tostring(DayNightManager.IsAssaultDay))
+    LogDebug(Prefix .. "SleepingPlayers: " .. DayNightManager.SleepingPlayers)
+    LogDebug(Prefix .. "LastWeatherDay: " .. DayNightManager.LastWeatherDay)
+    LogDebug(Prefix .. "CurrentWeatherEvent: " .. DayNightManager.CurrentWeatherEvent:ToString())
+    LogDebug(Prefix .. "RequiredDaysBetweenWeather: " .. DayNightManager.RequiredDaysBetweenWeather)
+    LogDebug(Prefix .. "TimeLastAutoSaved: " .. DayNightManager.TimeLastAutoSaved)
+    if DayNightManager.ActiveWeatherDirector:IsValid() then
+        LogDebug(Prefix .. "ActiveWeatherDirector.Class: " .. DayNightManager.ActiveWeatherDirector:GetClass():GetFullName())
+    end
+    LogDebug(Prefix .. "ActiveAmbientRadiation: " .. DayNightManager.ActiveAmbientRadiation)
+    LogDebug(Prefix .. "CurrentAnnouncementCompendium.Num: " .. #DayNightManager.CurrentAnnouncementCompendium)
+    LogDebug(Prefix .. "Weather_RequestByPlayer.RowName: " .. DayNightManager.Weather_RequestByPlayer.RowName:ToString())
+    LogDebug(Prefix .. "Weather_RequestByPlayer.DataTablePath: " .. DayNightManager.Weather_RequestByPlayer.DataTablePath:ToString())
+end

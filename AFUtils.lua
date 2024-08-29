@@ -87,10 +87,20 @@ AFUtils.WeatherEvents = {
 
 -- Static Classes --
 --------------------
+local Actor_Class = nil
+function AFUtils.GetClassActor()
+    if not Actor_Class then
+        Actor_Class = StaticFindObject("/Script/Engine.Actor")
+        ---@cast Actor_Class UClass
+    end
+    return Actor_Class
+end
+
 local Abiotic_PlayerCharacter_C_Class = nil
 function AFUtils.GetClassAbiotic_PlayerCharacter_C()
     if not Abiotic_PlayerCharacter_C_Class or not Abiotic_PlayerCharacter_C_Class:IsValid() then
         Abiotic_PlayerCharacter_C_Class = StaticFindObject("/Game/Blueprints/Characters/Abiotic_PlayerCharacter.Abiotic_PlayerCharacter_C")
+        ---@cast Abiotic_PlayerCharacter_C_Class UClass
     end
     return Abiotic_PlayerCharacter_C_Class
 end
@@ -99,14 +109,17 @@ local Abiotic_Item_ParentBP_C_Class = nil
 function AFUtils.GetClassAbiotic_Item_ParentBP_C()
     if not Abiotic_Item_ParentBP_C_Class or not Abiotic_Item_ParentBP_C_Class:IsValid() then
         Abiotic_Item_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Items/Abiotic_Item_ParentBP.Abiotic_Item_ParentBP_C")
+        ---@cast Abiotic_Item_ParentBP_C_Class UClass
     end
     return Abiotic_Item_ParentBP_C_Class
 end
 
 local AbioticDeployed_ParentBP_C_Class = nil
+---@return UClass
 function AFUtils.GetClassAbioticDeployed_ParentBP_C()
     if not AbioticDeployed_ParentBP_C_Class or not AbioticDeployed_ParentBP_C_Class:IsValid() then
         AbioticDeployed_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/AbioticDeployed_ParentBP.AbioticDeployed_ParentBP_C")
+        ---@cast AbioticDeployed_ParentBP_C_Class UClass
     end
     return AbioticDeployed_ParentBP_C_Class
 end
@@ -115,6 +128,7 @@ local RechargeableComponent_C_Class = nil
 function AFUtils.GetClassRechargeableComponent_C()
     if not RechargeableComponent_C_Class or not RechargeableComponent_C_Class:IsValid() then
         RechargeableComponent_C_Class = StaticFindObject("/Game/Blueprints/Items/RechargeableComponent.RechargeableComponent_C")
+        ---@cast RechargeableComponent_C_Class UClass
     end
     return RechargeableComponent_C_Class
 end
@@ -123,6 +137,7 @@ local Deployed_Battery_ParentBP_C_Class = nil
 function AFUtils.GetClassDeployed_Battery_ParentBP_C()
     if not Deployed_Battery_ParentBP_C_Class or not Deployed_Battery_ParentBP_C_Class:IsValid() then
         Deployed_Battery_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/Misc/Deployed_Battery_ParentBP.Deployed_Battery_ParentBP_C")
+        ---@cast Deployed_Battery_ParentBP_C_Class UClass
     end
     return Deployed_Battery_ParentBP_C_Class
 end
@@ -131,6 +146,7 @@ local Abiotic_Item_Dropped_C_Class = nil
 function AFUtils.GetClassAbiotic_Item_Dropped_C()
     if not Abiotic_Item_Dropped_C_Class or not Abiotic_Item_Dropped_C_Class:IsValid() then
         Abiotic_Item_Dropped_C_Class = StaticFindObject("/Game/Blueprints/Items/Abiotic_Item_Dropped.Abiotic_Item_Dropped_C")
+        ---@cast Abiotic_Item_Dropped_C_Class UClass
     end
     return Abiotic_Item_Dropped_C_Class
 end
@@ -139,6 +155,7 @@ local Abiotic_Weapon_ParentBP_C_Class = nil
 function AFUtils.GetClassAbiotic_Weapon_ParentBP_C()
     if not Abiotic_Weapon_ParentBP_C_Class or not Abiotic_Weapon_ParentBP_C_Class:IsValid() then
         Abiotic_Weapon_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Items/Weapons/Abiotic_Weapon_ParentBP.Abiotic_Weapon_ParentBP_C")
+        ---@cast Abiotic_Weapon_ParentBP_C_Class UClass
     end
     return Abiotic_Weapon_ParentBP_C_Class
 end
@@ -147,6 +164,7 @@ local Abiotic_Character_ParentBP_C_Class = nil
 function AFUtils.GetClassAbiotic_Character_ParentBP_C()
     if not Abiotic_Character_ParentBP_C_Class or not Abiotic_Character_ParentBP_C_Class:IsValid() then
         Abiotic_Character_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/Abiotic_Character_ParentBP.Abiotic_Character_ParentBP_C")
+        ---@cast Abiotic_Character_ParentBP_C_Class UClass
     end
     return Abiotic_Character_ParentBP_C_Class
 end
@@ -155,6 +173,7 @@ local NarrativeNPC_ParentBP_C_Class = nil
 function AFUtils.GetClassNarrativeNPC_ParentBP_C()
     if not NarrativeNPC_ParentBP_C_Class or not NarrativeNPC_ParentBP_C_Class:IsValid() then
         NarrativeNPC_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/NarrativeNPCs/NarrativeNPC_ParentBP.NarrativeNPC_ParentBP_C")
+        ---@cast NarrativeNPC_ParentBP_C_Class UClass
     end
     return NarrativeNPC_ParentBP_C_Class
 end
@@ -163,6 +182,7 @@ local NarrativeNPC_Human_ParentBP_C_Class = nil
 function AFUtils.GetClassNarrativeNPC_Human_ParentBP_C()
     if not NarrativeNPC_Human_ParentBP_C_Class or not NarrativeNPC_Human_ParentBP_C_Class:IsValid() then
         NarrativeNPC_Human_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/NarrativeNPCs/NarrativeNPC_Human_ParentBP.NarrativeNPC_Human_ParentBP_C")
+        ---@cast NarrativeNPC_Human_ParentBP_C_Class UClass
     end
     return NarrativeNPC_Human_ParentBP_C_Class
 end

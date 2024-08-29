@@ -151,6 +151,14 @@ function AFUtils.GetClassNarrativeNPC_ParentBP_C()
     return NarrativeNPC_ParentBP_C_Class
 end
 
+local Abiotic_Character_ParentBP_C_Class = nil
+function AFUtils.GetClassAbiotic_Character_ParentBP_C()
+    if not Abiotic_Character_ParentBP_C_Class or not Abiotic_Character_ParentBP_C_Class:IsValid() then
+        Abiotic_Character_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/Abiotic_Character_ParentBP.Abiotic_Character_ParentBP_C")
+    end
+    return Abiotic_Character_ParentBP_C_Class
+end
+
 ---- Default objects ---
 ------------------------
 

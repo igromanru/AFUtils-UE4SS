@@ -143,6 +143,14 @@ function AFUtils.GetClassAbiotic_Weapon_ParentBP_C()
     return Abiotic_Weapon_ParentBP_C_Class
 end
 
+local Abiotic_Character_ParentBP_C_Class = nil
+function AFUtils.GetClassAbiotic_Character_ParentBP_C()
+    if not Abiotic_Character_ParentBP_C_Class or not Abiotic_Character_ParentBP_C_Class:IsValid() then
+        Abiotic_Character_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/Abiotic_Character_ParentBP.Abiotic_Character_ParentBP_C")
+    end
+    return Abiotic_Character_ParentBP_C_Class
+end
+
 local NarrativeNPC_ParentBP_C_Class = nil
 function AFUtils.GetClassNarrativeNPC_ParentBP_C()
     if not NarrativeNPC_ParentBP_C_Class or not NarrativeNPC_ParentBP_C_Class:IsValid() then
@@ -151,12 +159,12 @@ function AFUtils.GetClassNarrativeNPC_ParentBP_C()
     return NarrativeNPC_ParentBP_C_Class
 end
 
-local Abiotic_Character_ParentBP_C_Class = nil
-function AFUtils.GetClassAbiotic_Character_ParentBP_C()
-    if not Abiotic_Character_ParentBP_C_Class or not Abiotic_Character_ParentBP_C_Class:IsValid() then
-        Abiotic_Character_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/Abiotic_Character_ParentBP.Abiotic_Character_ParentBP_C")
+local NarrativeNPC_Human_ParentBP_C_Class = nil
+function AFUtils.GetClassNarrativeNPC_Human_ParentBP_C()
+    if not NarrativeNPC_Human_ParentBP_C_Class or not NarrativeNPC_Human_ParentBP_C_Class:IsValid() then
+        NarrativeNPC_Human_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/NarrativeNPCs/NarrativeNPC_Human_ParentBP.NarrativeNPC_Human_ParentBP_C")
     end
-    return Abiotic_Character_ParentBP_C_Class
+    return NarrativeNPC_Human_ParentBP_C_Class
 end
 
 ---- Default objects ---

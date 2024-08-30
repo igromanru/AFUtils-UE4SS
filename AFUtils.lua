@@ -96,6 +96,14 @@ function AFUtils.GetClassActor()
     return Actor_Class
 end
 
+local AbioticGameViewportClientClass = nil
+function AFUtils.GetClassAbioticGameViewportClient()
+    if not AbioticGameViewportClientClass or not AbioticGameViewportClientClass:IsValid() then
+        AbioticGameViewportClientClass = StaticFindObject("/Script/AbioticFactor.AbioticGameViewportClient")
+    end
+    return AbioticGameViewportClientClass
+end
+
 local Abiotic_PlayerCharacter_C_Class = nil
 function AFUtils.GetClassAbiotic_PlayerCharacter_C()
     if not Abiotic_PlayerCharacter_C_Class or not Abiotic_PlayerCharacter_C_Class:IsValid() then

@@ -277,6 +277,17 @@ function AFUtils.GetMyInventoryComponent()
     return nil
 end
 
+---Returns player's CharacterProgressionComponent or nil
+---@return UAbiotic_CharacterProgressionComponent_C?
+function AFUtils.GetMyCharacterProgressionComponent()
+    local myPlayer = AFUtils.GetMyPlayer()
+    if myPlayer and myPlayer.CharacterProgressionComponent:IsValid() then
+        return myPlayer.CharacterProgressionComponent
+    end
+
+    return nil
+end
+
 ---Returns PlayerHUD
 ---@return UW_PlayerHUD_Main_C?
 function AFUtils.GetMyPlayerHUD()

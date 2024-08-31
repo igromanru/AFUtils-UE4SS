@@ -813,4 +813,18 @@ function AFUtils.TriggerWeatherEvent(EventName)
     return false
 end
 
+---@param playerCharacter AAbiotic_PlayerCharacter_C
+function AFUtils.HealAllLimbs(playerCharacter)
+    for i = 1, 6, 1 do
+        local outSuccess = { Success = false }
+        playerCharacter:Server_HealRandomLimb(100.0, outSuccess)
+    end
+    playerCharacter.CurrentHealth_Head = 68.0
+    playerCharacter.CurrentHealth_Torso = 100.0
+    playerCharacter.CurrentHealth_LeftArm= 100.0
+    playerCharacter.CurrentHealth_RightArm = 100.0
+    playerCharacter.CurrentHealth_LeftLeg = 100.0
+    playerCharacter.CurrentHealth_RightLeg = 100.0
+end
+
 return AFUtils

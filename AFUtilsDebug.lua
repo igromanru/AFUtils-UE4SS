@@ -424,6 +424,8 @@ function AFUtils.LogCharacterParentBP(Character, Prefix)
     if not Character or not Character:IsValid() then return end
     Prefix = Prefix or ""
 
+    LogDebug(Prefix, "ActorLocation: ", VectorToString(Character:K2_GetActorLocation()))
+    LogDebug(Prefix, "ActorRotation: ", RotatorToString(Character:K2_GetActorRotation()))
     LogDebug(Prefix, "TotalCombinedHealth: ", Character.TotalCombinedHealth)
     LogDebug(Prefix, "IsDead: ", Character.IsDead)
     LogDebug(Prefix, "IsDBNO: ", Character.IsDBNO)

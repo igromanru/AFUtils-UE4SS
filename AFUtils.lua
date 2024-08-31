@@ -96,6 +96,14 @@ function AFUtils.GetClassActor()
     return Actor_Class
 end
 
+local AbioticGameViewportClientClass = nil
+function AFUtils.GetClassAbioticGameViewportClient()
+    if not AbioticGameViewportClientClass or not AbioticGameViewportClientClass:IsValid() then
+        AbioticGameViewportClientClass = StaticFindObject("/Script/AbioticFactor.AbioticGameViewportClient")
+    end
+    return AbioticGameViewportClientClass
+end
+
 local Abiotic_PlayerCharacter_C_Class = nil
 function AFUtils.GetClassAbiotic_PlayerCharacter_C()
     if not Abiotic_PlayerCharacter_C_Class or not Abiotic_PlayerCharacter_C_Class:IsValid() then
@@ -264,6 +272,17 @@ function AFUtils.GetMyInventoryComponent()
     local myPlayer = AFUtils.GetMyPlayer()
     if myPlayer and myPlayer.CharacterInventory:IsValid() then
         return myPlayer.CharacterInventory
+    end
+
+    return nil
+end
+
+---Returns player's CharacterProgressionComponent or nil
+---@return UAbiotic_CharacterProgressionComponent_C?
+function AFUtils.GetMyCharacterProgressionComponent()
+    local myPlayer = AFUtils.GetMyPlayer()
+    if myPlayer and myPlayer.CharacterProgressionComponent:IsValid() then
+        return myPlayer.CharacterProgressionComponent
     end
 
     return nil

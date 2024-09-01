@@ -842,7 +842,6 @@ function AFUtils.SetNextWeatherEvent(EventName)
         local RowName = FName(EventName, EFindName.FNAME_Find)
         myPlayerController.DayNightManager.RequiredDaysBetweenWeather = 0
         myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName = RowName
-        myPlayerController.DayNightManager.WeatherEventUpdated(RowName)
         LogDebug("SetNextWeatherEvent: Weather_RequestByPlayer.RowName: "..myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName:ToString())
     end
     return false

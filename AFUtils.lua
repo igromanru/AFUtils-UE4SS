@@ -316,6 +316,23 @@ function AFUtils.GetSurvivalGameMode()
     return SurvivalGameModeCache
 end
 
+---@type AAbiotic_Survival_GameState_C?
+local SurvivalGameStateCache = nil
+---Returns current AAbiotic_Survival_GameMode_C or nil
+---@return AAbiotic_Survival_GameState_C?
+function AFUtils.GetSurvivalGameState()
+    if SurvivalGameStateCache and SurvivalGameStateCache:IsValid() then
+        return SurvivalGameStateCache
+    end
+    
+    SurvivalGameStateCache = FindFirstOf("Abiotic_Survival_GameState_C")
+    if not SurvivalGameStateCache or not SurvivalGameStateCache:IsValid() then 
+        SurvivalGameStateCache = nil
+    end
+
+    return SurvivalGameStateCache
+end
+
 local AIDirectorCache = nil
 ---Returns current AAbiotic_AIDirector_C or nil
 ---@return AAbiotic_AIDirector_C?

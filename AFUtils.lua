@@ -80,6 +80,7 @@ AFUtils.CharacterSkills = {
 ---Map of weather events
 ---@enum WeatherEvents
 AFUtils.WeatherEvents = {
+    None = NAME_None,
     Fog = "Fog",
     RadLeak = "RadLeak",
     Spores = "Spores"
@@ -826,6 +827,23 @@ function AFUtils.TriggerWeatherEvent(EventName)
                 return true
             end
         end
+    end
+    return false
+end
+
+---Set next weather event
+---@param EventName string|WeatherEvents
+---@return boolean Success
+function AFUtils.SetNextWeatherEvent(EventName)
+    if type(EventName) ~= "string" then return false end
+
+    local myPlayerController = AFUtils.GetMyPlayerController()
+    if myPlayerController and myPlayerController.DayNightManager:IsValid() then
+        local RowName = FName(EventName, EFindName.FNAME_Find)
+        myPlayerController.DayNightManager.RequiredDaysBetweenWeather = 0
+        myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName = RowName
+        myPlayerController.DayNightManager.WeatherEventUpdated(RowName)
+        LogDebug("SetNextWeatherEvent: Weather_RequestByPlayer.RowName: "..myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName:ToString())
     end
     return false
 end

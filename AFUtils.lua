@@ -862,4 +862,31 @@ function AFUtils.HealAllLimbs(playerCharacter)
     playerCharacter.CurrentHealth_RightLeg = 100.0
 end
 
+---Teleports a player to a close location of another
+---@param Player AAbiotic_PlayerCharacter_C? # Player that should be teleported
+---@param TargetPlayer AAbiotic_PlayerCharacter_C? # Target to teleport to
+---@param Behind boolean? # If the player should be teleported behind or infront of the target
+---@param DistanceToActor integer? # Default 100 aka. 1m
+---@return boolean
+function AFUtils.TeleportPlayerToPlayer(Player, TargetPlayer, Behind, DistanceToActor)
+    if not Player or not TargetPlayer or not Player:IsValid() or not TargetPlayer:IsValid() then return false end
+
+    Behind = Behind or false
+    DistanceToActor = DistanceToActor or 100 -- 1m
+    
+    local direction = TargetPlayer:GetActorForwardVector()
+    local tagetLocation = TargetPlayer:K2_GetActorLocation()
+    tagetLocation.Z = tagetLocation.Z + 20
+    local targetRotation = TargetPlayer:K2_GetActorRotation()
+    if Behind then
+        DistanceToActor = DistanceToActor * -1
+    else
+        targetRotation.Yaw = targetRotation.Yaw * -1
+    end
+    local locationOffset = GetKismetMathLibrary():Multiply_VectorVector(direction, FVector(DistanceToActor, DistanceToActor, 0))
+    tagetLocation = GetKismetMathLibrary():Add_VectorVector(tagetLocation, locationOffset)
+    
+    return Player:TeleportPlayer(tagetLocation, targetRotation)
+end
+
 return AFUtils

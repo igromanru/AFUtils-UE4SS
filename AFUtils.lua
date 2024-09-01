@@ -80,7 +80,7 @@ AFUtils.CharacterSkills = {
 ---Map of weather events
 ---@enum WeatherEvents
 AFUtils.WeatherEvents = {
-    None = NAME_None,
+    None = "None",
     Fog = "Fog",
     RadLeak = "RadLeak",
     Spores = "Spores"
@@ -843,6 +843,7 @@ function AFUtils.SetNextWeatherEvent(EventName)
         myPlayerController.DayNightManager.RequiredDaysBetweenWeather = 0
         myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName = RowName
         LogDebug("SetNextWeatherEvent: Weather_RequestByPlayer.RowName: "..myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName:ToString())
+        return true
     end
     return false
 end

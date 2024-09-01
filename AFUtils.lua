@@ -369,6 +369,28 @@ function AFUtils.GetAIControllerLeyak()
     return AIControllerLeyakCache
 end
 
+---Gets Control Rotation
+---@return FRotator
+function AFUtils.GetControlRotation()
+    local playerController = AFUtils.GetMyPlayerController()
+    if playerController then
+        return RotatorToUserdata(playerController.ControlRotation)
+    end
+    return FRotator()
+end
+
+---Force client control rotation
+---@param Rotation FRotator
+---@return boolean Success # false if no valid PlayerController
+function AFUtils.SetControlRotation(Rotation)
+    local playerController = AFUtils.GetMyPlayerController()
+    if playerController then
+        playerController:SetControlRotation(Rotation)
+        return true
+    end
+    return false
+end
+
 ---Returns struct that represents current selected slot in the hotbat aka. held item
 ---@param playerCharacter AAbiotic_PlayerCharacter_C
 ---@return FInventorySlotSelected_Struct?
@@ -867,7 +889,7 @@ end
 ---@param TargetPlayer AAbiotic_PlayerCharacter_C? # Target to teleport to
 ---@param Behind boolean? # If the player should be teleported behind or infront of the target
 ---@param DistanceToActor integer? # Default 100 aka. 1m
----@return boolean
+---@return boolean Sucess
 function AFUtils.TeleportPlayerToPlayer(Player, TargetPlayer, Behind, DistanceToActor)
     if not Player or not TargetPlayer or not Player:IsValid() or not TargetPlayer:IsValid() then return false end
 

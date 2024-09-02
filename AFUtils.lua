@@ -300,6 +300,20 @@ function AFUtils.GetMyPlayerHUD()
     return nil
 end
 
+ ---@type UAbiotic_GameInstance_C?
+ local GameInstanceCache = nil
+ ---Returns UAbiotic_GameInstance_C or nil
+ ---@return UAbiotic_GameInstance_C?
+ function AFUtils.GetGameInstance()
+     if GameInstanceCache and GameInstanceCache:IsValid() then
+         return GameInstanceCache
+     end
+ 
+     ---@type UAbiotic_GameInstance_C
+     GameInstanceCache = FindFirstOf("Abiotic_GameInstance_C")
+     return GameInstanceCache and GameInstanceCache:IsValid() and GameInstanceCache or nil
+ end
+
 ---@type AAbiotic_Survival_GameMode_C?
 local SurvivalGameModeCache = nil
 ---Returns current AAbiotic_Survival_GameMode_C or nil

@@ -1,5 +1,6 @@
 
 local AFUtils = require("AFUtils.AFUtils")
+require("AFUtils.BaseUtils.LogDebug")
 
 ---Logs in debug scope all relevant properties of FTimerHandle to console 
 ---@param WorldContext UObject
@@ -621,4 +622,16 @@ function AFUtils.LogNarrativeNPC(NarrativeNPC, Prefix)
     LogDebug(Prefix, "LongInteractBText: ", NarrativeNPC.LongInteractBText:ToString())
     LogDebug(Prefix, "DistanceForBeckonSubtitles: ", NarrativeNPC.DistanceForBeckonSubtitles)
     LogDebug(Prefix, "NonInteractable: ", NarrativeNPC.NonInteractable)
+end
+
+---Logs in debug scope all relevant properties of a UAbioticCharacterMovementComponent to console 
+---@param MovementComponent UAbioticCharacterMovementComponent
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogAbioticCharacterMovementComponent(MovementComponent, Prefix)
+    if not MovementComponent or not MovementComponent:IsValid() or not MovementComponent.MaxTetherDistance then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "bCanEverSprint: ", MovementComponent.bCanEverSprint)
+    LogDebug(Prefix .. "bCanEverAim: ", MovementComponent.bCanEverAim)
+    LogCharacterMovementComponent(MovementComponent, Prefix)
 end

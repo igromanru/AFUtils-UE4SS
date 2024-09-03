@@ -206,6 +206,7 @@ function AFUtils.LogItemParentBP(Item, Prefix)
     if not Item or not Item:IsValid() then return end
     Prefix = Prefix or ""
 
+    LogDebug(Prefix, "Class Name: " .. Item:GetClass():GetFullName())
     LogDebug(Prefix, "ItemDataRow.RowName: " .. Item.ItemDataRow.RowName:ToString())
     AFUtils.LogInventoryItemStruct(Item.ItemData, Prefix, "ItemData.")
     AFUtils.LogInventoryChangeableDataStruct(Item.ChangeableData, Prefix, "ChangeableData.")

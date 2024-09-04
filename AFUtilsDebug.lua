@@ -260,6 +260,40 @@ function AFUtils.LogInventoryComponent(Inventory, Prefix)
     LogDebug(Prefix, "InventoryUpdateLocked: " .. tostring(Inventory.InventoryUpdateLocked))
 end
 
+---Logs in debug scope all relevant properties of a UW_InventoryItemSlot_C to console 
+---@param InventoryItemSlot UW_InventoryItemSlot_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogInventoryItemSlot(InventoryItemSlot, Prefix)
+    if not InventoryItemSlot or not InventoryItemSlot:IsValid() then return end
+    Prefix = Prefix or ""
+
+    AFUtils.LogInventoryItemSlotStruct(InventoryItemSlot.ItemInSlot, Prefix .. "ItemInSlot.")
+    LogDebug(Prefix .. "Empty: ", InventoryItemSlot.Empty)
+    LogDebug(Prefix .. "HasEmptySlotTooltip: ", InventoryItemSlot.HasEmptySlotTooltip)
+    LogDebug(Prefix .. "EmptySlotTooltipText: " .. InventoryItemSlot.EmptySlotTooltipText:ToString())
+    LogDebug(Prefix .. "SlotType (enum 0-13): ", InventoryItemSlot.SlotType)
+    LogDebug(Prefix .. "SlotIndex: ", InventoryItemSlot.SlotIndex)
+    -- LogDebug(Prefix .. "RepresentationOnly: ", InventoryItemSlot.RepresentationOnly)
+    LogDebug(Prefix .. "UnavailableItem: ", InventoryItemSlot.UnavailableItem)
+    AFUtils.LogInventoryChangeableDataStruct(InventoryItemSlot.ItemChangeableStats, Prefix .. "ItemChangeableStats.")
+    LogDebug(Prefix .. "MaxWeightShown: ", InventoryItemSlot.MaxWeightShown)
+    LogDebug(Prefix .. "MinWeightShown: ", InventoryItemSlot.MinWeightShown)
+    LogDebug(Prefix .. "LastItemCanLoseDurability: ", InventoryItemSlot.LastItemCanLoseDurability)
+    LogDebug(Prefix .. "Same Item: ", InventoryItemSlot["Same Item"])
+    LogDebug(Prefix .. "KeyPressed.KeyName: " .. InventoryItemSlot.KeyPressed.KeyName:ToString())
+    -- LogDebug(Prefix .. "ShowTopLeftHotkeyNumber: ", InventoryItemSlot.ShowTopLeftHotkeyNumber)
+    -- LogDebug(Prefix .. "TopLeftHotkeyBinding: " .. InventoryItemSlot.TopLeftHotkeyBinding:ToString())
+    LogDebug(Prefix .. "QuickMoveOn: ", InventoryItemSlot.QuickMoveOn)
+    LogDebug(Prefix .. "Leftovers: ", InventoryItemSlot.Leftovers)
+    -- LogDebug(Prefix .. "BriefTooltip: ", InventoryItemSlot.BriefTooltip)
+    LogDebug(Prefix .. "CanShowCraftableIcon: ", InventoryItemSlot.CanShowCraftableIcon)
+    LogDebug(Prefix .. "EdgeGlowWhenFilled: ", InventoryItemSlot.EdgeGlowWhenFilled)
+    LogDebug(Prefix .. "RemoveGlowWhenHovered: ", InventoryItemSlot.RemoveGlowWhenHovered)
+    -- LogDebug(Prefix .. "PinnedRecipeItemPresent: ", InventoryItemSlot.PinnedRecipeItemPresent)
+    -- LogDebug(Prefix .. "TooltipDisplayState (enum 0-4): ", InventoryItemSlot.TooltipDisplayState)
+    -- LogDebug(Prefix .. "SlotAppearance (enum 0-3): ", InventoryItemSlot.SlotAppearance)
+end
+
 ---Logs in debug scope all relevant properties of a AAbiotic_AIDirector_C to console 
 ---@param AIDirector AAbiotic_AIDirector_C
 ---@param Prefix string? Prefix that should be added in front of each line

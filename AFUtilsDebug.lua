@@ -717,3 +717,19 @@ function AFUtils.LogAbioticCharacterMovementComponent(MovementComponent, Prefix)
     LogDebug(Prefix .. "bCanEverAim: ", MovementComponent.bCanEverAim)
     LogCharacterMovementComponent(MovementComponent, Prefix)
 end
+
+---Logs in debug scope all relevant AAbioticWorldSettings to console 
+---@param WorldSettings AAbioticWorldSettings
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogWorldSettings(WorldSettings, Prefix)
+    if not WorldSettings or not WorldSettings:IsValid() or not WorldSettings.SandboxValues then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "SandboxValues count: ", #WorldSettings.SandboxValues)
+    for i = 1, #WorldSettings.SandboxValues, 1 do
+        ---@type FSandboxData
+        local data = WorldSettings.SandboxValues[i]
+        LogDebug(Prefix .. " #" .. i .. ": Key: " .. data.Key:ToString() .. ", Value " .. data.Value:ToString())
+    end
+    LogDebug(Prefix .. "ModifiedRuleset (enum 0-3): ", WorldSettings.ModifiedRuleset)
+end

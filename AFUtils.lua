@@ -77,6 +77,43 @@ AFUtils.CharacterSkills = {
     Unknown2 = 17
 }
 
+---Map of Sandbox Value FNames
+---@enum SandboxValueName
+AFUtils.SandboxValueName = {
+    LootRespawnEnabled = "LootRespawnEnabled",
+    PowerSocketsOffAtNight = "PowerSocketsOffAtNight",
+    DayNightCycleState = "DayNightCycleState",
+    DayNightCycleSpeedMultiplier = "DayNightCycleSpeedMultiplier",
+    SinkRefillRate = "SinkRefillRate",
+    FoodSpoilSpeedMultiplier = "FoodSpoilSpeedMultiplier",
+    RefrigerationEffectivenessMultiplier = "RefrigerationEffectivenessMultiplier",
+    EnemySpawnRate = "EnemySpawnRate",
+    EnemyHealthMultiplier = "EnemyHealthMultiplier",
+    EnemyPlayerDamageMultiplier = "EnemyPlayerDamageMultiplier",
+    EnemyDeployableDamageMultiplier = "EnemyDeployableDamageMultiplier",
+    DamageToAlliesMultiplier = "DamageToAlliesMultiplier",
+    HungerSpeedMultiplier = "HungerSpeedMultiplier",
+    ThirstSpeedMultiplier = "ThirstSpeedMultiplier",
+    FatigueSpeedMultiplier = "FatigueSpeedMultiplier",
+    ContinenceSpeedMultiplier = "ContinenceSpeedMultiplier",
+    DetectionSpeedMultiplier = "DetectionSpeedMultiplier",
+    PlayerXPGainMultiplier = "PlayerXPGainMultiplier",
+    ItemStackSizeMultiplier = "ItemStackSizeMultiplier",
+    ItemWeightMultiplier = "ItemWeightMultiplier",
+    ItemDurabilityMultiplier = "ItemDurabilityMultiplier",
+    DurabilityLossOnDeathMultiplier = "DurabilityLossOnDeathMultiplier",
+    ShowDeathMessages = "ShowDeathMessages",
+    AllowRecipeSharing = "AllowRecipeSharing",
+    AllowPagers = "AllowPagers",
+    AllowTransmog = "AllowTransmog",
+    DisableResearchMinigame = "DisableResearchMinigame",
+    DeathPenalties = "DeathPenalties",
+    GlobalRecipeUnlocks = "GlobalRecipeUnlocks",
+    FirstTimeStartingWeapon = "FirstTimeStartingWeapon",
+    HostAccessPlayerCorpses = "HostAccessPlayerCorpses",
+    StorageByTag = "StorageByTag"
+}
+
 ---Map of weather events
 ---@enum WeatherEvents
 AFUtils.WeatherEvents = {

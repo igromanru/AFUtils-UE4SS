@@ -925,4 +925,31 @@ function AFUtils.TeleportPlayerToPlayer(Player, TargetPlayer, Behind, DistanceTo
     return Player:TeleportPlayer(tagetLocation, targetRotation)
 end
 
+---@param InventoryItemSlot UW_InventoryItemSlot_C
+---@return UAbiotic_InventoryComponent_C? Inventory, integer SlotIndex
+function AFUtils.GetInventoryAndSlotIndexFromItemSlot(InventoryItemSlot)
+    if not InventoryItemSlot or not InventoryItemSlot:IsValid() then return nil, 0 end
+
+    if InventoryItemSlot.ParentInventoryGrid:IsValid() and InventoryItemSlot.ParentInventoryGrid.MainInventoryComponent:IsValid() then
+        return InventoryItemSlot.ParentInventoryGrid.MainInventoryComponent, InventoryItemSlot.SlotIndex
+    end
+    return nil, 0
+end
+
+---@param Inventory UAbiotic_InventoryComponent_C
+---@param SlotIndex integer
+---@param StackToAdd integer
+---@return boolean Executed # Returns false if PlayerController doesn't exists or one of parameters is wrong
+function AFUtils.AddToItemStack(Inventory, SlotIndex, StackToAdd)
+    if not Inventory or not Inventory:IsValid() or not SlotIndex or not StackToAdd then return false end
+
+    local myPlayerController = AFUtils.GetMyPlayerController()
+    if myPlayerController then
+        myPlayerController:Server_AddToItemStack(Inventory, SlotIndex, StackToAdd)
+        return true
+    end
+
+    return false
+end
+
 return AFUtils

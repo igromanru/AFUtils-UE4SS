@@ -233,6 +233,15 @@ function AFUtils.GetClassNarrativeNPC_Human_ParentBP_C()
     return NarrativeNPC_Human_ParentBP_C_Class
 end
 
+local Deployed_Toilet_Portal_C_Class = nil
+function AFUtils.GetClassDeployed_Toilet_Portal_C()
+    if not Deployed_Toilet_Portal_C_Class or not Deployed_Toilet_Portal_C_Class:IsValid() then
+        Deployed_Toilet_Portal_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/Furniture/Deployed_Toilet_Portal.Deployed_Toilet_Portal_C")
+        ---@cast Deployed_Toilet_Portal_C_Class UClass
+    end
+    return Deployed_Toilet_Portal_C_Class
+end
+
 ---- Default objects ---
 ------------------------
 

@@ -245,7 +245,29 @@ end
 ---- Default objects ---
 ------------------------
 
+---@type UAbioticFunctionLibrary_C
+local AbioticFunctionLibraryCache = nil
+---@return UAbioticFunctionLibrary_C
+function AFUtils.GetAbioticFunctionLibrary()
+    if not AbioticFunctionLibraryCache or not AbioticFunctionLibraryCache:IsValid() then
+        AbioticFunctionLibraryCache = StaticFindObject("/Game/Blueprints/Libraries/AbioticFunctionLibrary.Default__AbioticFunctionLibrary_C")
+    end
+    return AbioticFunctionLibraryCache
+end
+
+---@type ULevelStreamingCustom
+local LevelStreamingCustomCache = nil
+---@return ULevelStreamingCustom
+function AFUtils.GetLevelStreamingCustom()
+    if not LevelStreamingCustomCache or not LevelStreamingCustomCache:IsValid() then
+        LevelStreamingCustomCache = StaticFindObject("/Script/AbioticFactor.LevelStreamingCustom")
+    end
+    return LevelStreamingCustomCache
+end
+
+---@type UWeatherEventHandleFunctionLibrary
 local WeatherEventHandleFunctionLibraryCache = nil
+---@return UWeatherEventHandleFunctionLibrary
 function AFUtils.GetWeatherEventHandleFunctionLibrary()
     if not WeatherEventHandleFunctionLibraryCache or not WeatherEventHandleFunctionLibraryCache:IsValid() then
         WeatherEventHandleFunctionLibraryCache = StaticFindObject("/Script/AbioticFactor.Default__WeatherEventHandleFunctionLibrary")

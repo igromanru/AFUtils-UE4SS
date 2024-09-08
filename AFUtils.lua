@@ -260,7 +260,7 @@ local LevelStreamingCustomCache = nil
 ---@return ULevelStreamingCustom
 function AFUtils.GetLevelStreamingCustom()
     if not LevelStreamingCustomCache or not LevelStreamingCustomCache:IsValid() then
-        LevelStreamingCustomCache = StaticFindObject("/Script/AbioticFactor.LevelStreamingCustom")
+        LevelStreamingCustomCache = StaticFindObject("/Script/AbioticFactor.Default__LevelStreamingCustom")
     end
     return LevelStreamingCustomCache
 end

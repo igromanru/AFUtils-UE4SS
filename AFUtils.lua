@@ -233,6 +233,15 @@ function AFUtils.GetClassNarrativeNPC_Human_ParentBP_C()
     return NarrativeNPC_Human_ParentBP_C_Class
 end
 
+local CharacterCorpse_ParentBP_Class = nil
+function AFUtils.GetClassCharacterCorpse_ParentBP()
+    if not CharacterCorpse_ParentBP_Class or not CharacterCorpse_ParentBP_Class:IsValid() then
+        CharacterCorpse_ParentBP_Class = StaticFindObject("/Game/Blueprints/Environment/Special/CharacterCorpse_ParentBP.CharacterCorpse_ParentBP_C")
+        ---@cast CharacterCorpse_ParentBP_Class UClass
+    end
+    return CharacterCorpse_ParentBP_Class
+end
+
 local Deployed_Toilet_Portal_C_Class = nil
 function AFUtils.GetClassDeployed_Toilet_Portal_C()
     if not Deployed_Toilet_Portal_C_Class or not Deployed_Toilet_Portal_C_Class:IsValid() then

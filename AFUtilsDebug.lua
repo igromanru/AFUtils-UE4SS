@@ -782,3 +782,22 @@ function AFUtils.LogCraftingEntryItem(CraftingEntryItem, Prefix)
     LogDebug(Prefix .. "bNeverCrafted:", CraftingEntryItem.bNeverCrafted)
     LogDebug(Prefix .. "bFavorited:", CraftingEntryItem.bFavorited)
 end
+
+---Logs in debug scope all relevant properties of a FAbioticRecipe_Struct to console 
+---@param RecipeStruct FAbioticRecipe_Struct
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogRecipeStruct(RecipeStruct, Prefix)
+    if not RecipeStruct or not RecipeStruct.ItemToCreate_4_842F5059497E898D938220BCCC148B08 then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "ItemToCreate.RowName: " .. RecipeStruct.ItemToCreate_4_842F5059497E898D938220BCCC148B08.RowName:ToString())
+    LogDebug(Prefix .. "CountToCreate:", RecipeStruct.CountToCreate_17_9ACBB85C48DCB6769A2331AB7B56E2C8)
+    LogDebug(Prefix .. "Category:", RecipeStruct.Category_22_940DB5D6483687DCE5FF63A7711F71C3)
+    LogDebug(Prefix .. "RecipeItems Num:", #RecipeStruct.RecipeItems_7_0F13BA7A407C72065EE926B9D41B8B9E)
+    LogDebug(Prefix .. "BenchesRequired Num:", #RecipeStruct.BenchesRequired_10_493C635841D8143BB87BDCA941CD28A6)
+    LogDebug(Prefix .. "CraftDuration:", RecipeStruct.CraftDuration_13_BFC1ED4A429775D36D12E683816868D6)
+    LogDebug(Prefix .. "LinkedRecipesToUnlock Num:", #RecipeStruct.LinkedRecipesToUnlock_28_EAECA1EA4C69C00231A206961B10737D)
+    LogDebug(Prefix .. "NotUnlockableByPickup:", RecipeStruct.NotUnlockableByPickup_24_B20B4A1149D919E221126BA38DB0D6C2)
+    LogDebug(Prefix .. "StatModifier.RowName:", RecipeStruct.StatModifier_41_48EF866B4719B527AA6212AD8AC21DFE.RowName:ToString())
+    LogDebug(Prefix .. "StrippedFromBuild:", RecipeStruct.StrippedFromBuild_46_61BC23684470C1F8417C2CB501AE385D)
+end

@@ -371,6 +371,26 @@ function AFUtils.GetMyInventoryComponent()
     return nil
 end
 
+---Returns current player's equipment inventory or nil
+---@return UAbiotic_InventoryComponent_C?
+function AFUtils.GetMyEquipmentInventory()
+    local myPlayer = AFUtils.GetMyPlayer()
+    if myPlayer and myPlayer.CharacterEquipSlotInventory and myPlayer.CharacterEquipSlotInventory:IsValid() then
+        return myPlayer.CharacterEquipSlotInventory
+    end
+    return nil
+end
+
+---Returns current player's hotbar inventory or nil
+---@return UAbiotic_InventoryComponent_C?
+function AFUtils.GetMyHotbarInventory()
+    local myPlayer = AFUtils.GetMyPlayer()
+    if myPlayer and myPlayer.CharacterHotbarInventory and myPlayer.CharacterHotbarInventory:IsValid() then
+        return myPlayer.CharacterHotbarInventory
+    end
+    return nil
+end
+
 ---Returns current player inventory widget or nil
 ---@return UW_PlayerInventory_Main_C?
 function AFUtils.GetMyPlayerInventory()
@@ -1065,5 +1085,21 @@ function AFUtils.AddToItemStack(Inventory, SlotIndex, StackToAdd)
 
     return false
 end
+
+---@param TargetItemSlot FAbiotic_InventoryItemSlotStruct
+---@param DataTableRowName FName
+---@param ItemsCount integer
+---@return boolean
+function AFUtils.SetItemSlot(TargetItemSlot, DataTableRowName, ItemsCount)
+    if not TargetItemSlot or not TargetItemSlot.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B then return false end
+
+    TargetItemSlot.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName = DataTableRowName
+    TargetItemSlot.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8 = 100
+    TargetItemSlot.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B = 100
+    TargetItemSlot.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentStack_9_D443B69044D640B0989FD8A629801A49 = ItemsCount
+
+    return true
+end
+
 
 return AFUtils

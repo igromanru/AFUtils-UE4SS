@@ -75,6 +75,7 @@ function AFUtils.LogInventoryItemSlotStruct(InventoryItemSlotStruct, Prefix)
     Prefix = Prefix or ""
 
     LogDebug(Prefix, "RowName: " .. InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName:ToString())
+    LogDebug(Prefix, "DataTable IsValid:", InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.DataTable:IsValid())
     AFUtils.LogInventoryChangeableDataStruct(InventoryItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313, Prefix, "ChangeableData.")
 end
 
@@ -240,7 +241,7 @@ function AFUtils.LogInventoryComponent(Inventory, Prefix)
     LogDebug(Prefix, "CurrentInventory.Num: " .. #Inventory.CurrentInventory)
     for i = 1, #Inventory.CurrentInventory, 1 do
         local inventoryItemSlotStruct = Inventory.CurrentInventory[i]
-        AFUtils.LogInventoryItemSlotStruct(inventoryItemSlotStruct, Prefix, "CurrentInventory["..i.."].")
+        AFUtils.LogInventoryItemSlotStruct(inventoryItemSlotStruct, Prefix .. "CurrentInventory["..i.."].")
     end
     LogDebug(Prefix, "MaxSlots: " .. Inventory.MaxSlots)
     LogDebug(Prefix, "InventorySlotType enum: " .. Inventory.InventorySlotType)
@@ -794,10 +795,15 @@ function AFUtils.LogRecipeStruct(RecipeStruct, Prefix)
     LogDebug(Prefix .. "CountToCreate:", RecipeStruct.CountToCreate_17_9ACBB85C48DCB6769A2331AB7B56E2C8)
     LogDebug(Prefix .. "Category:", RecipeStruct.Category_22_940DB5D6483687DCE5FF63A7711F71C3)
     LogDebug(Prefix .. "RecipeItems Num:", #RecipeStruct.RecipeItems_7_0F13BA7A407C72065EE926B9D41B8B9E)
+    for i = 1, #RecipeStruct.RecipeItems_7_0F13BA7A407C72065EE926B9D41B8B9E, 1 do
+        local recipeItems = RecipeStruct.RecipeItems_7_0F13BA7A407C72065EE926B9D41B8B9E[i]
+        LogDebug(Prefix .. "RecipeItems["..i.."].Item.RowName: " .. recipeItems.Item_5_5AD3D6B1470ED45BCB2D15BC84BB0F1A.RowName:ToString())
+        LogDebug(Prefix .. "RecipeItems["..i.."].Count:", recipeItems.Count_6_4C6C5BFB4956F9C29A5C2BB6F28B7690)
+    end
     LogDebug(Prefix .. "BenchesRequired Num:", #RecipeStruct.BenchesRequired_10_493C635841D8143BB87BDCA941CD28A6)
     LogDebug(Prefix .. "CraftDuration:", RecipeStruct.CraftDuration_13_BFC1ED4A429775D36D12E683816868D6)
     LogDebug(Prefix .. "LinkedRecipesToUnlock Num:", #RecipeStruct.LinkedRecipesToUnlock_28_EAECA1EA4C69C00231A206961B10737D)
     LogDebug(Prefix .. "NotUnlockableByPickup:", RecipeStruct.NotUnlockableByPickup_24_B20B4A1149D919E221126BA38DB0D6C2)
-    LogDebug(Prefix .. "StatModifier.RowName:", RecipeStruct.StatModifier_41_48EF866B4719B527AA6212AD8AC21DFE.RowName:ToString())
+    LogDebug(Prefix .. "StatModifier.RowName:" .. RecipeStruct.StatModifier_41_48EF866B4719B527AA6212AD8AC21DFE.RowName:ToString())
     LogDebug(Prefix .. "StrippedFromBuild:", RecipeStruct.StrippedFromBuild_46_61BC23684470C1F8417C2CB501AE385D)
 end

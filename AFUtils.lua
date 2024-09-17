@@ -127,11 +127,20 @@ AFUtils.WeatherEvents = {
 --------------------
 local Actor_Class = nil
 function AFUtils.GetClassActor()
-    if not Actor_Class then
+    if not Actor_Class or not Actor_Class:IsValid() then
         Actor_Class = StaticFindObject("/Script/Engine.Actor")
         ---@cast Actor_Class UClass
     end
     return Actor_Class
+end
+
+local SkeletalMeshActor_Class = nil
+function AFUtils.GetClassSkeletalMeshActor()
+    if not SkeletalMeshActor_Class or not SkeletalMeshActor_Class:IsValid() then
+        SkeletalMeshActor_Class = StaticFindObject("/Script/Engine.SkeletalMeshActor")
+        ---@cast SkeletalMeshActor_Class UClass
+    end
+    return SkeletalMeshActor_Class
 end
 
 local AbioticGameViewportClientClass = nil
@@ -222,6 +231,15 @@ function AFUtils.GetClassNarrativeNPC_ParentBP_C()
         ---@cast NarrativeNPC_ParentBP_C_Class UClass
     end
     return NarrativeNPC_ParentBP_C_Class
+end
+
+local CharacterCorpse_Human_BP_C_Class = nil
+function AFUtils.GetClassCharacterCorpse_Human_BP_C()
+    if not CharacterCorpse_Human_BP_C_Class or not CharacterCorpse_Human_BP_C_Class:IsValid() then
+        CharacterCorpse_Human_BP_C_Class = StaticFindObject("/Game/Blueprints/Environment/Special/CharacterCorpse_Human_BP.CharacterCorpse_Human_BP_C")
+        ---@cast CharacterCorpse_Human_BP_C_Class UClass
+    end
+    return CharacterCorpse_Human_BP_C_Class
 end
 
 local NarrativeNPC_Human_ParentBP_C_Class = nil

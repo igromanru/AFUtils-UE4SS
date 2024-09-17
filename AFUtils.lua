@@ -300,10 +300,8 @@ function AFUtils.GetMyPlayerController()
     local playerControllers = FindAllOf("Abiotic_PlayerController_C")
     if playerControllers and type(playerControllers) == 'table' then 
         for _, controller in pairs(playerControllers) do
-            if controller.MyPlayerCharacter and controller.MyPlayerCharacter:IsValid() and controller.MyPlayerCharacter:IsPlayerControlled() then
-                PlayerControllerCache = controller
-                break
-            end
+            PlayerControllerCache = controller
+            break
         end
     end
     
@@ -354,6 +352,27 @@ function AFUtils.GetMyInventoryComponent()
 
     return nil
 end
+
+---Returns current player inventory widget or nil
+---@return UW_PlayerInventory_Main_C?
+function AFUtils.GetMyPlayerInventory()
+    local myPlayer = AFUtils.GetMyPlayer()
+    if myPlayer and myPlayer.InventoryReference:IsValid() then
+        return myPlayer.InventoryReference
+    end
+    return nil
+end
+
+---Returns current crafting area or nil
+---@return UW_Inventory_CraftingArea_C?
+function AFUtils.GetMyInventoryCraftingArea()
+    local myPlayerInventory = AFUtils.GetMyPlayerInventory()
+    if myPlayerInventory and myPlayerInventory.W_Inventory_CraftingArea:IsValid() then
+        return myPlayerInventory.W_Inventory_CraftingArea
+    end
+    return nil
+end
+
 
 ---Returns player's CharacterProgressionComponent or nil
 ---@return UAbiotic_CharacterProgressionComponent_C?

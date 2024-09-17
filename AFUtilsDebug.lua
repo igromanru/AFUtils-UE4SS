@@ -748,3 +748,37 @@ function AFUtils.LogWorldSettings(WorldSettings, Prefix)
     end
     LogDebug(Prefix .. "ModifiedRuleset (enum 0-3):", WorldSettings.ModifiedRuleset)
 end
+
+---Logs in debug scope all relevant properties of a UCraftingEntryItem to console 
+---@param CraftingEntryItem UCraftingEntryItem
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogCraftingEntryItem(CraftingEntryItem, Prefix)
+    if not CraftingEntryItem or not CraftingEntryItem:IsValid() or not CraftingEntryItem.RecipeRow then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "RecipeRow.RowName: " .. CraftingEntryItem.RecipeRow.RowName:ToString())
+    LogDebug(Prefix .. "CountToCreate:", CraftingEntryItem.CountToCreate)
+    LogDebug(Prefix .. "RecipeItemName: " .. CraftingEntryItem.RecipeItemName:ToString())
+    LogDebug(Prefix .. "ItemToCreate.RowName: " .. CraftingEntryItem.ItemToCreate.RowName:ToString())
+    LogDebug(Prefix .. "BenchesRequired.Num: " .. #CraftingEntryItem.BenchesRequired)
+    LogDebug(Prefix .. "Category: " .. CraftingEntryItem.Category)
+    LogDebug(Prefix .. "RecipeItems.Num: " .. #CraftingEntryItem.RecipeItems)
+    for i = 1, #CraftingEntryItem.RecipeItems, 1 do
+        local recipeItem = CraftingEntryItem.RecipeItems[i]
+        LogDebug(Prefix .. "RecipeItems[".. i .. "].Item.RowName: " .. recipeItem.Item.RowName:ToString())
+        LogDebug(Prefix .. "RecipeItems[".. i .. "].Count: " .. recipeItem.Count)
+    end
+    LogDebug(Prefix .. "SubstituteItems.Num: " .. #CraftingEntryItem.SubstituteItems)
+    for i = 1, #CraftingEntryItem.SubstituteItems, 1 do
+        local recipeItem = CraftingEntryItem.SubstituteItems[i]
+        LogDebug(Prefix .. "SubstituteItems[".. i .. "].Item.RowName: " .. recipeItem.Item.RowName:ToString())
+        LogDebug(Prefix .. "SubstituteItems[".. i .. "].Count: " .. recipeItem.Count)
+    end
+    LogDebug(Prefix .. "bIsSoupRecipe:", CraftingEntryItem.bIsSoupRecipe)
+    LogDebug(Prefix .. "bUnlocked:", CraftingEntryItem.bUnlocked)
+    LogDebug(Prefix .. "bResearched:", CraftingEntryItem.bResearched)
+    LogDebug(Prefix .. "bBenchAvailable:", CraftingEntryItem.bBenchAvailable)
+    LogDebug(Prefix .. "bNewRecipeHighlight:", CraftingEntryItem.bNewRecipeHighlight)
+    LogDebug(Prefix .. "bNeverCrafted:", CraftingEntryItem.bNeverCrafted)
+    LogDebug(Prefix .. "bFavorited:", CraftingEntryItem.bFavorited)
+end

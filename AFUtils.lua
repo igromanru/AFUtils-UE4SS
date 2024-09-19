@@ -52,7 +52,8 @@ AFUtils.GearInventoryIndex = {
     Trinket = 8,
     Wristwatch = 9, -- Wristwatch or Pager
     KeypadHacker = 10,
-    OffHandShield = 11
+    OffHandShield = 11,
+    Trinket2 = 12,
 }
 
 ---@enum CharacterSkills
@@ -876,7 +877,7 @@ end
 
 ---@param playerCharacter AAbiotic_PlayerCharacter_C Must be a valid object
 function AFUtils.FillAllEquippedItemsWithEnergy(playerCharacter)
-    if not playerCharacter or not playerCharacter.CharacterEquipSlotInventory:IsValid() or #playerCharacter.CharacterEquipSlotInventory.CurrentInventory < 11 then
+    if not playerCharacter or not playerCharacter.CharacterEquipSlotInventory:IsValid() or #playerCharacter.CharacterEquipSlotInventory.CurrentInventory < 12 then
         return
     end
     local itemSlotStructs = playerCharacter.CharacterEquipSlotInventory.CurrentInventory
@@ -890,6 +891,7 @@ function AFUtils.FillAllEquippedItemsWithEnergy(playerCharacter)
     local trinketSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.Trinket]
     local shieldSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.OffHandShield]
     local wristwatchSlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.Wristwatch]
+    local trinket2SlotStruct = itemSlotStructs[AFUtils.GearInventoryIndex.Trinket2]
 
     AFUtils.FillItemSlotStructEnergyFromItem(chestArmorSlotStruct, playerCharacter.Gear_TorsoBP)
     AFUtils.FillItemSlotStructEnergyFromItem(headArmorSlotStruct, playerCharacter.Gear_TorsoBP)
@@ -901,6 +903,7 @@ function AFUtils.FillAllEquippedItemsWithEnergy(playerCharacter)
     AFUtils.FillItemSlotStructEnergyFromItem(trinketSlotStruct, playerCharacter.Gear_TrinketBP)
     AFUtils.FillItemSlotStructEnergyFromItem(shieldSlotStruct, playerCharacter.Gear_ShieldBP)
     AFUtils.FillItemSlotStructEnergyFromItem(wristwatchSlotStruct, playerCharacter.Gear_WristwatchBP)
+    AFUtils.FillItemSlotStructEnergyFromItem(trinket2SlotStruct, playerCharacter.Gear_Trinket2_BP)
 end
 
 ---Fill CurrentAmmoInMagazine of FAbiotic_InventoryChangeableDataStruct with maximum ammo

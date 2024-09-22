@@ -231,6 +231,30 @@ function AFUtils.LogItemParentBP(Item, Prefix)
     -- end
 end
 
+---Logs in debug scope all relevant properties of a AAbiotic_Weapon_ParentBP_C to console 
+---@param Weapon AAbiotic_Weapon_ParentBP_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogWeaponParentBP(Weapon, Prefix)
+    if not Weapon or not Weapon:IsValid() then return end
+    Prefix = Prefix or ""
+
+    AFUtils.LogItemParentBP(Weapon, Prefix)
+    LogDebug(Prefix, "MaxMagazineSize:", Weapon.MaxMagazineSize)
+    LogDebug(Prefix, "CurrentRoundsInMagazine:", Weapon.CurrentRoundsInMagazine)
+    LogDebug(Prefix, "CurrentAmmoIndex:", Weapon.CurrentAmmoIndex)
+    LogDebug(Prefix, "FireDelayDuration:", Weapon.FireDelayDuration)
+    LogDebug(Prefix, "OnHitOnlyOncePerAttack:", Weapon.OnHitOnlyOncePerAttack)
+    LogDebug(Prefix, "OnHitBlocked:", Weapon.OnHitBlocked)
+    LogDebug(Prefix, "IsCharging:", Weapon.IsCharging)
+    LogDebug(Prefix, "UsesChargingLogic:", Weapon.UsesChargingLogic)
+    LogDebug(Prefix, "ChargeAmount:", Weapon.ChargeAmount)
+    LogDebug(Prefix, "ChargeSpeed:", Weapon.ChargeSpeed)
+    LogDebug(Prefix, "OnAmmoHit:", Weapon.OnAmmoHit)
+    LogDebug(Prefix, "HasAmmoVisualsLoaded:", Weapon.HasAmmoVisualsLoaded)
+    LogDebug(Prefix, "CompatibleAmmoTypes.Num:", #Weapon.CompatibleAmmoTypes)
+    LogDebug(Prefix, "ConsumeAmmoOnFire:", Weapon.ConsumeAmmoOnFire)
+end
+
 ---Logs in debug scope all relevant properties of a UAbiotic_InventoryComponent_C to console 
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@param Prefix string? Prefix that should be added in front of each line

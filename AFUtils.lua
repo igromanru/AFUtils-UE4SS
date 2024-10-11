@@ -445,7 +445,7 @@ end
      end
  
      ---@type UAbiotic_GameInstance_C
-     GameInstanceCache = FindFirstOf("Abiotic_GameInstance_C")
+     GameInstanceCache = FindFirstOf("Abiotic_GameInstance_C") ---@cast GameInstanceCache UAbiotic_GameInstance_C
      return GameInstanceCache and GameInstanceCache:IsValid() and GameInstanceCache or nil
  end
 
@@ -458,7 +458,7 @@ function AFUtils.GetSurvivalGameMode()
         return SurvivalGameModeCache
     end
     
-    SurvivalGameModeCache = FindFirstOf("Abiotic_Survival_GameMode_C")
+    SurvivalGameModeCache = FindFirstOf("Abiotic_Survival_GameMode_C") ---@cast SurvivalGameModeCache AAbiotic_Survival_GameMode_C
     if not SurvivalGameModeCache or not SurvivalGameModeCache:IsValid() then 
         SurvivalGameModeCache = nil
     end
@@ -475,7 +475,7 @@ function AFUtils.GetSurvivalGameState()
         return SurvivalGameStateCache
     end
     
-    SurvivalGameStateCache = FindFirstOf("Abiotic_Survival_GameState_C")
+    SurvivalGameStateCache = FindFirstOf("Abiotic_Survival_GameState_C") ---@cast SurvivalGameStateCache AAbiotic_Survival_GameState_C
     if not SurvivalGameStateCache or not SurvivalGameStateCache:IsValid() then 
         SurvivalGameStateCache = nil
     end
@@ -565,6 +565,18 @@ function AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
         end
     end
     return nil, nil, nil
+end
+
+---Get current held weapon for a player
+---@param playerCharacter AAbiotic_PlayerCharacter_C #If nil, will use the local player
+---@return AAbiotic_Weapon_ParentBP_C?
+function AFUtils.GetCurrentWeapon(playerCharacter)
+    playerCharacter = playerCharacter or AFUtils.GetMyPlayer()
+    if playerCharacter and playerCharacter.ItemInHand_BP:IsValid() and playerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassAbiotic_Weapon_ParentBP_C()) then
+        local weapon = playerCharacter.ItemInHand_BP ---@cast weapon AAbiotic_Weapon_ParentBP_C
+        return weapon
+    end
+    return nil
 end
 
 ---Prints a colored message to local player's chat (only visible to the player)
@@ -945,17 +957,21 @@ function AFUtils.FillItemSlotStructAmmoFromItem(ItemSlotStruct, Item)
 end
 
 ---@param playerCharacter AAbiotic_PlayerCharacter_C Must be a valid object
+---@param weapon AAbiotic_Weapon_ParentBP_C? Must be a valid object
 ---@return boolean Filled # Returns true if ammo was modified, otherwise false
-function AFUtils.FillHeldWeaponWithAmmo(playerCharacter)
-    if not playerCharacter or not playerCharacter.ItemInHand_BP:IsValid() then return false end
-    
-    local weaponData = playerCharacter.ItemInHand_BP.ItemData.WeaponData_61_3C29CF6C4A7F9DD435F9318FEE4B033D
+function AFUtils.FillHeldWeaponWithAmmo(playerCharacter, weapon)
+    if not playerCharacter or not playerCharacter.ItemInHand_BP then return false end
+
+    weapon = weapon or AFUtils.GetCurrentWeapon(playerCharacter)
+    if not weapon or not weapon:IsValid() then return false end
+
+    local weaponData = weapon.ItemData.WeaponData_61_3C29CF6C4A7F9DD435F9318FEE4B033D
     if not weaponData.RequireAmmo_85_8BB1C1954D2A83BB1994549DDEEBA306 then return false end
 
     local itemSlotStruct, inventory, slotIndex = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
     if itemSlotStruct and inventory and slotIndex then
-        if AFUtils.FillItemSlotStructAmmoFromItem(itemSlotStruct, playerCharacter.ItemInHand_BP) then
-            playerCharacter.ItemInHand_BP.CurrentRoundsInMagazine = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D
+        if AFUtils.FillItemSlotStructAmmoFromItem(itemSlotStruct, weapon) then
+            weapon.CurrentRoundsInMagazine = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D
             return true
         end
     end

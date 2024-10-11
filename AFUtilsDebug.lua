@@ -831,3 +831,19 @@ function AFUtils.LogRecipeStruct(RecipeStruct, Prefix)
     LogDebug(Prefix .. "StatModifier.RowName:" .. RecipeStruct.StatModifier_41_48EF866B4719B527AA6212AD8AC21DFE.RowName:ToString())
     LogDebug(Prefix .. "StrippedFromBuild:", RecipeStruct.StrippedFromBuild_46_61BC23684470C1F8417C2CB501AE385D)
 end
+
+---@param LeyakContainment ADeployed_LeyakContainment_C
+---@param Prefix string?
+function AFUtils.LogDeployedLeyakContainment(LeyakContainment, Prefix)
+    if not LeyakContainment or not LeyakContainment:IsValid() then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "FrostGlassTimeline:", LeyakContainment.FrostGlassTimeline_NewTrack_0_08756EC44A134A401814C5B93A4A86D5)
+    LogDebug(Prefix .. "FrostGlassTimeline Direction:", LeyakContainment.FrostGlassTimeline__Direction_08756EC44A134A401814C5B93A4A86D5)
+    LogDebug(Prefix .. "ContainsLeyak:", LeyakContainment.ContainsLeyak)
+    LogDebug(Prefix .. "Stability Level:", LeyakContainment["Stability Level"])
+    LogDebug(Prefix .. "StabilityDecreasePerNight:", LeyakContainment.StabilityDecreasePerNight)
+    LogDebug(Prefix .. "MaxStability:", LeyakContainment.MaxStability)
+    LogDebug(Prefix .. "FeedRequiredToFill:", LeyakContainment.FeedRequiredToFill)
+    LogDebug(Prefix .. "FoggedGlass:", LeyakContainment.FoggedGlass)
+end

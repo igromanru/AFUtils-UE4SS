@@ -5,6 +5,7 @@
     Description: Utility functions for the game Abiotic Factor
 ]]
 
+local UEHelpers = require("UEHelpers")
 local BaseUtils = require("AFUtils.BaseUtils.BaseUtils")
 
 -- AFUtils class
@@ -273,32 +274,33 @@ end
 ---- Default objects ---
 ------------------------
 
----@type UAbioticFunctionLibrary_C
-local AbioticFunctionLibraryCache = nil
+local AbioticFunctionLibraryCache = CreateInvalidObject() ---@cast AbioticFunctionLibraryCache UAbioticFunctionLibrary_C
 ---@return UAbioticFunctionLibrary_C
 function AFUtils.GetAbioticFunctionLibrary()
     if not AbioticFunctionLibraryCache or not AbioticFunctionLibraryCache:IsValid() then
         AbioticFunctionLibraryCache = StaticFindObject("/Game/Blueprints/Libraries/AbioticFunctionLibrary.Default__AbioticFunctionLibrary_C")
+        ---@cast AbioticFunctionLibraryCache UAbioticFunctionLibrary_C
     end
     return AbioticFunctionLibraryCache
 end
 
----@type ULevelStreamingCustom
-local LevelStreamingCustomCache = nil
+local LevelStreamingCustomCache = CreateInvalidObject() ---@cast LevelStreamingCustomCache ULevelStreamingCustom
 ---@return ULevelStreamingCustom
 function AFUtils.GetLevelStreamingCustom()
-    if not LevelStreamingCustomCache or not LevelStreamingCustomCache:IsValid() then
+    if not LevelStreamingCustomCache:IsValid() then
         LevelStreamingCustomCache = StaticFindObject("/Script/AbioticFactor.Default__LevelStreamingCustom")
+        ---@cast LevelStreamingCustomCache ULevelStreamingCustom
     end
     return LevelStreamingCustomCache
 end
 
----@type UWeatherEventHandleFunctionLibrary
-local WeatherEventHandleFunctionLibraryCache = nil
+
+local WeatherEventHandleFunctionLibraryCache = CreateInvalidObject() ---@cast WeatherEventHandleFunctionLibraryCache UWeatherEventHandleFunctionLibrary
 ---@return UWeatherEventHandleFunctionLibrary
 function AFUtils.GetWeatherEventHandleFunctionLibrary()
-    if not WeatherEventHandleFunctionLibraryCache or not WeatherEventHandleFunctionLibraryCache:IsValid() then
+    if not WeatherEventHandleFunctionLibraryCache:IsValid() then
         WeatherEventHandleFunctionLibraryCache = StaticFindObject("/Script/AbioticFactor.Default__WeatherEventHandleFunctionLibrary")
+        ---@cast WeatherEventHandleFunctionLibraryCache UWeatherEventHandleFunctionLibrary
     end
     return WeatherEventHandleFunctionLibraryCache
 end
@@ -306,215 +308,168 @@ end
 -- Exported functions --
 ------------------------
 
-local PlayerControllerCache = nil
----Returns current AAbiotic_PlayerController_C or nil
----@return AAbiotic_PlayerController_C?
+---Returns current AAbiotic_PlayerController_C
+---@return AAbiotic_PlayerController_C
 function AFUtils.GetMyPlayerController()
-    if PlayerControllerCache and PlayerControllerCache:IsValid() then
-        return PlayerControllerCache
+    local myPlayerController = UEHelpers.GetPlayerController() ---@cast myPlayerController AAbiotic_PlayerController_C
+    if myPlayerController:IsValid() and myPlayerController.MyPlayerCharacter then
+        return myPlayerController
     end
-    PlayerControllerCache = nil
-
-    ---@type AAbiotic_PlayerController_C[]?
-    local playerControllers = FindAllOf("Abiotic_PlayerController_C")
-    if playerControllers and type(playerControllers) == 'table' then 
-        for _, controller in pairs(playerControllers) do
-            PlayerControllerCache = controller
-            break
-        end
-    end
-    
-    return PlayerControllerCache
+    return CreateInvalidObject() ---@type AAbiotic_PlayerController_C
 end
 
-local PlayerCache = nil
----Returns current controlled player or nil
----@return AAbiotic_PlayerCharacter_C?
+---Returns current controlled player
+---@return AAbiotic_PlayerCharacter_C
 function AFUtils.GetMyPlayer()
-    if PlayerCache and PlayerCache:IsValid() then
-        return PlayerCache
+    local player = UEHelpers.GetPlayer() ---@cast player AAbiotic_PlayerCharacter_C
+    if player:IsValid() and player.MyPlayerController then
+        return player
     end
-
-    PlayerCache = nil
-    local playerController = AFUtils.GetMyPlayerController()
-    if playerController and playerController.MyPlayerCharacter:IsValid() then
-        PlayerCache = playerController.MyPlayerCharacter
-    end
-
-    return PlayerCache
+    return CreateInvalidObject() ---@type AAbiotic_PlayerCharacter_C
 end
 
-local PlayerStateCache = nil
+local PlayerStateCache = CreateInvalidObject() ---@cast PlayerStateCache AAbiotic_PlayerState_C
 ---Returns player state of current player
----@return AAbiotic_PlayerState_C?
+---@return AAbiotic_PlayerState_C
 function AFUtils.GetMyPlayerState()
     if PlayerStateCache and PlayerStateCache:IsValid() then
         return PlayerStateCache
     end
 
-    PlayerStateCache = nil
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer and myPlayer.MyPlayerState:IsValid() then
+    if myPlayer:IsValid() then
         PlayerStateCache = myPlayer.MyPlayerState
     end
 
     return PlayerStateCache
 end
 
----Returns current player's inventory or nil
----@return UAbiotic_InventoryComponent_C?
+---Returns current player's inventory
+---@return UAbiotic_InventoryComponent_C
 function AFUtils.GetMyInventoryComponent()
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer and myPlayer.CharacterInventory:IsValid() then
+    if myPlayer:IsValid() and myPlayer.CharacterInventory then
         return myPlayer.CharacterInventory
     end
-
-    return nil
+    return CreateInvalidObject() ---@type UAbiotic_InventoryComponent_C
 end
 
----Returns current player's equipment inventory or nil
----@return UAbiotic_InventoryComponent_C?
+---Returns current player's equipment inventory
+---@return UAbiotic_InventoryComponent_C
 function AFUtils.GetMyEquipmentInventory()
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer and myPlayer.CharacterEquipSlotInventory and myPlayer.CharacterEquipSlotInventory:IsValid() then
+    if myPlayer:IsValid() and myPlayer.CharacterEquipSlotInventory then
         return myPlayer.CharacterEquipSlotInventory
     end
-    return nil
+    return CreateInvalidObject() ---@type UAbiotic_InventoryComponent_C
 end
 
----Returns current player's hotbar inventory or nil
----@return UAbiotic_InventoryComponent_C?
+---Returns current player's hotbar inventory
+---@return UAbiotic_InventoryComponent_C
 function AFUtils.GetMyHotbarInventory()
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer and myPlayer.CharacterHotbarInventory and myPlayer.CharacterHotbarInventory:IsValid() then
+    if myPlayer:IsValid() and myPlayer.CharacterHotbarInventory then
         return myPlayer.CharacterHotbarInventory
     end
-    return nil
+    return CreateInvalidObject() ---@type UAbiotic_InventoryComponent_C
 end
 
----Returns current player inventory widget or nil
----@return UW_PlayerInventory_Main_C?
+---Returns current player inventory widget
+---@return UW_PlayerInventory_Main_C
 function AFUtils.GetMyPlayerInventory()
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer and myPlayer.InventoryReference:IsValid() then
+    if myPlayer:IsValid() and myPlayer.InventoryReference then
         return myPlayer.InventoryReference
     end
-    return nil
+    return CreateInvalidObject() ---@type UW_PlayerInventory_Main_C
 end
 
----Returns current crafting area or nil
----@return UW_Inventory_CraftingArea_C?
+---Returns current crafting area
+---@return UW_Inventory_CraftingArea_C
 function AFUtils.GetMyInventoryCraftingArea()
     local myPlayerInventory = AFUtils.GetMyPlayerInventory()
-    if myPlayerInventory and myPlayerInventory.W_Inventory_CraftingArea:IsValid() then
+    if myPlayerInventory:IsValid() and myPlayerInventory.W_Inventory_CraftingArea then
         return myPlayerInventory.W_Inventory_CraftingArea
     end
-    return nil
+    return CreateInvalidObject() ---@type UW_Inventory_CraftingArea_C
 end
 
 
----Returns player's CharacterProgressionComponent or nil
----@return UAbiotic_CharacterProgressionComponent_C?
+---Returns player's CharacterProgressionComponent
+---@return UAbiotic_CharacterProgressionComponent_C
 function AFUtils.GetMyCharacterProgressionComponent()
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer and myPlayer.CharacterProgressionComponent:IsValid() then
+    if myPlayer:IsValid() and myPlayer.CharacterProgressionComponent then
         return myPlayer.CharacterProgressionComponent
     end
 
-    return nil
+    return CreateInvalidObject() ---@type UAbiotic_CharacterProgressionComponent_C
 end
 
 ---Returns PlayerHUD
----@return UW_PlayerHUD_Main_C?
+---@return UW_PlayerHUD_Main_C
 function AFUtils.GetMyPlayerHUD()
     local playerController = AFUtils.GetMyPlayerController()
-    if playerController and playerController.PlayerHUDRef:IsValid() then
+    if playerController:IsValid() and playerController.PlayerHUDRef then
         return playerController.PlayerHUDRef
     end
-
-    return nil
+    return CreateInvalidObject() ---@type UW_PlayerHUD_Main_C
 end
 
- ---@type UAbiotic_GameInstance_C?
- local GameInstanceCache = nil
- ---Returns UAbiotic_GameInstance_C or nil
- ---@return UAbiotic_GameInstance_C?
+ ---@return UAbiotic_GameInstance_C
  function AFUtils.GetGameInstance()
-     if GameInstanceCache and GameInstanceCache:IsValid() then
-         return GameInstanceCache
-     end
- 
-     ---@type UAbiotic_GameInstance_C
-     GameInstanceCache = FindFirstOf("Abiotic_GameInstance_C") ---@cast GameInstanceCache UAbiotic_GameInstance_C
-     return GameInstanceCache and GameInstanceCache:IsValid() and GameInstanceCache or nil
+    local gameInstance = UEHelpers.GetGameInstance() ---@cast gameInstance UAbiotic_GameInstance_C
+    if gameInstance:IsValid() and gameInstance.MaxSkillLevel then
+        return gameInstance
+    end
+    return CreateInvalidObject() ---@type UAbiotic_GameInstance_C
  end
 
----@type AAbiotic_Survival_GameMode_C?
-local SurvivalGameModeCache = nil
----Returns current AAbiotic_Survival_GameMode_C or nil
----@return AAbiotic_Survival_GameMode_C?
+---Returns current AAbiotic_Survival_GameMode_C
+---@return AAbiotic_Survival_GameMode_C
 function AFUtils.GetSurvivalGameMode()
-    if SurvivalGameModeCache and SurvivalGameModeCache:IsValid() then
-        return SurvivalGameModeCache
+    local gameMode = UEHelpers.GetGameModeBase() ---@cast gameMode AAbiotic_Survival_GameMode_C
+    if gameMode:IsValid() and gameMode.ServerID then
+        return gameMode
     end
-    
-    SurvivalGameModeCache = FindFirstOf("Abiotic_Survival_GameMode_C") ---@cast SurvivalGameModeCache AAbiotic_Survival_GameMode_C
-    if not SurvivalGameModeCache or not SurvivalGameModeCache:IsValid() then 
-        SurvivalGameModeCache = nil
-    end
-
-    return SurvivalGameModeCache
+    return CreateInvalidObject() ---@type AAbiotic_Survival_GameMode_C
 end
 
----@type AAbiotic_Survival_GameState_C?
-local SurvivalGameStateCache = nil
----Returns current AAbiotic_Survival_GameMode_C or nil
----@return AAbiotic_Survival_GameState_C?
+---Returns current AAbiotic_Survival_GameMode_C
+---@return AAbiotic_Survival_GameState_C
 function AFUtils.GetSurvivalGameState()
-    if SurvivalGameStateCache and SurvivalGameStateCache:IsValid() then
-        return SurvivalGameStateCache
+    local gameState = UEHelpers.GetGameStateBase() ---@cast gameState AAbiotic_Survival_GameState_C
+    if gameState:IsValid() and gameState.HostName then
+        return gameState
     end
-    
-    SurvivalGameStateCache = FindFirstOf("Abiotic_Survival_GameState_C") ---@cast SurvivalGameStateCache AAbiotic_Survival_GameState_C
-    if not SurvivalGameStateCache or not SurvivalGameStateCache:IsValid() then 
-        SurvivalGameStateCache = nil
-    end
-
-    return SurvivalGameStateCache
+    return CreateInvalidObject() ---@type AAbiotic_Survival_GameState_C
 end
 
-local AIDirectorCache = nil
----Returns current AAbiotic_AIDirector_C or nil
----@return AAbiotic_AIDirector_C?
+local AIDirectorCache = CreateInvalidObject() ---@cast AIDirectorCache AAbiotic_AIDirector_C
+---Returns current AAbiotic_AIDirector_C
+---@return AAbiotic_AIDirector_C
 function AFUtils.GetAIDirector()
-    if AIDirectorCache and AIDirectorCache:IsValid() then
+    if AIDirectorCache:IsValid() then
         return AIDirectorCache
     end
 
-    AIDirectorCache = nil
     local gameMode = AFUtils.GetSurvivalGameMode()
-    if gameMode and gameMode.AI_Director:IsValid() then
+    if gameMode:IsValid() and gameMode.AI_Director then
         AIDirectorCache = gameMode.AI_Director
     end
     
     return AIDirectorCache
 end
 
- ---@type AAI_Controller_Leyak_C?
-local AIControllerLeyakCache = nil
----Returns current AAI_Controller_Leyak_C or nil
----@return AAI_Controller_Leyak_C?
+local AIControllerLeyakCache = CreateInvalidObject() ---@cast AIControllerLeyakCache AAI_Controller_Leyak_C
+---Returns current AAI_Controller_Leyak_C
+---@return AAI_Controller_Leyak_C
 function AFUtils.GetAIControllerLeyak()
-    if AIControllerLeyakCache and AIControllerLeyakCache:IsValid() then
+    if AIControllerLeyakCache:IsValid() then
         return AIControllerLeyakCache
     end
-
-    ---@type AAI_Controller_Leyak_C?
-    AIControllerLeyakCache = FindFirstOf("AI_Controller_Leyak_C")
-    if not AIControllerLeyakCache or not AIControllerLeyakCache:IsValid() then 
-        AIControllerLeyakCache = nil
-    end
     
+    AIControllerLeyakCache = FindFirstOf("AI_Controller_Leyak_C") ---@cast AIControllerLeyakCache AAI_Controller_Leyak_C
     return AIControllerLeyakCache
 end
 
@@ -522,7 +477,7 @@ end
 ---@return FRotator
 function AFUtils.GetControlRotation()
     local playerController = AFUtils.GetMyPlayerController()
-    if playerController then
+    if playerController:IsValid() then
         return RotatorToUserdata(playerController.ControlRotation)
     end
     return FRotator()
@@ -533,7 +488,7 @@ end
 ---@return boolean Success # false if no valid PlayerController
 function AFUtils.SetControlRotation(Rotation)
     local playerController = AFUtils.GetMyPlayerController()
-    if playerController then
+    if playerController:IsValid() then
         playerController:SetControlRotation(Rotation)
         return true
     end
@@ -572,7 +527,7 @@ end
 ---@return AAbiotic_Weapon_ParentBP_C?
 function AFUtils.GetCurrentWeapon(playerCharacter)
     playerCharacter = playerCharacter or AFUtils.GetMyPlayer()
-    if playerCharacter and playerCharacter.ItemInHand_BP:IsValid() and playerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassAbiotic_Weapon_ParentBP_C()) then
+    if playerCharacter:IsValid() and playerCharacter.ItemInHand_BP:IsValid() and playerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassAbiotic_Weapon_ParentBP_C()) then
         local weapon = playerCharacter.ItemInHand_BP ---@cast weapon AAbiotic_Weapon_ParentBP_C
         return weapon
     end
@@ -587,7 +542,7 @@ function AFUtils.DisplayTextChatMessage(Message, Prefix, Color)
     if not Message then return end
 
     local myPlayerController = AFUtils.GetMyPlayerController()
-    if myPlayerController then
+    if myPlayerController:IsValid() then
         Prefix = Prefix or ""
         if not Color or type(Color) ~= 'table' then
             Color = { -- White
@@ -619,7 +574,7 @@ function AFUtils.ClientDisplayWarningMessage(Message, CriticalityLevel, WarningB
     WarningBeep = WarningBeep or false
 
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer then
+    if myPlayer:IsValid() then
         -- LogDebug("ClientDisplayWarningMessage: Message: "..Message.." CriticalityLevel: "..CriticalityLevel.." WarningBeep: "..tostring(WarningBeep))
         local fText = FText(Message)
         if fText then
@@ -996,7 +951,7 @@ function AFUtils.TriggerWeatherEvent(EventName)
 
     local weatherEventHandleFunctionLibrary = AFUtils.GetWeatherEventHandleFunctionLibrary()
     local myPlayerController = AFUtils.GetMyPlayerController()
-    if weatherEventHandleFunctionLibrary and myPlayerController and myPlayerController.DayNightManager:IsValid() then
+    if weatherEventHandleFunctionLibrary and myPlayerController:IsValid() and myPlayerController.DayNightManager:IsValid() then
         ---@type table<LocalUnrealParam>
         local outRowHandles = {}
         weatherEventHandleFunctionLibrary:GetAllWeatherEventRowHandles(outRowHandles)
@@ -1027,7 +982,7 @@ function AFUtils.SetNextWeatherEvent(EventName)
     if type(EventName) ~= "string" then return false end
 
     local myPlayerController = AFUtils.GetMyPlayerController()
-    if myPlayerController and myPlayerController.DayNightManager:IsValid() then
+    if myPlayerController:IsValid() and myPlayerController.DayNightManager:IsValid() then
         local RowName = FName(EventName, EFindName.FNAME_Find)
         myPlayerController.DayNightManager.RequiredDaysBetweenWeather = 0
         myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName = RowName
@@ -1097,7 +1052,7 @@ function AFUtils.AddToItemStack(Inventory, SlotIndex, StackToAdd)
     if not Inventory or not Inventory:IsValid() or not SlotIndex or not StackToAdd then return false end
 
     local myPlayerController = AFUtils.GetMyPlayerController()
-    if myPlayerController then
+    if myPlayerController:IsValid() then
         myPlayerController:Server_AddToItemStack(Inventory, SlotIndex, StackToAdd)
         return true
     end

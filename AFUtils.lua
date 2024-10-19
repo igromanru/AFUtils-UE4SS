@@ -461,6 +461,17 @@ function AFUtils.GetAIDirector()
     return AIDirectorCache
 end
 
+local DayNightManagerCache = CreateInvalidObject() ---@cast DayNightManagerCache ADayNightManager_C
+---Retruns current ADayNightManager_C
+---@return ADayNightManager_C
+function AFUtils.GetDayNightManager()
+    local aiDirector = AFUtils.GetAIDirector()
+    if aiDirector:IsValid() and aiDirector.DayNightManager then
+        DayNightManagerCache = aiDirector.DayNightManager
+    end
+    return DayNightManagerCache
+end
+
 local AIControllerLeyakCache = CreateInvalidObject() ---@cast AIControllerLeyakCache AAI_Controller_Leyak_C
 ---Returns current AAI_Controller_Leyak_C
 ---@return AAI_Controller_Leyak_C
@@ -1075,5 +1086,51 @@ function AFUtils.SetItemSlot(TargetItemSlot, DataTableRowName, ItemsCount)
     return true
 end
 
+---@param DayNightManager ADayNightManager_C?
+---@return boolean Success
+function AFUtils.CalculateAndSetDaytime(DayNightManager)
+    DayNightManager = DayNightManager or AFUtils.GetDayNightManager()
+    if not DayNightManager:IsValid() then return false end
+
+    local currentTime = DayNightManager.CurrentTimeInSeconds
+    local isDay = currentTime < HoursToSeconds(DayNightManager.NightfallStartHour) and currentTime >= HoursToSeconds(DayNightManager.MorningStartHour)
+    if DayNightManager.IsNight == isDay then
+        DayNightManager.IsNight = not isDay
+        DayNightManager:OnRep_IsNight()
+    end
+    return true
+end 
+
+---Set in game time
+---@param Hours integer? # Default: 0
+---@param Minutes integer? # Default: 0
+function AFUtils.SetGameTime(Hours, Minutes)
+    Hours = Hours or 0.0
+    Minutes = Minutes or 0.0
+
+    local dayNightManager = AFUtils.GetDayNightManager()
+    if dayNightManager:IsValid() then
+        dayNightManager.CurrentTimeInSeconds = HoursToSeconds(Hours) + MinutesToSeconds(Minutes)
+        dayNightManager:OnRep_CurrentTimeInSeconds()
+        return AFUtils.CalculateAndSetDaytime(dayNightManager)
+    end
+    return false
+end
+
+---Add hours and minutes to current game time
+---@param Hours integer
+---@param Minutes integer? # Default: 0
+function AFUtils.AddGameTime(Hours, Minutes)
+    Minutes = Minutes or 0.0
+
+    local dayNightManager = AFUtils.GetDayNightManager()
+    if dayNightManager:IsValid() then
+        local secondsToAdd = HoursToSeconds(Hours) + MinutesToSeconds(Minutes)
+        dayNightManager.CurrentTimeInSeconds = dayNightManager.CurrentTimeInSeconds + secondsToAdd
+        dayNightManager:OnRep_CurrentTimeInSeconds()
+        return AFUtils.CalculateAndSetDaytime(dayNightManager)
+    end
+    return false
+end
 
 return AFUtils

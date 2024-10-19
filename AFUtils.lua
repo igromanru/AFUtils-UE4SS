@@ -1110,9 +1110,12 @@ function AFUtils.SetGameTime(Hours, Minutes)
 
     local dayNightManager = AFUtils.GetDayNightManager()
     if dayNightManager:IsValid() then
-        dayNightManager.CurrentTimeInSeconds = HoursToSeconds(Hours) + MinutesToSeconds(Minutes)
+        local targetTime = HoursToSeconds(Hours) + MinutesToSeconds(Minutes)
+        dayNightManager.CurrentTimeInSeconds = targetTime
         dayNightManager:OnRep_CurrentTimeInSeconds()
-        return AFUtils.CalculateAndSetDaytime(dayNightManager)
+        if dayNightManager.CurrentTimeInSeconds == targetTime then
+            return AFUtils.CalculateAndSetDaytime(dayNightManager)
+        end
     end
     return false
 end
@@ -1125,10 +1128,12 @@ function AFUtils.AddGameTime(Hours, Minutes)
 
     local dayNightManager = AFUtils.GetDayNightManager()
     if dayNightManager:IsValid() then
-        local secondsToAdd = HoursToSeconds(Hours) + MinutesToSeconds(Minutes)
-        dayNightManager.CurrentTimeInSeconds = dayNightManager.CurrentTimeInSeconds + secondsToAdd
+        local targetTime = dayNightManager.CurrentTimeInSeconds + HoursToSeconds(Hours) + MinutesToSeconds(Minutes)
+        dayNightManager.CurrentTimeInSeconds = targetTime
         dayNightManager:OnRep_CurrentTimeInSeconds()
-        return AFUtils.CalculateAndSetDaytime(dayNightManager)
+        if dayNightManager.CurrentTimeInSeconds == targetTime then
+            return AFUtils.CalculateAndSetDaytime(dayNightManager)
+        end
     end
     return false
 end

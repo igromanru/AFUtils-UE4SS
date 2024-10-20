@@ -1163,13 +1163,10 @@ function AFUtils.TrapLeyak(LeyakContainment)
     local gameState = AFUtils.GetSurvivalGameState()
     if IsValid(gameState) then
         local assetId = LeyakContainment.SpawnedAssetID:ToString()
+        LogDebug("TrapLeyak: SpawnedAssetID:", assetId)
         LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability)
         LeyakContainment:TrapLeyak(0.0)
-        LeyakContainment:OnRep_ContainsLeyak()
-        if LeyakContainment.ContainsLeyak == true then
-            gameState['Set Leyak Containment ID'](assetId)
-        end
-        LogDebug("TrapLeyak: SpawnedAssetID:", assetId)
+        gameState['Set Leyak Containment ID'](assetId)
         LogDebug("TrapLeyak: ActiveLeyakContainmentID:", gameState.ActiveLeyakContainmentID:ToString())
         LogDebug("TrapLeyak: ContainsLeyak:", LeyakContainment.ContainsLeyak)
         return gameState.ActiveLeyakContainmentID:ToString() == assetId

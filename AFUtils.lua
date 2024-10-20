@@ -127,16 +127,18 @@ AFUtils.WeatherEvents = {
 
 -- Static Classes --
 --------------------
-local Actor_Class = nil
+local Actor_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassActor()
-    if not Actor_Class or not Actor_Class:IsValid() then
+    if not Actor_Class:IsValid() then
         Actor_Class = StaticFindObject("/Script/Engine.Actor")
         ---@cast Actor_Class UClass
     end
     return Actor_Class
 end
 
-local SkeletalMeshActor_Class = nil
+local SkeletalMeshActor_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassSkeletalMeshActor()
     if not SkeletalMeshActor_Class or not SkeletalMeshActor_Class:IsValid() then
         SkeletalMeshActor_Class = StaticFindObject("/Script/Engine.SkeletalMeshActor")
@@ -145,15 +147,18 @@ function AFUtils.GetClassSkeletalMeshActor()
     return SkeletalMeshActor_Class
 end
 
-local AbioticGameViewportClientClass = nil
+local AbioticGameViewportClientClass = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassAbioticGameViewportClient()
     if not AbioticGameViewportClientClass or not AbioticGameViewportClientClass:IsValid() then
         AbioticGameViewportClientClass = StaticFindObject("/Script/AbioticFactor.AbioticGameViewportClient")
+        ---@cast AbioticGameViewportClientClass UClass
     end
     return AbioticGameViewportClientClass
 end
 
-local Abiotic_PlayerCharacter_C_Class = nil
+local Abiotic_PlayerCharacter_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassAbiotic_PlayerCharacter_C()
     if not Abiotic_PlayerCharacter_C_Class or not Abiotic_PlayerCharacter_C_Class:IsValid() then
         Abiotic_PlayerCharacter_C_Class = StaticFindObject("/Game/Blueprints/Characters/Abiotic_PlayerCharacter.Abiotic_PlayerCharacter_C")
@@ -162,7 +167,8 @@ function AFUtils.GetClassAbiotic_PlayerCharacter_C()
     return Abiotic_PlayerCharacter_C_Class
 end
 
-local Abiotic_Item_ParentBP_C_Class = nil
+local Abiotic_Item_ParentBP_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassAbiotic_Item_ParentBP_C()
     if not Abiotic_Item_ParentBP_C_Class or not Abiotic_Item_ParentBP_C_Class:IsValid() then
         Abiotic_Item_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Items/Abiotic_Item_ParentBP.Abiotic_Item_ParentBP_C")
@@ -171,7 +177,7 @@ function AFUtils.GetClassAbiotic_Item_ParentBP_C()
     return Abiotic_Item_ParentBP_C_Class
 end
 
-local AbioticDeployed_ParentBP_C_Class = nil
+local AbioticDeployed_ParentBP_C_Class = CreateInvalidObject()
 ---@return UClass
 function AFUtils.GetClassAbioticDeployed_ParentBP_C()
     if not AbioticDeployed_ParentBP_C_Class or not AbioticDeployed_ParentBP_C_Class:IsValid() then
@@ -181,7 +187,8 @@ function AFUtils.GetClassAbioticDeployed_ParentBP_C()
     return AbioticDeployed_ParentBP_C_Class
 end
 
-local RechargeableComponent_C_Class = nil
+local RechargeableComponent_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassRechargeableComponent_C()
     if not RechargeableComponent_C_Class or not RechargeableComponent_C_Class:IsValid() then
         RechargeableComponent_C_Class = StaticFindObject("/Game/Blueprints/Items/RechargeableComponent.RechargeableComponent_C")
@@ -190,7 +197,8 @@ function AFUtils.GetClassRechargeableComponent_C()
     return RechargeableComponent_C_Class
 end
 
-local Deployed_Battery_ParentBP_C_Class = nil
+local Deployed_Battery_ParentBP_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassDeployed_Battery_ParentBP_C()
     if not Deployed_Battery_ParentBP_C_Class or not Deployed_Battery_ParentBP_C_Class:IsValid() then
         Deployed_Battery_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/Misc/Deployed_Battery_ParentBP.Deployed_Battery_ParentBP_C")
@@ -199,7 +207,8 @@ function AFUtils.GetClassDeployed_Battery_ParentBP_C()
     return Deployed_Battery_ParentBP_C_Class
 end
 
-local Abiotic_Item_Dropped_C_Class = nil
+local Abiotic_Item_Dropped_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassAbiotic_Item_Dropped_C()
     if not Abiotic_Item_Dropped_C_Class or not Abiotic_Item_Dropped_C_Class:IsValid() then
         Abiotic_Item_Dropped_C_Class = StaticFindObject("/Game/Blueprints/Items/Abiotic_Item_Dropped.Abiotic_Item_Dropped_C")
@@ -208,7 +217,8 @@ function AFUtils.GetClassAbiotic_Item_Dropped_C()
     return Abiotic_Item_Dropped_C_Class
 end
 
-local Abiotic_Weapon_ParentBP_C_Class = nil
+local Abiotic_Weapon_ParentBP_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassAbiotic_Weapon_ParentBP_C()
     if not Abiotic_Weapon_ParentBP_C_Class or not Abiotic_Weapon_ParentBP_C_Class:IsValid() then
         Abiotic_Weapon_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Items/Weapons/Abiotic_Weapon_ParentBP.Abiotic_Weapon_ParentBP_C")
@@ -217,7 +227,8 @@ function AFUtils.GetClassAbiotic_Weapon_ParentBP_C()
     return Abiotic_Weapon_ParentBP_C_Class
 end
 
-local Abiotic_Character_ParentBP_C_Class = nil
+local Abiotic_Character_ParentBP_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassAbiotic_Character_ParentBP_C()
     if not Abiotic_Character_ParentBP_C_Class or not Abiotic_Character_ParentBP_C_Class:IsValid() then
         Abiotic_Character_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/Abiotic_Character_ParentBP.Abiotic_Character_ParentBP_C")
@@ -226,7 +237,8 @@ function AFUtils.GetClassAbiotic_Character_ParentBP_C()
     return Abiotic_Character_ParentBP_C_Class
 end
 
-local NarrativeNPC_ParentBP_C_Class = nil
+local NarrativeNPC_ParentBP_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassNarrativeNPC_ParentBP_C()
     if not NarrativeNPC_ParentBP_C_Class or not NarrativeNPC_ParentBP_C_Class:IsValid() then
         NarrativeNPC_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/NarrativeNPCs/NarrativeNPC_ParentBP.NarrativeNPC_ParentBP_C")
@@ -235,7 +247,8 @@ function AFUtils.GetClassNarrativeNPC_ParentBP_C()
     return NarrativeNPC_ParentBP_C_Class
 end
 
-local CharacterCorpse_Human_BP_C_Class = nil
+local CharacterCorpse_Human_BP_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassCharacterCorpse_Human_BP_C()
     if not CharacterCorpse_Human_BP_C_Class or not CharacterCorpse_Human_BP_C_Class:IsValid() then
         CharacterCorpse_Human_BP_C_Class = StaticFindObject("/Game/Blueprints/Environment/Special/CharacterCorpse_Human_BP.CharacterCorpse_Human_BP_C")
@@ -244,7 +257,8 @@ function AFUtils.GetClassCharacterCorpse_Human_BP_C()
     return CharacterCorpse_Human_BP_C_Class
 end
 
-local NarrativeNPC_Human_ParentBP_C_Class = nil
+local NarrativeNPC_Human_ParentBP_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassNarrativeNPC_Human_ParentBP_C()
     if not NarrativeNPC_Human_ParentBP_C_Class or not NarrativeNPC_Human_ParentBP_C_Class:IsValid() then
         NarrativeNPC_Human_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/NarrativeNPCs/NarrativeNPC_Human_ParentBP.NarrativeNPC_Human_ParentBP_C")
@@ -253,7 +267,8 @@ function AFUtils.GetClassNarrativeNPC_Human_ParentBP_C()
     return NarrativeNPC_Human_ParentBP_C_Class
 end
 
-local CharacterCorpse_ParentBP_Class = nil
+local CharacterCorpse_ParentBP_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassCharacterCorpse_ParentBP()
     if not CharacterCorpse_ParentBP_Class or not CharacterCorpse_ParentBP_Class:IsValid() then
         CharacterCorpse_ParentBP_Class = StaticFindObject("/Game/Blueprints/Environment/Special/CharacterCorpse_ParentBP.CharacterCorpse_ParentBP_C")
@@ -262,7 +277,8 @@ function AFUtils.GetClassCharacterCorpse_ParentBP()
     return CharacterCorpse_ParentBP_Class
 end
 
-local Deployed_Toilet_Portal_C_Class = nil
+local Deployed_Toilet_Portal_C_Class = CreateInvalidObject()
+---@return UClass
 function AFUtils.GetClassDeployed_Toilet_Portal_C()
     if not Deployed_Toilet_Portal_C_Class or not Deployed_Toilet_Portal_C_Class:IsValid() then
         Deployed_Toilet_Portal_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/Furniture/Deployed_Toilet_Portal.Deployed_Toilet_Portal_C")

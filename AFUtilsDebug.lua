@@ -945,6 +945,7 @@ function AFUtils.LogDeployedLeyakContainment(LeyakContainment, Prefix)
     if not LeyakContainment or not LeyakContainment:IsValid() then return end
     Prefix = Prefix or ""
 
+    LogDebug(Prefix .. "SpawnedAssetID:", LeyakContainment.SpawnedAssetID:ToString())
     LogDebug(Prefix .. "FrostGlassTimeline:", LeyakContainment.FrostGlassTimeline_NewTrack_0_08756EC44A134A401814C5B93A4A86D5)
     LogDebug(Prefix .. "FrostGlassTimeline Direction:", LeyakContainment.FrostGlassTimeline__Direction_08756EC44A134A401814C5B93A4A86D5)
     LogDebug(Prefix .. "ContainsLeyak:", LeyakContainment.ContainsLeyak)

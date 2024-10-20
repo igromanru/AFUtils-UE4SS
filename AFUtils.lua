@@ -1154,7 +1154,6 @@ function AFUtils.AddGameTime(Hours, Minutes)
     return false
 end
 
----comment
 ---@param LeyakContainment ADeployed_LeyakContainment_C
 ---@return boolean Success
 function AFUtils.TrapLeyak(LeyakContainment)
@@ -1170,6 +1169,20 @@ function AFUtils.TrapLeyak(LeyakContainment)
         LogDebug("TrapLeyak: ActiveLeyakContainmentID:", gameState.ActiveLeyakContainmentID:ToString())
         LogDebug("TrapLeyak: ContainsLeyak:", LeyakContainment.ContainsLeyak)
         return gameState.ActiveLeyakContainmentID:ToString() == assetId
+    end
+    return false
+end
+
+---@param LeyakContainment ADeployed_LeyakContainment_C
+---@return boolean Success
+function AFUtils.FreeLeyak(LeyakContainment)
+    if IsNotValid(LeyakContainment) or LeyakContainment.DeployableDestroyed or not LeyakContainment.ContainsLeyak then return false end
+
+    local gameState = AFUtils.GetSurvivalGameState()
+    if IsValid(gameState) then
+        LeyakContainment['Free Leyak']()
+        gameState['Set Leyak Containment ID']("")
+        return gameState.ActiveLeyakContainmentID:ToString() == ""
     end
     return false
 end

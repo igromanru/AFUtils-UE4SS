@@ -177,6 +177,16 @@ function AFUtils.GetClassAbiotic_Survival_GameMode_C()
     return Abiotic_Survival_GameMode_C_Class
 end
 
+local Abiotic_GameInstance_C_Class = CreateInvalidObject()
+---@return UClass
+function AFUtils.GetClassAbiotic_GameInstance_C()
+    if not Abiotic_GameInstance_C_Class or not Abiotic_GameInstance_C_Class:IsValid() then
+        Abiotic_GameInstance_C_Class = StaticFindObject("/Game/Blueprints/Meta/Abiotic_GameInstance.Abiotic_GameInstance_C")
+        ---@cast Abiotic_GameInstance_C_Class UClass
+    end
+    return Abiotic_GameInstance_C_Class
+end
+
 local Abiotic_PlayerCharacter_C_Class = CreateInvalidObject()
 ---@return UClass
 function AFUtils.GetClassAbiotic_PlayerCharacter_C()
@@ -467,7 +477,7 @@ end
  ---@return UAbiotic_GameInstance_C
  function AFUtils.GetGameInstance()
     local gameInstance = UEHelpers.GetGameInstance() ---@cast gameInstance UAbiotic_GameInstance_C
-    if gameInstance:IsValid() and gameInstance.MaxSkillLevel then
+    if gameInstance:IsValid() and gameInstance:IsA(AFUtils.GetClassAbiotic_GameInstance_C()) then
         return gameInstance
     end
     return CreateInvalidObject() ---@type UAbiotic_GameInstance_C
@@ -477,7 +487,7 @@ end
 ---@return AAbiotic_Survival_GameMode_C
 function AFUtils.GetSurvivalGameMode()
     local gameMode = UEHelpers.GetGameModeBase() ---@cast gameMode AAbiotic_Survival_GameMode_C
-    if gameMode:IsValid() and gameMode.ServerID then
+    if gameMode:IsValid() and gameMode:IsA(AFUtils.GetClassAbiotic_Survival_GameMode_C()) then
         return gameMode
     end
     return CreateInvalidObject() ---@type AAbiotic_Survival_GameMode_C
@@ -487,7 +497,7 @@ end
 ---@return AAbiotic_Survival_GameState_C
 function AFUtils.GetSurvivalGameState()
     local gameState = UEHelpers.GetGameStateBase() ---@cast gameState AAbiotic_Survival_GameState_C
-    if gameState:IsValid() and gameState.HostName then
+    if gameState:IsValid() and gameState:IsA(AFUtils.GetClassAbiotic_Survival_GameState_C()) then
         return gameState
     end
     return CreateInvalidObject() ---@type AAbiotic_Survival_GameState_C
@@ -552,6 +562,38 @@ function AFUtils.SetControlRotation(Rotation)
         return true
     end
     return false
+end
+
+---Search for player state by UniquePlayerId
+---@param PlayerId FString|string
+---@return AAbiotic_PlayerState_C
+function AFUtils.GetPlayerStateById(PlayerId)
+    if type(PlayerId) == "userdata" and PlayerId:type() == "FString" then
+        PlayerId = PlayerId:ToString()
+    end
+    if type(PlayerId) == "string" and PlayerId ~= "" then
+        local gameState = AFUtils.GetSurvivalGameState()
+        if IsValid(gameState) and gameState.PlayerArray then
+            for i = 1, #gameState.PlayerArray do
+                local playerState = gameState.PlayerArray[i] ---@cast playerState AAbiotic_PlayerState_C
+                if playerState.UniquePlayerID and playerState.UniquePlayerID:ToString() == PlayerId then
+                    return playerState
+                end
+            end
+        end
+    end
+    return CreateInvalidObject() ---@type AAbiotic_PlayerState_C
+end
+
+---Search for player by UniquePlayerId
+---@param PlayerId FString|string
+---@return AAbiotic_PlayerCharacter_C
+function AFUtils.GetPlayerById(PlayerId)
+    local playerState = AFUtils.GetPlayerStateById(PlayerId)
+    if IsValid(playerState) and playerState.PawnPrivate then
+        return playerState.PawnPrivate ---@type AAbiotic_PlayerCharacter_C
+    end
+    return CreateInvalidObject() ---@type AAbiotic_PlayerCharacter_C
 end
 
 ---Returns struct that represents current selected slot in the hotbat aka. held item

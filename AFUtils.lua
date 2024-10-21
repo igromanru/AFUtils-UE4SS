@@ -327,6 +327,16 @@ function AFUtils.GetClassDeployed_Toilet_Portal_C()
     return Deployed_Toilet_Portal_C_Class
 end
 
+local Item_Gear_KeypadHacker_C_Class = CreateInvalidObject()
+---@return UClass
+function AFUtils.GetClassItem_Gear_KeypadHacker_C()
+    if not Item_Gear_KeypadHacker_C_Class or not Item_Gear_KeypadHacker_C_Class:IsValid() then
+        Item_Gear_KeypadHacker_C_Class = StaticFindObject("/Game/Blueprints/Items/Gear/Item_Gear_KeypadHacker.Item_Gear_KeypadHacker_C")
+        ---@cast Item_Gear_KeypadHacker_C_Class UClass
+    end
+    return Item_Gear_KeypadHacker_C_Class
+end
+
 ---- Default objects ---
 ------------------------
 
@@ -627,12 +637,12 @@ function AFUtils.GetCurrentHotbarSlotSelected(PlayerCharacter)
 end
 
 ---Retruns struct that represents the current selected Hotbar item slot, it's inventory component and SlotIndex. The item can be modified through ChangeableData.
----@param playerCharacter AAbiotic_PlayerCharacter_C
+---@param PlayerCharacter AAbiotic_PlayerCharacter_C
 ---@return FAbiotic_InventoryItemSlotStruct? # Can be used to modify item's data though ChangeableData
 ---@return UAbiotic_InventoryComponent_C? # Parent InventoryComponent
 ---@return integer? # Slot index
-function AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
-    local slotData = AFUtils.GetCurrentHotbarSlotSelected(playerCharacter)
+function AFUtils.GetSelectedHotbarInventoryItemSlot(PlayerCharacter)
+    local slotData = AFUtils.GetCurrentHotbarSlotSelected(PlayerCharacter)
     if slotData and slotData.Inventory_2_B69CD60741EFD551F09ED5AFF44B1E46:IsValid() then
         local inventory = slotData.Inventory_2_B69CD60741EFD551F09ED5AFF44B1E46
         local luaIndex = slotData.Index_5_6BDC7B3944A5DE0B319F9FA20720872F + 1
@@ -644,15 +654,22 @@ function AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
 end
 
 ---Get current held weapon for a player
----@param playerCharacter AAbiotic_PlayerCharacter_C #If nil, will use the local player
+---@param PlayerCharacter AAbiotic_PlayerCharacter_C #If nil, will use the local player
 ---@return AAbiotic_Weapon_ParentBP_C?
-function AFUtils.GetCurrentWeapon(playerCharacter)
-    playerCharacter = playerCharacter or AFUtils.GetMyPlayer()
-    if playerCharacter:IsValid() and playerCharacter.ItemInHand_BP:IsValid() and playerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassAbiotic_Weapon_ParentBP_C()) then
-        local weapon = playerCharacter.ItemInHand_BP ---@cast weapon AAbiotic_Weapon_ParentBP_C
+function AFUtils.GetCurrentWeapon(PlayerCharacter)
+    PlayerCharacter = PlayerCharacter or AFUtils.GetMyPlayer()
+    if PlayerCharacter:IsValid() and PlayerCharacter.ItemInHand_BP:IsValid() and PlayerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassAbiotic_Weapon_ParentBP_C()) then
+        local weapon = PlayerCharacter.ItemInHand_BP ---@cast weapon AAbiotic_Weapon_ParentBP_C
         return weapon
     end
     return nil
+end
+
+---@param PlayerCharacter AAbiotic_PlayerCharacter_C? # In nil, using MyPlayer
+---@return boolean
+function AFUtils.IsHoldingKeypadHacker(PlayerCharacter)
+    PlayerCharacter = PlayerCharacter or AFUtils.GetMyPlayer()
+    return IsValid(PlayerCharacter) and IsValid(PlayerCharacter.ItemInHand_BP) and PlayerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassItem_Gear_KeypadHacker_C())
 end
 
 ---Prints a colored message to local player's chat (only visible to the player)

@@ -157,6 +157,26 @@ function AFUtils.GetClassAbioticGameViewportClient()
     return AbioticGameViewportClientClass
 end
 
+local Abiotic_Survival_GameState_C_Class = CreateInvalidObject()
+---@return UClass
+function AFUtils.GetClassAbiotic_Survival_GameState_C()
+    if not Abiotic_Survival_GameState_C_Class or not Abiotic_Survival_GameState_C_Class:IsValid() then
+        Abiotic_Survival_GameState_C_Class = StaticFindObject("/Game/Blueprints/Meta/Abiotic_Survival_GameState.Abiotic_Survival_GameState_C")
+        ---@cast Abiotic_Survival_GameState_C_Class UClass
+    end
+    return Abiotic_Survival_GameState_C_Class
+end
+
+local Abiotic_Survival_GameMode_C_Class = CreateInvalidObject()
+---@return UClass
+function AFUtils.GetClassAbiotic_Survival_GameMode_C()
+    if not Abiotic_Survival_GameMode_C_Class or not Abiotic_Survival_GameMode_C_Class:IsValid() then
+        Abiotic_Survival_GameMode_C_Class = StaticFindObject("/Game/Blueprints/Meta/Abiotic_Survival_GameMode.Abiotic_Survival_GameMode_C")
+        ---@cast Abiotic_Survival_GameMode_C_Class UClass
+    end
+    return Abiotic_Survival_GameMode_C_Class
+end
+
 local Abiotic_PlayerCharacter_C_Class = CreateInvalidObject()
 ---@return UClass
 function AFUtils.GetClassAbiotic_PlayerCharacter_C()
@@ -323,6 +343,18 @@ end
 
 -- Exported functions --
 ------------------------
+
+local IsDedicatedServerCache = nil
+---Returns true if code is running on a Dedicated Server<br>
+---The function uses a cache!
+---@param UpdateCache boolean?
+---@return boolean
+function AFUtils.IsDedicatedServer(UpdateCache)
+    if IsDedicatedServerCache == nil or UpdateCache then
+        IsDedicatedServerCache = IsDedicatedServer()
+    end
+    return IsDedicatedServerCache
+end
 
 ---Returns current AAbiotic_PlayerController_C
 ---@return AAbiotic_PlayerController_C

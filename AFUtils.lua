@@ -187,6 +187,16 @@ function AFUtils.GetClassAbiotic_GameInstance_C()
     return Abiotic_GameInstance_C_Class
 end
 
+local Abiotic_PlayerController_C_Class = CreateInvalidObject()
+---@return UClass
+function AFUtils.GetClassAbiotic_PlayerController_C()
+    if IsNotValid(Abiotic_PlayerController_C_Class) then
+        Abiotic_PlayerController_C_Class = StaticFindObject("/Game/Blueprints/Meta/Abiotic_PlayerController.Abiotic_PlayerController_C")
+        ---@cast Abiotic_PlayerController_C_Class UClass
+    end
+    return Abiotic_PlayerController_C_Class
+end
+
 local Abiotic_PlayerCharacter_C_Class = CreateInvalidObject()
 ---@return UClass
 function AFUtils.GetClassAbiotic_PlayerCharacter_C()
@@ -370,8 +380,18 @@ end
 ---@return AAbiotic_PlayerController_C
 function AFUtils.GetMyPlayerController()
     local myPlayerController = UEHelpers.GetPlayerController() ---@cast myPlayerController AAbiotic_PlayerController_C
-    if myPlayerController:IsValid() and myPlayerController.MyPlayerCharacter then
+    if IsValid(myPlayerController) and myPlayerController:IsA(AFUtils.GetClassAbiotic_PlayerController_C()) then
         return myPlayerController
+    end
+    return CreateInvalidObject() ---@type AAbiotic_PlayerController_C
+end
+
+---Returns player's AAbiotic_PlayerController_C
+---@param PlayerCharacter AAbiotic_PlayerCharacter_C
+---@return AAbiotic_PlayerController_C
+function AFUtils.GetPlayerController(PlayerCharacter)
+    if IsValid(PlayerCharacter) and PlayerCharacter.MyPlayerController then
+        return PlayerCharacter.MyPlayerController
     end
     return CreateInvalidObject() ---@type AAbiotic_PlayerController_C
 end
@@ -380,7 +400,7 @@ end
 ---@return AAbiotic_PlayerCharacter_C
 function AFUtils.GetMyPlayer()
     local player = UEHelpers.GetPlayer() ---@cast player AAbiotic_PlayerCharacter_C
-    if player:IsValid() and player.MyPlayerController then
+    if IsValid(player) and player:IsA(AFUtils.GetClassAbiotic_PlayerCharacter_C()) then
         return player
     end
     return CreateInvalidObject() ---@type AAbiotic_PlayerCharacter_C
@@ -597,11 +617,11 @@ function AFUtils.GetPlayerById(PlayerId)
 end
 
 ---Returns struct that represents current selected slot in the hotbat aka. held item
----@param playerCharacter AAbiotic_PlayerCharacter_C
+---@param PlayerCharacter AAbiotic_PlayerCharacter_C
 ---@return FInventorySlotSelected_Struct?
-function AFUtils.GetCurrentHotbarSlotSelected(playerCharacter)
-    if playerCharacter and playerCharacter:IsValid() and playerCharacter.CurrentHotbarSlotSelected:IsValid() then
-        return playerCharacter.CurrentHotbarSlotSelected
+function AFUtils.GetCurrentHotbarSlotSelected(PlayerCharacter)
+    if IsValid(PlayerCharacter) and PlayerCharacter.CurrentHotbarSlotSelected:IsValid() then
+        return PlayerCharacter.CurrentHotbarSlotSelected
     end
     return nil
 end

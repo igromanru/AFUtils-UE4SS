@@ -125,49 +125,166 @@ AFUtils.WeatherEvents = {
     Spores = "Spores"
 }
 
----Map of Traits. Key = FName, Value = Trait Name<br>
+---Map of Traits. Key is trait's FName<br>
 ---Game v0.9.2
----@type { [string]: string }
+---@type { [string]: { Description: string, Buff: boolean } }
 AFUtils.Traits = {
-	Trait_Decathlon = "Decathlon Competitor",
-	Trait_FormerGuard = "Tough as Nails",
-	Trait_WrinklyBrainmeat = "Wrinkly Brainmeat",
-	Trait_NightOwl = "Night Owl",
-	Trait_Chef = "Hobbyist Chef",
-	Trait_Inconspicuous = "Inconspicuous",
-	Trait_Outdoorsman = "Weathered",
-	Trait_FannyPack = "Fanny Pack",
-	Trait_ThickSkinned = "Thick Skinned",
-	Trait_FirstAidCert = "First Aid Certification",
-	Trait_Gardener = "Gardener",
-	Trait_LightEater = "Light Eater",
-	Trait_Moist = "Naturally Moist",
-	Trait_SelfDefense = "Self Defense",
-	Trait_SteelBladder = "Bladder of Steel",
-	Trait_Strong = "Buff Brainiac",
-	Trait_LeadBelly = "Lead Belly",
-	Trait_FearOfViolence = "Fear of Violence",
-	Trait_EasilyStartled = "Easily Startled",
-	Trait_Feeble = "Feeble",
-	Trait_Narcoleptic = "Narcoleptic",
-	Trait_Agoraphobic = "Agoraphobic",
-	Trait_Fumbler = "Fumbler",
-	Trait_Asthmatic = "Asthmatic",
-	Trait_Claustrophobic = "Claustrophobic",
-	Trait_Clumsy = "Clumsy",
-	Trait_Conspicuous = "Painfully Obvious",
-	Trait_HeartyAppetite = "Hearty Appetite",
-	Trait_Dry = "Dry Skin",
-	Trait_Hemophobic = "Hemophobic",
-	Trait_Dyslexia = "Dyslexia",
-	Trait_RestlessSleeper = "Restless Sleeper",
-	Trait_Smoker = "Smoker",
-	Trait_SlowHealer = "Slow Healer",
-	Trait_SlowLearner = "Slow Learner",
-	Trait_Hemophilia = "Hemophilia",
-	Trait_Unlucky = "Unlucky",
-	Trait_WeakBladder = "Weak Bladder",
-	Trait_Cannibal = "Forbidden Diet",
+	Trait_Decathlon = {
+		Description = "Decathlon Competitor",
+		Buff = true,
+	},
+	Trait_FormerGuard = {
+		Description = "Tough as Nails",
+		Buff = true,
+	},
+	Trait_WrinklyBrainmeat = {
+		Description = "Wrinkly Brainmeat",
+		Buff = true,
+	},
+	Trait_NightOwl = {
+		Description = "Night Owl",
+		Buff = true,
+	},
+	Trait_Chef = {
+		Description = "Hobbyist Chef",
+		Buff = true,
+	},
+	Trait_Inconspicuous = {
+		Description = "Inconspicuous",
+		Buff = true,
+	},
+	Trait_Outdoorsman = {
+		Description = "Weathered",
+		Buff = true,
+	},
+	Trait_FannyPack = {
+		Description = "Fanny Pack",
+		Buff = true,
+	},
+	Trait_ThickSkinned = {
+		Description = "Thick Skinned",
+		Buff = true,
+	},
+	Trait_FirstAidCert = {
+		Description = "First Aid Certification",
+		Buff = true,
+	},
+	Trait_Gardener = {
+		Description = "Gardener",
+		Buff = true,
+	},
+	Trait_LightEater = {
+		Description = "Light Eater",
+		Buff = true,
+	},
+	Trait_Moist = {
+		Description = "Naturally Moist",
+		Buff = true,
+	},
+	Trait_SelfDefense = {
+		Description = "Self Defense",
+		Buff = true,
+	},
+	Trait_SteelBladder = {
+		Description = "Bladder of Steel",
+		Buff = true,
+	},
+	Trait_Strong = {
+		Description = "Buff Brainiac",
+		Buff = true,
+	},
+	Trait_LeadBelly = {
+		Description = "Lead Belly",
+		Buff = true,
+	},
+	Trait_FearOfViolence = {
+		Description = "Fear of Violence",
+		Buff = false,
+	},
+	Trait_EasilyStartled = {
+		Description = "Easily Startled",
+		Buff = false,
+	},
+	Trait_Feeble = {
+		Description = "Feeble",
+		Buff = false,
+	},
+	Trait_Narcoleptic = {
+		Description = "Narcoleptic",
+		Buff = false,
+	},
+	Trait_Agoraphobic = {
+		Description = "Agoraphobic",
+		Buff = false,
+	},
+	Trait_Fumbler = {
+		Description = "Fumbler",
+		Buff = false,
+	},
+	Trait_Asthmatic = {
+		Description = "Asthmatic",
+		Buff = false,
+	},
+	Trait_Claustrophobic = {
+		Description = "Claustrophobic",
+		Buff = false,
+	},
+	Trait_Clumsy = {
+		Description = "Clumsy",
+		Buff = false,
+	},
+	Trait_Conspicuous = {
+		Description = "Painfully Obvious",
+		Buff = false,
+	},
+	Trait_HeartyAppetite = {
+		Description = "Hearty Appetite",
+		Buff = false,
+	},
+	Trait_Dry = {
+		Description = "Dry Skin",
+		Buff = false,
+	},
+	Trait_Hemophobic = {
+		Description = "Hemophobic",
+		Buff = false,
+	},
+	Trait_Dyslexia = {
+		Description = "Dyslexia",
+		Buff = false,
+	},
+	Trait_RestlessSleeper = {
+		Description = "Restless Sleeper",
+		Buff = false,
+	},
+	Trait_Smoker = {
+		Description = "Smoker",
+		Buff = false,
+	},
+	Trait_SlowHealer = {
+		Description = "Slow Healer",
+		Buff = false,
+	},
+	Trait_SlowLearner = {
+		Description = "Slow Learner",
+		Buff = false,
+	},
+	Trait_Hemophilia = {
+		Description = "Hemophilia",
+		Buff = false,
+	},
+	Trait_Unlucky = {
+		Description = "Unlucky",
+		Buff = false,
+	},
+	Trait_WeakBladder = {
+		Description = "Weak Bladder",
+		Buff = false,
+	},
+	Trait_Cannibal = {
+		Description = "Forbidden Diet",
+		Buff = false,
+	},
 }
 
 -- Static Classes --

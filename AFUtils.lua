@@ -125,6 +125,51 @@ AFUtils.WeatherEvents = {
     Spores = "Spores"
 }
 
+---Map of Traits. Key = FName, Value = Trait Name<br>
+---Game v0.9.2
+---@type { [string]: string }
+AFUtils.Traits = {
+	Trait_Decathlon = "Decathlon Competitor",
+	Trait_FormerGuard = "Tough as Nails",
+	Trait_WrinklyBrainmeat = "Wrinkly Brainmeat",
+	Trait_NightOwl = "Night Owl",
+	Trait_Chef = "Hobbyist Chef",
+	Trait_Inconspicuous = "Inconspicuous",
+	Trait_Outdoorsman = "Weathered",
+	Trait_FannyPack = "Fanny Pack",
+	Trait_ThickSkinned = "Thick Skinned",
+	Trait_FirstAidCert = "First Aid Certification",
+	Trait_Gardener = "Gardener",
+	Trait_LightEater = "Light Eater",
+	Trait_Moist = "Naturally Moist",
+	Trait_SelfDefense = "Self Defense",
+	Trait_SteelBladder = "Bladder of Steel",
+	Trait_Strong = "Buff Brainiac",
+	Trait_LeadBelly = "Lead Belly",
+	Trait_FearOfViolence = "Fear of Violence",
+	Trait_EasilyStartled = "Easily Startled",
+	Trait_Feeble = "Feeble",
+	Trait_Narcoleptic = "Narcoleptic",
+	Trait_Agoraphobic = "Agoraphobic",
+	Trait_Fumbler = "Fumbler",
+	Trait_Asthmatic = "Asthmatic",
+	Trait_Claustrophobic = "Claustrophobic",
+	Trait_Clumsy = "Clumsy",
+	Trait_Conspicuous = "Painfully Obvious",
+	Trait_HeartyAppetite = "Hearty Appetite",
+	Trait_Dry = "Dry Skin",
+	Trait_Hemophobic = "Hemophobic",
+	Trait_Dyslexia = "Dyslexia",
+	Trait_RestlessSleeper = "Restless Sleeper",
+	Trait_Smoker = "Smoker",
+	Trait_SlowHealer = "Slow Healer",
+	Trait_SlowLearner = "Slow Learner",
+	Trait_Hemophilia = "Hemophilia",
+	Trait_Unlucky = "Unlucky",
+	Trait_WeakBladder = "Weak Bladder",
+	Trait_Cannibal = "Forbidden Diet",
+}
+
 -- Static Classes --
 --------------------
 local Actor_Class = CreateInvalidObject()

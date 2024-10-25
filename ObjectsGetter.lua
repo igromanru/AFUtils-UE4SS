@@ -43,7 +43,7 @@ local PlayerStateCache = CreateInvalidObject() ---@cast PlayerStateCache AAbioti
 ---Returns player state of current player
 ---@return AAbiotic_PlayerState_C
 function AFUtils.GetMyPlayerState()
-    if PlayerStateCache and PlayerStateCache:IsValid() then
+    if IsValid(PlayerStateCache) then
         return PlayerStateCache
     end
 
@@ -69,7 +69,7 @@ end
 ---@return UAbiotic_InventoryComponent_C
 function AFUtils.GetMyEquipmentInventory()
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer:IsValid() and myPlayer.CharacterEquipSlotInventory then
+    if IsValid(myPlayer) and myPlayer.CharacterEquipSlotInventory then
         return myPlayer.CharacterEquipSlotInventory
     end
     return CreateInvalidObject() ---@type UAbiotic_InventoryComponent_C
@@ -79,7 +79,7 @@ end
 ---@return UAbiotic_InventoryComponent_C
 function AFUtils.GetMyHotbarInventory()
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer:IsValid() and myPlayer.CharacterHotbarInventory then
+    if IsValid(myPlayer) and myPlayer.CharacterHotbarInventory then
         return myPlayer.CharacterHotbarInventory
     end
     return CreateInvalidObject() ---@type UAbiotic_InventoryComponent_C
@@ -89,7 +89,7 @@ end
 ---@return UW_PlayerInventory_Main_C
 function AFUtils.GetMyPlayerInventory()
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer:IsValid() and myPlayer.InventoryReference then
+    if IsValid(myPlayer) and myPlayer.InventoryReference then
         return myPlayer.InventoryReference
     end
     return CreateInvalidObject() ---@type UW_PlayerInventory_Main_C
@@ -99,7 +99,7 @@ end
 ---@return UW_Inventory_CraftingArea_C
 function AFUtils.GetMyInventoryCraftingArea()
     local myPlayerInventory = AFUtils.GetMyPlayerInventory()
-    if myPlayerInventory:IsValid() and myPlayerInventory.W_Inventory_CraftingArea then
+    if IsValid(myPlayerInventory) and myPlayerInventory.W_Inventory_CraftingArea then
         return myPlayerInventory.W_Inventory_CraftingArea
     end
     return CreateInvalidObject() ---@type UW_Inventory_CraftingArea_C
@@ -110,7 +110,7 @@ end
 ---@return UAbiotic_CharacterProgressionComponent_C
 function AFUtils.GetMyCharacterProgressionComponent()
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer:IsValid() and myPlayer.CharacterProgressionComponent then
+    if IsValid(myPlayer) and myPlayer.CharacterProgressionComponent then
         return myPlayer.CharacterProgressionComponent
     end
 
@@ -121,7 +121,7 @@ end
 ---@return UW_PlayerHUD_Main_C
 function AFUtils.GetMyPlayerHUD()
     local playerController = AFUtils.GetMyPlayerController()
-    if playerController:IsValid() and playerController.PlayerHUDRef then
+    if IsValid(playerController) and playerController.PlayerHUDRef then
         return playerController.PlayerHUDRef
     end
     return CreateInvalidObject() ---@type UW_PlayerHUD_Main_C
@@ -130,7 +130,7 @@ end
  ---@return UAbiotic_GameInstance_C
  function AFUtils.GetGameInstance()
     local gameInstance = UEHelpers.GetGameInstance() ---@cast gameInstance UAbiotic_GameInstance_C
-    if gameInstance:IsValid() and gameInstance:IsA(AFUtils.GetClassAbiotic_GameInstance_C()) then
+    if IsValid(gameInstance) and gameInstance:IsA(AFUtils.GetClassAbiotic_GameInstance_C()) then
         return gameInstance
     end
     return CreateInvalidObject() ---@type UAbiotic_GameInstance_C
@@ -140,7 +140,7 @@ end
 ---@return AAbiotic_Survival_GameMode_C
 function AFUtils.GetSurvivalGameMode()
     local gameMode = UEHelpers.GetGameModeBase() ---@cast gameMode AAbiotic_Survival_GameMode_C
-    if gameMode:IsValid() and gameMode:IsA(AFUtils.GetClassAbiotic_Survival_GameMode_C()) then
+    if IsValid(gameMode) and gameMode:IsA(AFUtils.GetClassAbiotic_Survival_GameMode_C()) then
         return gameMode
     end
     return CreateInvalidObject() ---@type AAbiotic_Survival_GameMode_C
@@ -150,7 +150,7 @@ end
 ---@return AAbiotic_Survival_GameState_C
 function AFUtils.GetSurvivalGameState()
     local gameState = UEHelpers.GetGameStateBase() ---@cast gameState AAbiotic_Survival_GameState_C
-    if gameState:IsValid() and gameState:IsA(AFUtils.GetClassAbiotic_Survival_GameState_C()) then
+    if IsValid(gameState) and gameState:IsA(AFUtils.GetClassAbiotic_Survival_GameState_C()) then
         return gameState
     end
     return CreateInvalidObject() ---@type AAbiotic_Survival_GameState_C
@@ -160,12 +160,12 @@ local AIDirectorCache = CreateInvalidObject() ---@cast AIDirectorCache AAbiotic_
 ---Returns current AAbiotic_AIDirector_C
 ---@return AAbiotic_AIDirector_C
 function AFUtils.GetAIDirector()
-    if AIDirectorCache:IsValid() then
+    if IsValid(AIDirectorCache) then
         return AIDirectorCache
     end
 
     local gameMode = AFUtils.GetSurvivalGameMode()
-    if gameMode:IsValid() and gameMode.AI_Director then
+    if IsValid(gameMode) and gameMode.AI_Director then
         AIDirectorCache = gameMode.AI_Director
     end
     
@@ -177,7 +177,7 @@ local DayNightManagerCache = CreateInvalidObject() ---@cast DayNightManagerCache
 ---@return ADayNightManager_C
 function AFUtils.GetDayNightManager()
     local aiDirector = AFUtils.GetAIDirector()
-    if aiDirector:IsValid() and aiDirector.DayNightManager then
+    if IsValid(aiDirector) and aiDirector.DayNightManager then
         DayNightManagerCache = aiDirector.DayNightManager
     end
     return DayNightManagerCache
@@ -187,7 +187,7 @@ local AIControllerLeyakCache = CreateInvalidObject() ---@cast AIControllerLeyakC
 ---Returns current AAI_Controller_Leyak_C
 ---@return AAI_Controller_Leyak_C
 function AFUtils.GetAIControllerLeyak()
-    if AIControllerLeyakCache:IsValid() then
+    if IsValid(AIControllerLeyakCache) then
         return AIControllerLeyakCache
     end
     
@@ -259,7 +259,7 @@ end
 ---@return AAbiotic_Weapon_ParentBP_C?
 function AFUtils.GetCurrentWeapon(PlayerCharacter)
     PlayerCharacter = PlayerCharacter or AFUtils.GetMyPlayer()
-    if PlayerCharacter:IsValid() and PlayerCharacter.ItemInHand_BP:IsValid() and PlayerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassAbiotic_Weapon_ParentBP_C()) then
+    if IsValid(PlayerCharacter) and PlayerCharacter.ItemInHand_BP:IsValid() and PlayerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassAbiotic_Weapon_ParentBP_C()) then
         local weapon = PlayerCharacter.ItemInHand_BP ---@cast weapon AAbiotic_Weapon_ParentBP_C
         return weapon
     end

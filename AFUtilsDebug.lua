@@ -1,5 +1,5 @@
 
-local AFUtils = require("AFUtils.AFUtils")
+require("AFUtils.AFBase")
 require("AFUtils.BaseUtils.LogDebug")
 
 ---Logs in debug scope all relevant properties of FTimerHandle to console 

@@ -1,4 +1,10 @@
 
+--[[
+    Author: Igromanru
+    Created Date: 19.08.2024
+    Description: Utility functions for the game Abiotic Factor
+]]
+
 require("AFUtils.AFBase")
 
 local AbioticFunctionLibraryCache = CreateInvalidObject() ---@cast AbioticFunctionLibraryCache UAbioticFunctionLibrary_C
@@ -31,3 +37,5 @@ function AFUtils.GetWeatherEventHandleFunctionLibrary()
     end
     return WeatherEventHandleFunctionLibraryCache
 end
+
+return AFUtils

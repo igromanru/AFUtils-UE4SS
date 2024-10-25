@@ -1,4 +1,10 @@
 
+--[[
+    Author: Igromanru
+    Created Date: 19.08.2024
+    Description: Utility functions for the game Abiotic Factor
+]]
+
 require("AFUtils.AFBase")
 require("AFUtils.BaseUtils.LogDebug")
 
@@ -959,3 +965,5 @@ function AFUtils.LogDeployedLeyakContainment(LeyakContainment, Prefix)
     LogDebug(Prefix .. "FeedRequiredToFill:", LeyakContainment.FeedRequiredToFill)
     LogDebug(Prefix .. "FoggedGlass:", LeyakContainment.FoggedGlass)
 end
+
+return AFUtils

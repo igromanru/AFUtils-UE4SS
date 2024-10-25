@@ -1,3 +1,8 @@
+--[[
+    Author: Igromanru
+    Created Date: 19.08.2024
+    Description: Utility functions for the game Abiotic Factor
+]]
 
 require("AFUtils.AFBase")
 
@@ -210,3 +215,5 @@ function AFUtils.GetClassItem_Gear_KeypadHacker_C()
     end
     return Item_Gear_KeypadHacker_C_Class
 end
+
+return AFUtils

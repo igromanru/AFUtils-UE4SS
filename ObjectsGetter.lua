@@ -48,7 +48,7 @@ function AFUtils.GetMyPlayerState()
     end
 
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer:IsValid() then
+    if IsValid(myPlayer) then
         PlayerStateCache = myPlayer.MyPlayerState
     end
 
@@ -59,7 +59,7 @@ end
 ---@return UAbiotic_InventoryComponent_C
 function AFUtils.GetMyInventoryComponent()
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer:IsValid() and myPlayer.CharacterInventory then
+    if IsValid(myPlayer) and myPlayer.CharacterInventory then
         return myPlayer.CharacterInventory
     end
     return CreateInvalidObject() ---@type UAbiotic_InventoryComponent_C

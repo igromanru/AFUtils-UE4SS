@@ -27,7 +27,7 @@ end
 ---@return FRotator
 function AFUtils.GetControlRotation()
     local playerController = AFUtils.GetMyPlayerController()
-    if playerController:IsValid() then
+    if IsValid(playerController) then
         return RotatorToUserdata(playerController.ControlRotation)
     end
     return FRotator()
@@ -38,7 +38,7 @@ end
 ---@return boolean Success # false if no valid PlayerController
 function AFUtils.SetControlRotation(Rotation)
     local playerController = AFUtils.GetMyPlayerController()
-    if playerController:IsValid() then
+    if IsValid(playerController) then
         playerController:SetControlRotation(Rotation)
         return true
     end
@@ -60,7 +60,7 @@ function AFUtils.DisplayTextChatMessage(Message, Prefix, Color)
     if not Message then return end
 
     local myPlayerController = AFUtils.GetMyPlayerController()
-    if myPlayerController:IsValid() then
+    if IsValid(myPlayerController) then
         Prefix = Prefix or ""
         if not Color or type(Color) ~= 'table' then
             Color = { -- White
@@ -92,7 +92,7 @@ function AFUtils.ClientDisplayWarningMessage(Message, CriticalityLevel, WarningB
     WarningBeep = WarningBeep or false
 
     local myPlayer = AFUtils.GetMyPlayer()
-    if myPlayer:IsValid() then
+    if IsValid(myPlayer) then
         -- LogDebug("ClientDisplayWarningMessage: Message: "..Message.." CriticalityLevel: "..CriticalityLevel.." WarningBeep: "..tostring(WarningBeep))
         local fText = FText(Message)
         if fText then
@@ -127,7 +127,7 @@ end
 ---Get current combined health of all limbs
 ---@param playerCharacter AAbiotic_Character_ParentBP_C
 function AFUtils.GetCurrentCombinedHealth(playerCharacter)
-    if not playerCharacter then return 0 end
+    if IsNotValid(playerCharacter) then return 0 end
     return playerCharacter.CurrentHealth_Head + playerCharacter.CurrentHealth_Torso
             + playerCharacter.CurrentHealth_LeftArm + playerCharacter.CurrentHealth_RightArm
             + playerCharacter.CurrentHealth_LeftLeg + playerCharacter.CurrentHealth_RightLeg
@@ -347,7 +347,7 @@ end
 
 ---@param playerCharacter AAbiotic_PlayerCharacter_C Must be a valid object
 function AFUtils.FillAllEquippedItemsWithEnergy(playerCharacter)
-    if not playerCharacter or not playerCharacter.CharacterEquipSlotInventory:IsValid() or #playerCharacter.CharacterEquipSlotInventory.CurrentInventory < 12 then
+    if IsNotValid(playerCharacter) or not playerCharacter.CharacterEquipSlotInventory:IsValid() or #playerCharacter.CharacterEquipSlotInventory.CurrentInventory < 12 then
         return
     end
     local itemSlotStructs = playerCharacter.CharacterEquipSlotInventory.CurrentInventory
@@ -418,7 +418,7 @@ end
 ---@param weapon AAbiotic_Weapon_ParentBP_C? Must be a valid object
 ---@return boolean Filled # Returns true if ammo was modified, otherwise false
 function AFUtils.FillHeldWeaponWithAmmo(playerCharacter, weapon)
-    if not playerCharacter or not playerCharacter.ItemInHand_BP then return false end
+    if IsNotValid(playerCharacter) or not playerCharacter.ItemInHand_BP then return false end
 
     weapon = weapon or AFUtils.GetCurrentWeapon(playerCharacter)
     if not weapon or not weapon:IsValid() then return false end
@@ -454,7 +454,7 @@ function AFUtils.TriggerWeatherEvent(EventName)
 
     local weatherEventHandleFunctionLibrary = AFUtils.GetWeatherEventHandleFunctionLibrary()
     local myPlayerController = AFUtils.GetMyPlayerController()
-    if weatherEventHandleFunctionLibrary and myPlayerController:IsValid() and myPlayerController.DayNightManager:IsValid() then
+    if IsValid(weatherEventHandleFunctionLibrary) and IsValid(myPlayerController) and myPlayerController.DayNightManager:IsValid() then
         ---@type table<LocalUnrealParam>
         local outRowHandles = {}
         weatherEventHandleFunctionLibrary:GetAllWeatherEventRowHandles(outRowHandles)
@@ -485,7 +485,7 @@ function AFUtils.SetNextWeatherEvent(EventName)
     if type(EventName) ~= "string" then return false end
 
     local myPlayerController = AFUtils.GetMyPlayerController()
-    if myPlayerController:IsValid() and myPlayerController.DayNightManager:IsValid() then
+    if IsValid(myPlayerController) and myPlayerController.DayNightManager:IsValid() then
         local RowName = FName(EventName, EFindName.FNAME_Find)
         myPlayerController.DayNightManager.RequiredDaysBetweenWeather = 0
         myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName = RowName
@@ -510,13 +510,13 @@ function AFUtils.HealAllLimbs(playerCharacter)
 end
 
 ---Teleports a player to a close location of another
----@param Player AAbiotic_PlayerCharacter_C? # Player that should be teleported
----@param TargetPlayer AAbiotic_PlayerCharacter_C? # Target to teleport to
+---@param Player AAbiotic_PlayerCharacter_C # Player that should be teleported
+---@param TargetPlayer AAbiotic_PlayerCharacter_C # Target to teleport to
 ---@param Behind boolean? # If the player should be teleported behind or infront of the target
 ---@param DistanceToActor integer? # Default 100 aka. 1m
 ---@return boolean Sucess
 function AFUtils.TeleportPlayerToPlayer(Player, TargetPlayer, Behind, DistanceToActor)
-    if not Player or not TargetPlayer or not Player:IsValid() or not TargetPlayer:IsValid() then return false end
+    if IsNotValid(Player) or IsNotValid(TargetPlayer) then return false end
 
     Behind = Behind or false
     DistanceToActor = DistanceToActor or 100 -- 1m
@@ -555,7 +555,7 @@ function AFUtils.AddToItemStack(Inventory, SlotIndex, StackToAdd)
     if IsNotValid(Inventory) or not SlotIndex or not StackToAdd then return false end
 
     local myPlayerController = AFUtils.GetMyPlayerController()
-    if myPlayerController:IsValid() then
+    if IsValid(myPlayerController) then
         myPlayerController:Server_AddToItemStack(Inventory, SlotIndex, StackToAdd)
         return true
     end
@@ -582,7 +582,7 @@ end
 ---@return boolean Success
 function AFUtils.CalculateAndSetDaytime(DayNightManager)
     DayNightManager = DayNightManager or AFUtils.GetDayNightManager()
-    if not DayNightManager:IsValid() then return false end
+    if IsNotValid(DayNightManager) then return false end
 
     local currentTime = DayNightManager.CurrentTimeInSeconds
     local isDay = currentTime < HoursToSeconds(DayNightManager.NightfallStartHour) and currentTime >= HoursToSeconds(DayNightManager.MorningStartHour)
@@ -601,7 +601,7 @@ function AFUtils.SetGameTime(Hours, Minutes)
     Minutes = Minutes or 0.0
 
     local dayNightManager = AFUtils.GetDayNightManager()
-    if dayNightManager:IsValid() then
+    if IsValid(dayNightManager) then
         local targetTime = HoursToSeconds(Hours) + MinutesToSeconds(Minutes) + 10
         dayNightManager.CurrentTimeInSeconds = targetTime
         dayNightManager:OnRep_CurrentTimeInSeconds()
@@ -619,7 +619,7 @@ function AFUtils.AddGameTime(Hours, Minutes)
     Minutes = Minutes or 0.0
 
     local dayNightManager = AFUtils.GetDayNightManager()
-    if dayNightManager:IsValid() then
+    if IsValid(dayNightManager) then
         local targetTime = dayNightManager.CurrentTimeInSeconds + HoursToSeconds(Hours) + MinutesToSeconds(Minutes)
         dayNightManager.CurrentTimeInSeconds = targetTime
         dayNightManager:OnRep_CurrentTimeInSeconds()

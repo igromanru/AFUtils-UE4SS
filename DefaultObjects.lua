@@ -10,7 +10,7 @@ require("AFUtils.AFBase")
 local AbioticFunctionLibraryCache = CreateInvalidObject() ---@cast AbioticFunctionLibraryCache UAbioticFunctionLibrary_C
 ---@return UAbioticFunctionLibrary_C
 function AFUtils.GetAbioticFunctionLibrary()
-    if not AbioticFunctionLibraryCache or not AbioticFunctionLibraryCache:IsValid() then
+    if IsNotValid(AbioticFunctionLibraryCache) then
         AbioticFunctionLibraryCache = StaticFindObject("/Game/Blueprints/Libraries/AbioticFunctionLibrary.Default__AbioticFunctionLibrary_C")
         ---@cast AbioticFunctionLibraryCache UAbioticFunctionLibrary_C
     end
@@ -20,7 +20,7 @@ end
 local LevelStreamingCustomCache = CreateInvalidObject() ---@cast LevelStreamingCustomCache ULevelStreamingCustom
 ---@return ULevelStreamingCustom
 function AFUtils.GetLevelStreamingCustom()
-    if not LevelStreamingCustomCache:IsValid() then
+    if IsNotValid(LevelStreamingCustomCache) then
         LevelStreamingCustomCache = StaticFindObject("/Script/AbioticFactor.Default__LevelStreamingCustom")
         ---@cast LevelStreamingCustomCache ULevelStreamingCustom
     end
@@ -31,7 +31,7 @@ end
 local WeatherEventHandleFunctionLibraryCache = CreateInvalidObject() ---@cast WeatherEventHandleFunctionLibraryCache UWeatherEventHandleFunctionLibrary
 ---@return UWeatherEventHandleFunctionLibrary
 function AFUtils.GetWeatherEventHandleFunctionLibrary()
-    if not WeatherEventHandleFunctionLibraryCache:IsValid() then
+    if IsNotValid(WeatherEventHandleFunctionLibraryCache) then
         WeatherEventHandleFunctionLibraryCache = StaticFindObject("/Script/AbioticFactor.Default__WeatherEventHandleFunctionLibrary")
         ---@cast WeatherEventHandleFunctionLibraryCache UWeatherEventHandleFunctionLibrary
     end

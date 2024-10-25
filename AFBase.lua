@@ -4,6 +4,8 @@
     Description: Utility functions for the game Abiotic Factor
 ]]
 
+require("AFUtils.BaseUtils.BaseUtils")
+
 -- AFUtils class
 AFUtils = {}
 

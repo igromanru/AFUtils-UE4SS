@@ -5,9 +5,8 @@
 ]]
 
 local UEHelpers = require("UEHelpers")
-require("AFUtils.BaseUtils.BaseUtils")
 require("AFUtils.AFBase")
-require("AFUtils.Mappings")
+require("AFUtils.Enums")
 require("AFUtils.StaticClasses")
 require("AFUtils.DefaultObjects")
 

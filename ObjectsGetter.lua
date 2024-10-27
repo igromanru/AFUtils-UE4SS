@@ -170,6 +170,23 @@ function AFUtils.GetMyCharacterSave()
     return CreateInvalidObject() ---@type UAbiotic_CharacterSave_C
 end
 
+---@return UAbiotic_CharacterSave_C
+function AFUtils.GetMyPendingCharacterSave()
+    local gameInstance = AFUtils.GetGameInstance()
+    local playerState = AFUtils.GetMyPlayerState()
+    if IsValid(gameInstance) and IsValid(playerState) and gameInstance.PendingPlayerSaves and #gameInstance.PendingPlayerSaves > 0 then
+        local myUniqueId = playerState.UniquePlayerID:ToString()
+        for i = 1, #gameInstance.PendingPlayerSaves do
+            local playerSave = gameInstance.PendingPlayerSaves[i]
+            if IsValid(playerSave) and playerSave:IsA(AFUtils.GetClassAbiotic_CharacterSave_C()) and playerSave.SaveIdentifier:ToString() == myUniqueId then
+                ---@cast playerSave UAbiotic_CharacterSave_C
+                return playerSave
+            end
+        end
+    end
+    return CreateInvalidObject() ---@type UAbiotic_CharacterSave_C
+end
+
 local AIDirectorCache = CreateInvalidObject() ---@cast AIDirectorCache AAbiotic_AIDirector_C
 ---Returns current AAbiotic_AIDirector_C
 ---@return AAbiotic_AIDirector_C

@@ -156,6 +156,20 @@ function AFUtils.GetSurvivalGameState()
     return CreateInvalidObject() ---@type AAbiotic_Survival_GameState_C
 end
 
+---@return UAbiotic_CharacterSave_C
+function AFUtils.GetMyCharacterSave()
+    local gameInstance = AFUtils.GetGameInstance()
+    local playerState = AFUtils.GetMyPlayerState()
+    if IsValid(gameInstance) and IsValid(playerState) then
+        local playerSave = gameInstance:GetPlayerSave(playerState.UniquePlayerID, false)
+        if IsValid(playerSave) and playerSave:IsA(AFUtils.GetClassAbiotic_CharacterSave_C())  then
+            ---@cast playerSave UAbiotic_CharacterSave_C
+            return playerSave
+        end
+    end
+    return CreateInvalidObject() ---@type UAbiotic_CharacterSave_C
+end
+
 local AIDirectorCache = CreateInvalidObject() ---@cast AIDirectorCache AAbiotic_AIDirector_C
 ---Returns current AAbiotic_AIDirector_C
 ---@return AAbiotic_AIDirector_C

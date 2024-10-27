@@ -216,4 +216,14 @@ function AFUtils.GetClassItem_Gear_KeypadHacker_C()
     return Item_Gear_KeypadHacker_C_Class
 end
 
+local Abiotic_CharacterSave_C_Class = CreateInvalidObject()
+---@return UClass
+function AFUtils.GetClassAbiotic_CharacterSave_C()
+    if IsNotValid(Abiotic_CharacterSave_C_Class) then
+        Abiotic_CharacterSave_C_Class = StaticFindObject("/Game/Blueprints/Saves/Abiotic_CharacterSave.Abiotic_CharacterSave_C")
+        ---@cast Abiotic_CharacterSave_C_Class UClass
+    end
+    return Abiotic_CharacterSave_C_Class
+end
+
 return AFUtils

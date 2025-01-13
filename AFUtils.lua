@@ -18,8 +18,14 @@ local IsDedicatedServerCache = nil
 ---@return boolean
 function AFUtils.IsDedicatedServer(UpdateCache)
     if IsDedicatedServerCache == nil or UpdateCache then
-        IsDedicatedServerCache = IsDedicatedServer()
+        local commandLine = string.lower(GetKismetSystemLibrary():GetCommandLine():ToString())
+        if commandLine ~= "" and string.find(commandLine, "-newconsole", 1, true) then
+            IsDedicatedServerCache = true
+        else
+            IsDedicatedServerCache = IsDedicatedServer()
+        end
     end
+    
     return IsDedicatedServerCache
 end
 

@@ -539,7 +539,7 @@ function AFUtils.TeleportPlayerToPlayer(Player, TargetPlayer, Behind, DistanceTo
     local locationOffset = GetKismetMathLibrary():Multiply_VectorVector(direction, FVector(DistanceToActor, DistanceToActor, 0))
     tagetLocation = GetKismetMathLibrary():Add_VectorVector(tagetLocation, locationOffset)
     
-    return Player:TeleportPlayer(tagetLocation, targetRotation)
+    return Player:TeleportPlayer(tagetLocation, targetRotation, true)
 end
 
 ---@param InventoryItemSlot UW_InventoryItemSlot_C

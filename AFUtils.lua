@@ -34,7 +34,7 @@ end
 function AFUtils.GetControlRotation()
     local playerController = AFUtils.GetMyPlayerController()
     if IsValid(playerController) then
-        return RotatorToUserdata(playerController.ControlRotation)
+        return RotatorToTable(playerController.ControlRotation)
     end
     return FRotator()
 end
@@ -442,10 +442,10 @@ function AFUtils.FillHeldWeaponWithAmmo(playerCharacter, weapon)
     return false
 end
 
----Converts FWeatherEventRowHandle to userdata
+---Converts FWeatherEventRowHandle to table
 ---@param EventRow FWeatherEventRowHandle
----@return FWeatherEventRowHandle # It creates userdata that represent FWeatherEventRowHandle
-function AFUtils.ConvertWeatherEventRowHandleToUserdata(EventRow)
+---@return FWeatherEventRowHandle # It creates table that represent FWeatherEventRowHandle
+function AFUtils.ConvertWeatherEventRowHandleToTable(EventRow)
     return { 
         RowName = EventRow.RowName,
         DataTablePath = EventRow.DataTablePath
@@ -475,7 +475,7 @@ function AFUtils.TriggerWeatherEvent(EventName)
                 myPlayerController.DayNightManager.RequiredDaysBetweenWeather = 0
                 myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName = rowHandle.RowName
                 LogDebug("Weather_RequestByPlayer.RowName: "..myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName:ToString())
-                -- myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToUserdata(rowHandle))
+                -- myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToTable(rowHandle))
                 -- LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
                 return true
             end

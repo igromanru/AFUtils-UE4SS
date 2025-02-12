@@ -570,6 +570,7 @@ function AFUtils.LogCharacterParentBP(Character, Prefix)
 
     LogDebug(Prefix .. "ActorLocation:", VectorToString(Character:K2_GetActorLocation()))
     LogDebug(Prefix .. "ActorRotation:", RotatorToString(Character:K2_GetActorRotation()))
+    -- AFUtils.LogOutlineComponent(Character.OutlineComponent, "OutlineComponent.")
     LogDebug(Prefix .. "TotalCombinedHealth:", Character.TotalCombinedHealth)
     LogDebug(Prefix .. "IsDead:", Character.IsDead)
     LogDebug(Prefix .. "IsDBNO:", Character.IsDBNO)
@@ -965,5 +966,17 @@ function AFUtils.LogDeployedLeyakContainment(LeyakContainment, Prefix)
     LogDebug(Prefix .. "FeedRequiredToFill:", LeyakContainment.FeedRequiredToFill)
     LogDebug(Prefix .. "FoggedGlass:", LeyakContainment.FoggedGlass)
 end
+
+---@param OutlineComponent UOutlineComponent_C
+---@param Prefix string?
+function AFUtils.LogOutlineComponent(OutlineComponent, Prefix)
+    if not OutlineComponent or not OutlineComponent:IsValid() then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "OutlineMask:", OutlineComponent.OutlineMask)
+    LogDebug(Prefix .. "RegisteredComponents count:", #OutlineComponent.RegisteredComponents)
+    LogDebug(Prefix .. "ComponentEnabled:", OutlineComponent.ComponentEnabled)
+end
+
 
 return AFUtils

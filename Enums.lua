@@ -281,4 +281,16 @@ AFUtils.Traits = {
 	},
 }
 
+AFUtils.OutlineMask = {
+	None = 0,
+	Object = 1, -- Cyan
+	White = 2, -- White / Grey
+	-- Cyan2 = 3, -- Cyan
+	-- White2 = 4,
+	-- Cyan3 = 5,
+	-- White3 = 6,
+	-- Cyan4 = 7,
+	Enemy = 8 -- Red
+}
+
 return AFUtils

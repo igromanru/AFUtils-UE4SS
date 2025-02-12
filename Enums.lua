@@ -20,7 +20,7 @@ AFUtils.LiquidType = {
     Unknown8 = 8,
     Unknown9 = 9,
     TaintedWater = 10,
-    Unknown11 = 11,
+    Soup = 11,
     LaserEnergy = 12,
     Unknown13 = 13
 }

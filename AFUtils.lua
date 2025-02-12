@@ -185,11 +185,11 @@ end
 function AFUtils.IsOnlyEnergyLiquidTypeAllowed(LiquidStruct)
     local result = false
     if LiquidStruct and LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 then
-        for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3, 1 do
+        for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 do
             local allowedLiquid = LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[i]
             result = AFUtils.IsEnergyLiquidType(allowedLiquid)
             if not result then
-               break
+                return false
             end
         end
     end
@@ -334,7 +334,7 @@ end
 ---@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.LiquidData will be used to pull infomation for ItemSlotStruct and Item.ChangeableData
 ---@return boolean Success
 function AFUtils.FillItemSlotStructEnergyFromItem(ItemSlotStruct, Item)
-    if not ItemSlotStruct or not Item or not Item:IsValid() then return false end
+    if not ItemSlotStruct or IsNotValid(Item) then return false end
     return AFUtils.FillItemSlotStructEnergy(ItemSlotStruct, Item.ItemData) and AFUtils.FillChangeableDataEnergy(Item.ChangeableData, Item.ItemData)
 end
 

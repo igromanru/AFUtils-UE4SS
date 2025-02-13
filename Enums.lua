@@ -295,4 +295,23 @@ AFUtils.OutlineMask = {
 	Enemy = 8 -- Red
 }
 
+---@enum Factions
+AFUtils.Factions = {
+	None = 0,
+	NewEnumerator5 = 1,
+	Player = 2,
+	Soldier = 3,
+	NewEnumerator4 = 4,
+	Creature = 5,
+	NewEnumerator7 = 6,
+	NewEnumerator8 = 7,
+	NewEnumerator9 = 8,
+	NewEnumerator10 = 9,
+	NewEnumerator11 = 10,
+	NewEnumerator12 = 11,
+	NewEnumerator13 = 12,
+	NewEnumerator14 = 13,
+	NewEnumerator16 = 14
+};
+
 return AFUtils

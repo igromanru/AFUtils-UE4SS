@@ -29,6 +29,17 @@ function AFUtils.IsDedicatedServer(UpdateCache)
     return IsDedicatedServerCache
 end
 
+---Returns true if in single player or in main menu after playing single player
+---@return boolean
+function AFUtils.IsSinglepalyer()
+    local gameInstance = UEHelpers.GetGameInstance() ---@cast gameInstance UAbiotic_GameInstance_C
+    if IsValid(gameInstance) then
+        return gameInstance.IsSingleplayer == true
+    end
+    return false
+end
+
+
 ---Gets Control Rotation
 ---@return FRotator
 function AFUtils.GetControlRotation()

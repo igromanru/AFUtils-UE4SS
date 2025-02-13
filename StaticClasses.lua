@@ -156,6 +156,16 @@ function AFUtils.GetClassAbiotic_Character_ParentBP_C()
     return Abiotic_Character_ParentBP_C_Class
 end
 
+local NPC_Base_ParentBP_C_Class = CreateInvalidObject()
+---@return UClass
+function AFUtils.GetClassNPC_Base_ParentBP_C()
+    if IsNotValid(NPC_Base_ParentBP_C_Class) then
+        NPC_Base_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/Characters/NPCs/NPC_Base_ParentBP.NPC_Base_ParentBP_C")
+        ---@cast NPC_Base_ParentBP_C_Class UClass
+    end
+    return NPC_Base_ParentBP_C_Class
+end
+
 local NarrativeNPC_ParentBP_C_Class = CreateInvalidObject()
 ---@return UClass
 function AFUtils.GetClassNarrativeNPC_ParentBP_C()

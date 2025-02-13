@@ -29,6 +29,17 @@ function AFUtils.IsDedicatedServer(UpdateCache)
     return IsDedicatedServerCache
 end
 
+---Returns true if in single player or in main menu after playing single player
+---@return boolean
+function AFUtils.IsSinglepalyer()
+    local gameInstance = UEHelpers.GetGameInstance() ---@cast gameInstance UAbiotic_GameInstance_C
+    if IsValid(gameInstance) then
+        return gameInstance.IsSingleplayer == true
+    end
+    return false
+end
+
+
 ---Gets Control Rotation
 ---@return FRotator
 function AFUtils.GetControlRotation()
@@ -284,7 +295,7 @@ end
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@return boolean Success
 function AFUtils.RepairAllItemsInInvetory(PlayerCharacter, Inventory)
-    if not PlayerCharacter or not Inventory or not PlayerCharacter:IsValid() or not Inventory.CurrentInventory or #Inventory.CurrentInventory < 1 then return false end
+    if IsNotValid(PlayerCharacter) or IsNotValid(Inventory) or not Inventory.CurrentInventory or #Inventory.CurrentInventory < 1 then return false end
 
     for i = 1, #Inventory.CurrentInventory do
         local itemSlotStruct = Inventory.CurrentInventory[i]

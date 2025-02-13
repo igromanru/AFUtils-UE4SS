@@ -281,6 +281,8 @@ AFUtils.Traits = {
 	},
 }
 
+---Valid OutlineMask values for UOutlineComponent_C
+---@enum OutlineMask
 AFUtils.OutlineMask = {
 	None = 0,
 	Object = 1, -- Cyan

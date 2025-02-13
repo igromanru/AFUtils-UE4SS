@@ -284,7 +284,7 @@ end
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@return boolean Success
 function AFUtils.RepairAllItemsInInvetory(PlayerCharacter, Inventory)
-    if not PlayerCharacter or not Inventory or not PlayerCharacter:IsValid() or not Inventory.CurrentInventory or #Inventory.CurrentInventory < 1 then return false end
+    if IsNotValid(PlayerCharacter) or IsNotValid(Inventory) or not Inventory.CurrentInventory or #Inventory.CurrentInventory < 1 then return false end
 
     for i = 1, #Inventory.CurrentInventory do
         local itemSlotStruct = Inventory.CurrentInventory[i]

@@ -12,7 +12,7 @@ require("AFUtils.DefaultObjects")
 ---Returns current AAbiotic_PlayerController_C
 ---@return AAbiotic_PlayerController_C
 function AFUtils.GetMyPlayerController()
-    local myPlayerController = UEHelpers.GetPlayerController() ---@cast myPlayerController AAbiotic_PlayerController_C
+    local myPlayerController = GetMyPlayerController() ---@cast myPlayerController AAbiotic_PlayerController_C
     if IsValid(myPlayerController) and myPlayerController:IsA(AFUtils.GetClassAbiotic_PlayerController_C()) then
         return myPlayerController
     end
@@ -32,9 +32,9 @@ end
 ---Returns current controlled player
 ---@return AAbiotic_PlayerCharacter_C
 function AFUtils.GetMyPlayer()
-    local player = UEHelpers.GetPlayer() ---@cast player AAbiotic_PlayerCharacter_C
-    if IsValid(player) and player:IsA(AFUtils.GetClassAbiotic_PlayerCharacter_C()) then
-        return player
+    local playerController = AFUtils.GetMyPlayerController()
+    if IsValid(playerController) then
+        return playerController.MyPlayerCharacter
     end
     return CreateInvalidObject() ---@type AAbiotic_PlayerCharacter_C
 end

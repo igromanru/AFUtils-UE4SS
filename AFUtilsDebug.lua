@@ -600,7 +600,7 @@ function AFUtils.LogCharacterParentBP(Character, Prefix)
     -- LogDebug(Prefix .. "LeftLegBones.Num:", #Character.LeftLegBones)
     -- LogDebug(Prefix .. "RightLegBones.Num:", #Character.RightLegBones)
     -- ToDo LastPointDamage
-    LogDebug(Prefix .. "Faction (enum 0-10):", Character.Faction)
+    LogDebug(Prefix .. "Faction (enum 0-14):", Character.Faction)
     LogDebug(Prefix .. "CurrentVoiceAudioImportance (enum 0-2):", Character.CurrentVoiceAudioImportance)
     LogDebug(Prefix .. "NPC_Targetable:", Character.NPC_Targetable)
     LogDebug(Prefix .. "Inventory:", Character.Inventory)

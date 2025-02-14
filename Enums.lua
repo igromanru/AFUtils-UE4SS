@@ -18,11 +18,11 @@ AFUtils.LiquidType = {
     Unknown6 = 6,
     Energy = 7,
     Unknown8 = 8,
-    Unknown9 = 9,
+    Antejuice = 9,
     TaintedWater = 10,
     Soup = 11,
     LaserEnergy = 12,
-    Unknown13 = 13
+    Ink = 13
 }
 
 ---@enum CriticalityLevels

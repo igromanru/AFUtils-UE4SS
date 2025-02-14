@@ -70,7 +70,7 @@ function AFUtils.LogInventoryChangeableDataStruct(ChangeableData, Prefix)
     LogDebug(Prefix .. "CurrentStack: " .. ChangeableData.CurrentStack_9_D443B69044D640B0989FD8A629801A49)
     LogDebug(Prefix .. "CurrentAmmoInMagazine: " .. ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D)
     LogDebug(Prefix .. "LiquidLevel: " .. ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A)
-    LogDebug(Prefix .. "CurrentLiquid (enum): " .. ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109)
+    LogDebug(Prefix .. "CurrentLiquid (enum 0-13): " .. ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109)
 end
 
 ---Logs in debug scope all relevant properties of FAbiotic_InventoryItemSlotStruct to console 
@@ -241,8 +241,8 @@ function AFUtils.LogItemParentBP(Item, Prefix)
 
     LogDebug(Prefix .. "Class Name: " .. Item:GetClass():GetFullName())
     LogDebug(Prefix .. "ItemDataRow.RowName: " .. Item.ItemDataRow.RowName:ToString())
-    AFUtils.LogInventoryItemStruct(Item.ItemData, Prefix, "ItemData.")
-    AFUtils.LogInventoryChangeableDataStruct(Item.ChangeableData, Prefix, "ChangeableData.")
+    AFUtils.LogInventoryItemStruct(Item.ItemData, Prefix .. "ItemData.")
+    AFUtils.LogInventoryChangeableDataStruct(Item.ChangeableData, Prefix .. "ChangeableData.")
     LogDebug(Prefix .. "HasBeenPickedUp: " .. tostring(Item.HasBeenPickedUp))
     LogDebug(Prefix .. "To Interact with Text: " .. Item["To Interact with Text"]:ToString())
     LogDebug(Prefix .. "NoPhysics: " .. tostring(Item.NoPhysics))
@@ -259,7 +259,7 @@ function AFUtils.LogItemParentBP(Item, Prefix)
     -- LogDebug(Prefix .. "SpawnedFromProjectileImpact: " .. tostring(Item.SpawnedFromProjectileImpact))
     -- local rechargeableComponent = GetBlueprintCreatedComponentByClass(Item, AFUtils.GetClassRechargeableComponent_C())
     -- if rechargeableComponent then
-    --     AFUtils.LogRechargeableComponent(rechargeableComponent, Prefix, "RechargeableComponent.")
+    --     AFUtils.LogRechargeableComponent(rechargeableComponent, Prefix .. "RechargeableComponent.")
     -- end
 end
 

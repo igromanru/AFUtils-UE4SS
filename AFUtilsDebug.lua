@@ -70,7 +70,7 @@ function AFUtils.LogInventoryChangeableDataStruct(ChangeableData, Prefix)
     LogDebug(Prefix .. "CurrentStack: " .. ChangeableData.CurrentStack_9_D443B69044D640B0989FD8A629801A49)
     LogDebug(Prefix .. "CurrentAmmoInMagazine: " .. ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D)
     LogDebug(Prefix .. "LiquidLevel: " .. ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A)
-    LogDebug(Prefix .. "CurrentLiquid (enum 0-13): " .. ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109)
+    LogDebug(Prefix .. "CurrentLiquid (enum 0-13): " .. AFUtils.LiquidTypeToString(ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109) .. " (" .. ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 .. ")")
 end
 
 ---Logs in debug scope all relevant properties of FAbiotic_InventoryItemSlotStruct to console 
@@ -92,14 +92,18 @@ function AFUtils.LogLiquidStruct(LiquidStruct, Prefix)
     if not LiquidStruct then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "MaxLiquid: " .. LiquidStruct.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4)
-    LogDebug(Prefix .. "AllowedLiquids.Num: " .. #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3)
-    for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3, 1 do
+    LogDebug(Prefix .. "MaxLiquid:", LiquidStruct.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4)
+    LogDebug(Prefix .. "AllowedLiquids.Num:", #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3)
+    for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 do
         local liquiedType = LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[i]
-        LogDebug(Prefix .. string.format("AllowedLiquids[%d]:", i) .. liquiedType)
+        LogDebug(Prefix .. string.format("AllowedLiquids[%d]:", i), liquiedType)
     end
-    LogDebug(Prefix .. "PercentageLiquidToStartWith: " .. LiquidStruct.PercentageLiquidToStartWith_11_835A4C4F440C319874D3EFA75CAFA4C5)
-    LogDebug(Prefix .. "LiquidToStartWith.Num: " .. #LiquidStruct.LiquidToStartWith_15_F7D753A24D2130B92AF312AB9192AD9C)
+    LogDebug(Prefix .. "PercentageLiquidToStartWith:", LiquidStruct.PercentageLiquidToStartWith_11_835A4C4F440C319874D3EFA75CAFA4C5)
+    LogDebug(Prefix .. "LiquidToStartWith.Num:", #LiquidStruct.LiquidToStartWith_15_F7D753A24D2130B92AF312AB9192AD9C)
+    for i = 1, #LiquidStruct.LiquidToStartWith_15_F7D753A24D2130B92AF312AB9192AD9C do
+        local liquiedType = LiquidStruct.LiquidToStartWith_15_F7D753A24D2130B92AF312AB9192AD9C[i]
+        LogDebug(Prefix .. string.format("LiquidToStartWith[%d]:", i), liquiedType)
+    end
 end
 
 ---Logs in debug scope all relevant properties of FAbiotic_WeaponStruct to console 

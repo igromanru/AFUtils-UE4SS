@@ -150,8 +150,21 @@ function AFUtils.GetCurrentCombinedHealth(playerCharacter)
             + playerCharacter.CurrentHealth_LeftLeg + playerCharacter.CurrentHealth_RightLeg
 end
 
+
+---@param LiquidType number|LiquidType|E_LiquidType
+---@return string
+function AFUtils.LiquidTypeToString(LiquidType)
+    for key, value in pairs(AFUtils.LiquidType) do
+        if value == LiquidType then
+            return key
+        end
+    end
+    return "Unknown"
+end
+
 ---Checks if the LiquidType is energy
 ---@param LiquidType number|LiquidType|E_LiquidType
+---@return boolean
 function AFUtils.IsEnergyLiquidType(LiquidType)
     return LiquidType == AFUtils.LiquidType.Energy or LiquidType == AFUtils.LiquidType.LaserEnergy
 end
@@ -310,9 +323,71 @@ function AFUtils.RepairAllItemsInInvetory(PlayerCharacter, Inventory)
     return true
 end
 
----Fill liquid level of FAbiotic_InventoryChangeableDataStruct with best allowed liquid type to maximum
+---Sets current level and liquid type to 0
+---@param ChangeableData FAbiotic_InventoryChangeableDataStruct
+function AFUtils.ResetChangeableDataLiquid(ChangeableData)
+    if not ChangeableData then return end
+    
+    ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = AFUtils.LiquidType.None
+    ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = 0
+end
+
 ---@param ChangeableData FAbiotic_InventoryChangeableDataStruct Target
----@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull infomation
+---@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull information
+---@return boolean Success
+function AFUtils.FixChangeableDataLiquid(ChangeableData, ItemStruct)
+    if not ChangeableData or not ItemStruct or not ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0 then return false end
+
+    local liquidType = ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109
+    local liquidData = ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0
+    local typeMismatch = true
+    for i = 1, #liquidData.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 do
+        if liquidData.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[i] == liquidType then
+            typeMismatch = false
+            break
+        end
+    end
+    if typeMismatch then
+        AFUtils.ResetChangeableDataLiquid(ChangeableData)
+    end
+
+    return true
+end
+
+---Fix liquid type of FAbiotic_InventoryItemSlotStruct, if there is a mismatch
+---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull information
+---@return boolean Success
+function AFUtils.FixItemSlotStructLiquid(ItemSlotStruct, ItemStruct)
+    if not ItemSlotStruct or not ItemStruct then return false end
+    return AFUtils.FixChangeableDataLiquid(ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313, ItemStruct)
+end
+
+---Fix liquid type of FAbiotic_InventoryItemSlotStruct, if there is a mismatch
+---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.LiquidData will be used to pull information for ItemSlotStruct and Item.ChangeableData
+---@return boolean Success
+function AFUtils.FixItemSlotStructLiquidFromItem(ItemSlotStruct, Item)
+    if not ItemSlotStruct or IsNotValid(Item) then return false end
+    return AFUtils.FixItemSlotStructLiquid(ItemSlotStruct, Item.ItemData) and AFUtils.FixChangeableDataLiquid(Item.ChangeableData, Item.ItemData)
+end
+
+---Fix liquid type of current, in hotbar selected item.
+---@param playerCharacter AAbiotic_PlayerCharacter_C Must be a valid object
+---@return boolean Success
+function AFUtils.FixHeldItemLiquid(playerCharacter)
+    if not playerCharacter then return false end
+    
+    local itemSlotStruct = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
+    if itemSlotStruct then
+        return AFUtils.FixItemSlotStructLiquidFromItem(itemSlotStruct, playerCharacter.ItemInHand_BP)
+    end
+    return false
+end
+
+---Fill liquid level of FAbiotic_InventoryChangeableDataStruct with best allowed energy liquid type to maximum
+---@param ChangeableData FAbiotic_InventoryChangeableDataStruct Target
+---@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull information
 ---@return boolean Success
 function AFUtils.FillChangeableDataEnergy(ChangeableData, ItemStruct)
     if not ChangeableData or not ItemStruct then return false end
@@ -333,7 +408,7 @@ end
 
 ---Fill liquid level of FAbiotic_InventoryItemSlotStruct with best allowed liquid type to maximum
 ---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
----@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull infomation
+---@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull information
 ---@return boolean Success
 function AFUtils.FillItemSlotStructEnergy(ItemSlotStruct, ItemStruct)
     if not ItemSlotStruct or not ItemStruct then return false end
@@ -342,7 +417,7 @@ end
 
 ---Fill liquid level of FAbiotic_InventoryItemSlotStruct with best allowed liquid type to maximum
 ---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
----@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.LiquidData will be used to pull infomation for ItemSlotStruct and Item.ChangeableData
+---@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.LiquidData will be used to pull information for ItemSlotStruct and Item.ChangeableData
 ---@return boolean Success
 function AFUtils.FillItemSlotStructEnergyFromItem(ItemSlotStruct, Item)
     if not ItemSlotStruct or IsNotValid(Item) then return false end
@@ -395,7 +470,7 @@ end
 
 ---Fill CurrentAmmoInMagazine of FAbiotic_InventoryChangeableDataStruct with maximum ammo
 ---@param ChangeableData FAbiotic_InventoryChangeableDataStruct Target
----@param ItemStruct FAbiotic_InventoryItemStruct Source, WeaponStruct will be used to pull infomation
+---@param ItemStruct FAbiotic_InventoryItemStruct Source, WeaponStruct will be used to pull information
 ---@return boolean Filled # Returns true if CurrentAmmoInMagazine was modified, otherwise false
 function AFUtils.FillChangeableDataAmmo(ChangeableData, ItemStruct)
     if not ChangeableData or not ItemStruct then return false end
@@ -415,7 +490,7 @@ end
 
 ---Fill CurrentAmmoInMagazine of FAbiotic_InventoryChangeableDataStruct with maximum ammo
 ---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
----@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull infomation
+---@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull information
 ---@return boolean Filled # Returns true if CurrentAmmoInMagazine was modified, otherwise false
 function AFUtils.FillItemSlotStructAmmo(ItemSlotStruct, ItemStruct)
     if not ItemSlotStruct or not ItemStruct then return false end
@@ -424,7 +499,7 @@ end
 
 ---Fill CurrentAmmoInMagazine of FAbiotic_InventoryChangeableDataStruct with maximum ammo
 ---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
----@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.WeaponData will be used to pull infomation for ItemSlotStruct and Item.ChangeableData
+---@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.WeaponData will be used to pull information for ItemSlotStruct and Item.ChangeableData
 ---@return boolean Filled # Returns true if CurrentAmmoInMagazine was modified, otherwise false
 function AFUtils.FillItemSlotStructAmmoFromItem(ItemSlotStruct, Item)
     if not ItemSlotStruct or not Item or not Item:IsValid() then return false end

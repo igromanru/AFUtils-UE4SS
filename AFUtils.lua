@@ -546,7 +546,7 @@ function AFUtils.TriggerWeatherEvent(EventName)
 
     local weatherEventHandleFunctionLibrary = AFUtils.GetWeatherEventHandleFunctionLibrary()
     local myPlayerController = AFUtils.GetMyPlayerController()
-    if IsValid(weatherEventHandleFunctionLibrary) and IsValid(myPlayerController) and myPlayerController.DayNightManager:IsValid() then
+    if IsValid(weatherEventHandleFunctionLibrary) and IsValid(myPlayerController) and IsValid(myPlayerController.DayNightManager) then
         ---@type table<LocalUnrealParam>
         local outRowHandles = {}
         weatherEventHandleFunctionLibrary:GetAllWeatherEventRowHandles(outRowHandles)
@@ -558,11 +558,11 @@ function AFUtils.TriggerWeatherEvent(EventName)
             local rowHandle = param:get()
             local rowName = rowHandle.RowName:ToString()
             if rowName == EventName then
-                myPlayerController.DayNightManager.RequiredDaysBetweenWeather = 0
-                myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName = rowHandle.RowName
-                LogDebug("Weather_RequestByPlayer.RowName: "..myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName:ToString())
-                -- myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToTable(rowHandle))
-                -- LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
+                -- myPlayerController.DayNightManager.RequiredDaysBetweenWeather = 0
+                -- myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName = rowHandle.RowName
+                -- LogDebug("Weather_RequestByPlayer.RowName: "..myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName:ToString())
+                myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToTable(rowHandle))
+                LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
                 return true
             end
         end

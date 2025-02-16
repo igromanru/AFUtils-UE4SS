@@ -96,7 +96,7 @@ function AFUtils.LogLiquidStruct(LiquidStruct, Prefix)
     LogDebug(Prefix .. "AllowedLiquids.Num:", #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3)
     for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 do
         local liquiedType = LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[i]
-        LogDebug(Prefix .. string.format("AllowedLiquids[%d]:", i), liquiedType)
+        LogDebug(Prefix .. string.format("AllowedLiquids[%d]: %s (%d)", i, AFUtils.LiquidTypeToString(liquiedType), liquiedType))
     end
     LogDebug(Prefix .. "PercentageLiquidToStartWith:", LiquidStruct.PercentageLiquidToStartWith_11_835A4C4F440C319874D3EFA75CAFA4C5)
     LogDebug(Prefix .. "LiquidToStartWith.Num:", #LiquidStruct.LiquidToStartWith_15_F7D753A24D2130B92AF312AB9192AD9C)
@@ -982,5 +982,64 @@ function AFUtils.LogOutlineComponent(OutlineComponent, Prefix)
     LogDebug(Prefix .. "ComponentEnabled:", OutlineComponent.ComponentEnabled)
 end
 
+---@param FarmingPlot AFarmingPlot_BP_C
+---@param Prefix string?
+function AFUtils.LogFarmingPlot(FarmingPlot, Prefix)
+    if IsNotValid(FarmingPlot) then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "PlotIndex:", FarmingPlot.PlotIndex)
+    -- ToDo log FarmingPlot.PlantProxy
+    LogDebug(Prefix .. "GrowthTickRate:", FarmingPlot.GrowthTickRate)
+    LogDebug(Prefix .. "HasWater:", FarmingPlot.HasWater)
+    LogDebug(Prefix .. "FertilizerSaveConversionValue:", FarmingPlot.FertilizerSaveConversionValue)
+    LogDebug(Prefix .. "PlantGrowthStageMax:", FarmingPlot.PlantGrowthStageMax)
+    LogDebug(Prefix .. "VisualFertilizeQuality:", FarmingPlot.VisualFertilizeQuality)
+end
+
+
+---@param LiquidContainer ADeployed_LiquidContainer_ParentBP_C
+---@param Prefix string?
+function AFUtils.LogDeployedLiquidContainer(LiquidContainer, Prefix)
+    if IsNotValid(LiquidContainer) then return end
+    Prefix = Prefix or ""
+
+    -- AFUtils.LogFurnitureParentBP(LiquidContainer, Prefix)
+    LogDebug(Prefix .. "Liquid_FillLevel:", LiquidContainer.Liquid_FillLevel)
+    LogDebug(Prefix .. "Liquid_MaxFill:", LiquidContainer.Liquid_MaxFill)
+    LogDebug(Prefix .. "CurrentLiquid_Type enum (0-13):", AFUtils.LiquidTypeToString(LiquidContainer.CurrentLiquid_Type) .. " (" .. LiquidContainer.CurrentLiquid_Type .. ")")
+    LogDebug(Prefix .. "LocalPlayer_HasLiquidInContainer:", LiquidContainer.LocalPlayer_HasLiquidInContainer)
+    LogDebug(Prefix .. "LocalPlayer_CanTakeDirectSwig:", LiquidContainer.LocalPlayer_CanTakeDirectSwig)
+    LogDebug(Prefix .. "AllowedLiquids.Num:", #LiquidContainer.AllowedLiquids)
+    for i = 1, #LiquidContainer.AllowedLiquids do
+        local liquiedType = LiquidContainer.AllowedLiquids[i]
+        LogDebug(Prefix .. string.format("AllowedLiquids[%d]: %s (%d)", i, AFUtils.LiquidTypeToString(liquiedType), liquiedType))
+    end
+    LogDebug(Prefix .. "ObjectName_Empty:", LiquidContainer.ObjectName_Empty:ToString())
+    LogDebug(Prefix .. "ObjectName_WithLiquid:", LiquidContainer.ObjectName_WithLiquid:ToString())
+    LogDebug(Prefix .. "GiveRandomFill:", LiquidContainer.GiveRandomFill)
+    LogDebug(Prefix .. "LiquidToItemText:", LiquidContainer.LiquidToItemText:ToString())
+    LogDebug(Prefix .. "LiquidToContainerText:", LiquidContainer.LiquidToContainerText:ToString())
+    LogDebug(Prefix .. "LiquidDrinkDirectlyText:", LiquidContainer.LiquidDrinkDirectlyText:ToString())
+    LogDebug(Prefix .. "InfiniteSource:", LiquidContainer.InfiniteSource)
+    LogDebug(Prefix .. "DrinkCounter:", LiquidContainer.DrinkCounter)
+    -- LogDebug(Prefix .. "LastDrinker:", LiquidContainer.LastDrinker)
+end
+
+---@param GardenPlot AGardenPlot_ParentBP_C
+---@param Prefix string?
+function AFUtils.LogGardenPlot(GardenPlot, Prefix)
+    if IsNotValid(GardenPlot) then return end
+    Prefix = Prefix or ""
+
+    AFUtils.LogDeployedLiquidContainer(GardenPlot, Prefix)
+    LogDebug(Prefix .. "FarmingPlots.Num:", #GardenPlot.FarmingPlots)
+    for i = 1, #GardenPlot.FarmingPlots do
+        AFUtils.LogFarmingPlot(GardenPlot.FarmingPlots[i], Prefix .. "FarmingPlots[" .. i .. "].")
+    end
+    LogDebug(Prefix .. "WaterTickRate:", GardenPlot.WaterTickRate)
+    LogDebug(Prefix .. "WaterLossPerTick:", GardenPlot.WaterLossPerTick)
+    LogDebug(Prefix .. "WaterRequiredLight:", GardenPlot.WaterRequiredLight)
+end
 
 return AFUtils

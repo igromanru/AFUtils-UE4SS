@@ -236,4 +236,14 @@ function AFUtils.GetClassAbiotic_CharacterSave_C()
     return Abiotic_CharacterSave_C_Class
 end
 
+local GardenPlot_ParentBP_C_Class = CreateInvalidObject()
+---@return UClass
+function AFUtils.GetClassGardenPlot_ParentBP_C()
+    if IsNotValid(GardenPlot_ParentBP_C_Class) then
+        GardenPlot_ParentBP_C_Class = StaticFindObject("/Game/Blueprints/DeployedObjects/Farming/GardenPlot_ParentBP.GardenPlot_ParentBP_C")
+        ---@cast GardenPlot_ParentBP_C_Class UClass
+    end
+    return GardenPlot_ParentBP_C_Class
+end
+
 return AFUtils

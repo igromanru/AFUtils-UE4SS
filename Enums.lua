@@ -120,7 +120,7 @@ AFUtils.WeatherEvents = {
 }
 
 ---Map of Traits. Key is trait's FName<br>
----Game v0.9.2
+---Game v0.10.0
 ---@type { [string]: { Description: string, Buff: boolean } }
 AFUtils.Traits = {
 	Trait_Decathlon = {

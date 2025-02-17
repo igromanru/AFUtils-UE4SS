@@ -34,15 +34,15 @@ function AFUtils.LogTimeline(Timeline, Prefix)
     if not Timeline then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "LengthMode (enum 0-1): " .. Timeline.LengthMode)
-    LogDebug(Prefix .. "bLooping: " .. tostring(Timeline.bLooping))
-    LogDebug(Prefix .. "bReversePlayback: " .. tostring(Timeline.bReversePlayback))
-    LogDebug(Prefix .. "Length: " .. Timeline.Length)
-    LogDebug(Prefix .. "Events.Num: " .. #Timeline.Events)
-    LogDebug(Prefix .. "InterpVectors.Num: " .. #Timeline.InterpVectors)
-    LogDebug(Prefix .. "InterpFloats.Num: " .. #Timeline.InterpFloats)
-    LogDebug(Prefix .. "InterpLinearColors.Num: " .. #Timeline.InterpLinearColors)
-    LogDebug(Prefix .. "DirectionPropertyName: " .. Timeline.DirectionPropertyName:ToString())
+    LogDebug(Prefix .. "LengthMode (enum 0-1):", Timeline.LengthMode)
+    LogDebug(Prefix .. "bLooping:", tostring(Timeline.bLooping))
+    LogDebug(Prefix .. "bReversePlayback:", tostring(Timeline.bReversePlayback))
+    LogDebug(Prefix .. "Length:", Timeline.Length)
+    LogDebug(Prefix .. "Events.Num:", #Timeline.Events)
+    LogDebug(Prefix .. "InterpVectors.Num:", #Timeline.InterpVectors)
+    LogDebug(Prefix .. "InterpFloats.Num:", #Timeline.InterpFloats)
+    LogDebug(Prefix .. "InterpLinearColors.Num:", #Timeline.InterpLinearColors)
+    LogDebug(Prefix .. "DirectionPropertyName:", Timeline.DirectionPropertyName:ToString())
 end
 
 ---@param TimelineComponent UTimelineComponent
@@ -51,8 +51,8 @@ function AFUtils.LogTimelineComponent(TimelineComponent, Prefix)
     if not TimelineComponent or not TimelineComponent:IsValid() then return end
     Prefix = Prefix or ""
 
-    AFUtils.LogTimeline(TimelineComponent.TheTimeline, Prefix, "TheTimeline.")
-    LogDebug(Prefix .. "bIgnoreTimeDilation: " .. tostring(TimelineComponent.bIgnoreTimeDilation))
+    AFUtils.LogTimeline(TimelineComponent.TheTimeline, Prefix .. "TheTimeline.")
+    LogDebug(Prefix .. "bIgnoreTimeDilation:", tostring(TimelineComponent.bIgnoreTimeDilation))
 end
 
 ---Logs in debug scope all relevant properties of FAbiotic_InventoryChangeableDataStruct to console 
@@ -63,14 +63,14 @@ function AFUtils.LogInventoryChangeableDataStruct(ChangeableData, Prefix)
     Prefix = Prefix or ""
 
     if ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB then
-        LogDebug(Prefix .. "AssetID: " .. ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB:ToString())
+        LogDebug(Prefix .. "AssetID:", ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB:ToString())
     end
-    LogDebug(Prefix .. "CurrentItemDurability: " .. ChangeableData.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8)
-    LogDebug(Prefix .. "MaxItemDurability: " .. ChangeableData.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B)
-    LogDebug(Prefix .. "CurrentStack: " .. ChangeableData.CurrentStack_9_D443B69044D640B0989FD8A629801A49)
-    LogDebug(Prefix .. "CurrentAmmoInMagazine: " .. ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D)
-    LogDebug(Prefix .. "LiquidLevel: " .. ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A)
-    LogDebug(Prefix .. "CurrentLiquid (enum 0-13): " .. AFUtils.LiquidTypeToString(ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109) .. " (" .. ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 .. ")")
+    LogDebug(Prefix .. "CurrentItemDurability:", ChangeableData.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8)
+    LogDebug(Prefix .. "MaxItemDurability:", ChangeableData.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B)
+    LogDebug(Prefix .. "CurrentStack:", ChangeableData.CurrentStack_9_D443B69044D640B0989FD8A629801A49)
+    LogDebug(Prefix .. "CurrentAmmoInMagazine:", ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D)
+    LogDebug(Prefix .. "LiquidLevel:", ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A)
+    LogDebug(Prefix .. "CurrentLiquid (enum 0-13):", AFUtils.LiquidTypeToString(ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109) .. " (" .. ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 .. ")")
 end
 
 ---Logs in debug scope all relevant properties of FAbiotic_InventoryItemSlotStruct to console 
@@ -80,7 +80,7 @@ function AFUtils.LogInventoryItemSlotStruct(InventoryItemSlotStruct, Prefix)
     if not InventoryItemSlotStruct then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "RowName: " .. InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName:ToString())
+    LogDebug(Prefix .. "RowName:", InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName:ToString())
     LogDebug(Prefix .. "DataTable IsValid:", InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.DataTable:IsValid())
     AFUtils.LogInventoryChangeableDataStruct(InventoryItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313, Prefix .. "ChangeableData.")
 end
@@ -113,24 +113,24 @@ function AFUtils.LogWeaponStruct(WeaponStruct, Prefix)
     if not WeaponStruct then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "Melee: " .. tostring(WeaponStruct.Melee_1_AB17935A4F944DCEEB1AB3A5B598E702))
-    LogDebug(Prefix .. "MeleeSwingData.RowName: " .. WeaponStruct.MeleeSwingData_80_EA5C63F44178A08106BE41B8F7D8DE36.RowName:ToString())
-    LogDebug(Prefix .. "TimeBetweenShots: " .. tostring(WeaponStruct.TimeBetweenShots_8_71ACC9414B36314DEF34B3A54649941C))
-    LogDebug(Prefix .. "MaximumHitscanRange: " .. tostring(WeaponStruct.MaximumHitscanRange_26_F36D29CA48831A6C3AD49EB94F5D2BE2))
-    LogDebug(Prefix .. "DamagePerHit: " .. tostring(WeaponStruct.DamagePerHit_16_F95199D1425C37191C55CDA0DC07BDDC))
-    LogDebug(Prefix .. "BulletSpread_Min: " .. tostring(WeaponStruct.BulletSpread_Min_38_08ADC0BA4BEA02135BE0438A60AE5725))
-    LogDebug(Prefix .. "BulletSpread_Max: " .. tostring(WeaponStruct.BulletSpread_Max_39_4AE2E5744A934A3FFCEC2A9D7A1A6963))
-    LogDebug(Prefix .. "RecoilAmount: " .. tostring(WeaponStruct.RecoilAmount_42_85AFA9834A1CABF8183C088D857840EE))
-    LogDebug(Prefix .. "PelletCount: " .. tostring(WeaponStruct.PelletCount_77_4504318146345E7029C78790B317E074))
-    LogDebug(Prefix .. "MagazineSize: " .. tostring(WeaponStruct.MagazineSize_57_E890A3944240BB8D07EF0B9251F1FBD4))
-    LogDebug(Prefix .. "RequireAmmo: " .. tostring(WeaponStruct.RequireAmmo_85_8BB1C1954D2A83BB1994549DDEEBA306))
-    LogDebug(Prefix .. "AmmoType.RowName: " .. WeaponStruct.AmmoType_54_D19EDD9E48E4252D492757BFAAC23A73.RowName:ToString())
-    LogDebug(Prefix .. "AmmoTypes.Num: " .. #WeaponStruct.AmmoTypes_99_6514B50249092C020B24F9ABF9AF0E37)
-    LogDebug(Prefix .. "SecondaryAttack (enum 0-5): " .. WeaponStruct.SecondaryAttack_82_0ADE2DC74388F34F125F0DB6D9AAC1CD)
-    LogDebug(Prefix .. "LoudnessOnPrimaryUse: " .. WeaponStruct.LoudnessOnPrimaryUse_74_7829648A4C3F44A62DCA09B3817DF796)
-    LogDebug(Prefix .. "LoudnessOnSecondaryUse: " .. WeaponStruct.LoudnessOnSecondaryUse_73_89AB59C84EBC77DEB5DD2C9C88E9C237)
-    LogDebug(Prefix .. "UnderwaterState (enum 0-2): " .. WeaponStruct.UnderwaterState_95_972463794CBCCEA48AC987A7FA4C0118)
-    LogDebug(Prefix .. "BurstFireCount: " .. WeaponStruct.BurstFireCount_102_880FB81B4CA5EC7F7B5D6FBDE68275B8)
+    LogDebug(Prefix .. "Melee:", tostring(WeaponStruct.Melee_1_AB17935A4F944DCEEB1AB3A5B598E702))
+    LogDebug(Prefix .. "MeleeSwingData.RowName:", WeaponStruct.MeleeSwingData_80_EA5C63F44178A08106BE41B8F7D8DE36.RowName:ToString())
+    LogDebug(Prefix .. "TimeBetweenShots:", tostring(WeaponStruct.TimeBetweenShots_8_71ACC9414B36314DEF34B3A54649941C))
+    LogDebug(Prefix .. "MaximumHitscanRange:", tostring(WeaponStruct.MaximumHitscanRange_26_F36D29CA48831A6C3AD49EB94F5D2BE2))
+    LogDebug(Prefix .. "DamagePerHit:", tostring(WeaponStruct.DamagePerHit_16_F95199D1425C37191C55CDA0DC07BDDC))
+    LogDebug(Prefix .. "BulletSpread_Min:", tostring(WeaponStruct.BulletSpread_Min_38_08ADC0BA4BEA02135BE0438A60AE5725))
+    LogDebug(Prefix .. "BulletSpread_Max:", tostring(WeaponStruct.BulletSpread_Max_39_4AE2E5744A934A3FFCEC2A9D7A1A6963))
+    LogDebug(Prefix .. "RecoilAmount:", tostring(WeaponStruct.RecoilAmount_42_85AFA9834A1CABF8183C088D857840EE))
+    LogDebug(Prefix .. "PelletCount:", tostring(WeaponStruct.PelletCount_77_4504318146345E7029C78790B317E074))
+    LogDebug(Prefix .. "MagazineSize:", tostring(WeaponStruct.MagazineSize_57_E890A3944240BB8D07EF0B9251F1FBD4))
+    LogDebug(Prefix .. "RequireAmmo:", tostring(WeaponStruct.RequireAmmo_85_8BB1C1954D2A83BB1994549DDEEBA306))
+    LogDebug(Prefix .. "AmmoType.RowName:", WeaponStruct.AmmoType_54_D19EDD9E48E4252D492757BFAAC23A73.RowName:ToString())
+    LogDebug(Prefix .. "AmmoTypes.Num:", #WeaponStruct.AmmoTypes_99_6514B50249092C020B24F9ABF9AF0E37)
+    LogDebug(Prefix .. "SecondaryAttack (enum 0-5):", WeaponStruct.SecondaryAttack_82_0ADE2DC74388F34F125F0DB6D9AAC1CD)
+    LogDebug(Prefix .. "LoudnessOnPrimaryUse:", WeaponStruct.LoudnessOnPrimaryUse_74_7829648A4C3F44A62DCA09B3817DF796)
+    LogDebug(Prefix .. "LoudnessOnSecondaryUse:", WeaponStruct.LoudnessOnSecondaryUse_73_89AB59C84EBC77DEB5DD2C9C88E9C237)
+    LogDebug(Prefix .. "UnderwaterState (enum 0-2):", WeaponStruct.UnderwaterState_95_972463794CBCCEA48AC987A7FA4C0118)
+    LogDebug(Prefix .. "BurstFireCount:", WeaponStruct.BurstFireCount_102_880FB81B4CA5EC7F7B5D6FBDE68275B8)
 end
 
 ---Logs in debug scope all relevant properties of FAbiotic_InventoryItemStruct to console 
@@ -140,31 +140,31 @@ function AFUtils.LogInventoryItemStruct(InventoryItemStruct, Prefix)
     if not InventoryItemStruct then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "ItemName: " .. InventoryItemStruct.ItemName_51_B88648C048EE5BC2885E4E95F3E13F0A:ToString())
-    LogDebug(Prefix .. "ItemDescription: " .. InventoryItemStruct.ItemDescription_38_E5F7B38A4F3C41EB9DA52CA14654D303:ToString())
-    LogDebug(Prefix .. "ItemFlavorText: " .. InventoryItemStruct.ItemFlavorText_39_12D05DD74EA145A5E7D1159C7F326177:ToString())
-    -- LogDebug(Prefix .. "ToInteractWith_Text: " .. InventoryItemStruct.ToInteractWith_Text_66_C2148289464D5AAA4D19BBA13F15FE41:ToString())
-    -- LogDebug(Prefix .. "ToLongInteractWith_Text: " .. InventoryItemStruct.ToLongInteractWith_Text_68_4FBE88F341B6A020E3216CA026A1E4E8:ToString())
-    -- LogDebug(Prefix .. "ToPackage_Text: " .. InventoryItemStruct.ToPackage_Text_71_5094104748FCB4BD2F90C99A2C4C49A8:ToString())
-    -- LogDebug(Prefix .. "ToLongPackage_Text: " .. InventoryItemStruct.ToLongPackage_Text_72_CB77853E49960F43E6422C90DC967508:ToString())
-    -- LogDebug(Prefix .. "Scale_WorldMesh: " .. InventoryItemStruct.Scale_WorldMesh_143_AF66D856410026FCC19E70AC421B3667)
-    -- LogDebug(Prefix .. "Scale_FirstPersonMesh: " .. InventoryItemStruct.Scale_FirstPersonMesh_146_6AFCDB94484AE7625E73C6AFB835D21F)
-    -- LogDebug(Prefix .. "Scale_TPHeldMesh: " .. InventoryItemStruct.Scale_TPHeldMesh_145_6826D00A4F30AEDBF62E02892E4261E6)
-    LogDebug(Prefix .. "PlacementOrientationsAllowed enum: " .. InventoryItemStruct.PlacementOrientationsAllowed_122_75894D7C4B93F103C06AB18421167757)
-    LogDebug(Prefix .. "CanLoseDurability: " .. tostring(InventoryItemStruct.CanLoseDurability_29_42EA515F4AC1EC69D8480DB36C01D5E1))
-    LogDebug(Prefix .. "MaxItemDurability: " .. InventoryItemStruct.MaxItemDurability_31_6EBCEFC943F9E85DE9350BBC0E249447)
-    LogDebug(Prefix .. "ChanceToLoseDurability: " .. InventoryItemStruct.ChanceToLoseDurability_97_DF967C464092E2E6AEEBFE84C536ACAB)
+    LogDebug(Prefix .. "ItemName:", InventoryItemStruct.ItemName_51_B88648C048EE5BC2885E4E95F3E13F0A:ToString())
+    LogDebug(Prefix .. "ItemDescription:", InventoryItemStruct.ItemDescription_38_E5F7B38A4F3C41EB9DA52CA14654D303:ToString())
+    LogDebug(Prefix .. "ItemFlavorText:", InventoryItemStruct.ItemFlavorText_39_12D05DD74EA145A5E7D1159C7F326177:ToString())
+    -- LogDebug(Prefix .. "ToInteractWith_Text:", InventoryItemStruct.ToInteractWith_Text_66_C2148289464D5AAA4D19BBA13F15FE41:ToString())
+    -- LogDebug(Prefix .. "ToLongInteractWith_Text:", InventoryItemStruct.ToLongInteractWith_Text_68_4FBE88F341B6A020E3216CA026A1E4E8:ToString())
+    -- LogDebug(Prefix .. "ToPackage_Text:", InventoryItemStruct.ToPackage_Text_71_5094104748FCB4BD2F90C99A2C4C49A8:ToString())
+    -- LogDebug(Prefix .. "ToLongPackage_Text:", InventoryItemStruct.ToLongPackage_Text_72_CB77853E49960F43E6422C90DC967508:ToString())
+    -- LogDebug(Prefix .. "Scale_WorldMesh:", InventoryItemStruct.Scale_WorldMesh_143_AF66D856410026FCC19E70AC421B3667)
+    -- LogDebug(Prefix .. "Scale_FirstPersonMesh:", InventoryItemStruct.Scale_FirstPersonMesh_146_6AFCDB94484AE7625E73C6AFB835D21F)
+    -- LogDebug(Prefix .. "Scale_TPHeldMesh:", InventoryItemStruct.Scale_TPHeldMesh_145_6826D00A4F30AEDBF62E02892E4261E6)
+    LogDebug(Prefix .. "PlacementOrientationsAllowed enum:", InventoryItemStruct.PlacementOrientationsAllowed_122_75894D7C4B93F103C06AB18421167757)
+    LogDebug(Prefix .. "CanLoseDurability:", tostring(InventoryItemStruct.CanLoseDurability_29_42EA515F4AC1EC69D8480DB36C01D5E1))
+    LogDebug(Prefix .. "MaxItemDurability:", InventoryItemStruct.MaxItemDurability_31_6EBCEFC943F9E85DE9350BBC0E249447)
+    LogDebug(Prefix .. "ChanceToLoseDurability:", InventoryItemStruct.ChanceToLoseDurability_97_DF967C464092E2E6AEEBFE84C536ACAB)
     -- ToDo log FAbiotic_ItemDropStruct, InventoryItemStruct.RepairItem_106_C2E89B0B4B7F39FC3B2B828BBD13A391
-    LogDebug(Prefix .. "StackSize: " .. InventoryItemStruct.StackSize_47_D124F11B4B6D9766B2B33699795845A9)
-    LogDebug(Prefix .. "Weight: " .. InventoryItemStruct.Weight_119_CE7DB430417207921D739CAF458D4D7C)
-    LogDebug(Prefix .. "TryPlaceInHotbar: " .. tostring(InventoryItemStruct.TryPlaceInHotbar_128_F78F6AA34A238AEAB278F48066C080BF))
-    LogDebug(Prefix .. "IsWeapon: " .. tostring(InventoryItemStruct.IsWeapon_63_57F6A703413EA260B1455CA81F2D4911))
+    LogDebug(Prefix .. "StackSize:", InventoryItemStruct.StackSize_47_D124F11B4B6D9766B2B33699795845A9)
+    LogDebug(Prefix .. "Weight:", InventoryItemStruct.Weight_119_CE7DB430417207921D739CAF458D4D7C)
+    LogDebug(Prefix .. "TryPlaceInHotbar:", tostring(InventoryItemStruct.TryPlaceInHotbar_128_F78F6AA34A238AEAB278F48066C080BF))
+    LogDebug(Prefix .. "IsWeapon:", tostring(InventoryItemStruct.IsWeapon_63_57F6A703413EA260B1455CA81F2D4911))
     AFUtils.LogWeaponStruct(InventoryItemStruct.WeaponData_61_3C29CF6C4A7F9DD435F9318FEE4B033D, Prefix .. "WeaponData.")
     -- ToDo log FAbiotic_Equipment_Struct, InventoryItemStruct.EquipmentData_100_576D05464F36104AFE501B878255E318
     -- ToDo log FAbiotic_Consumable_Struct, InventoryItemStruct.ConsumableData_84_757B6B114FF23016981BEF888A31C670
     -- ToDo log FAbiotic_CookableStruct, InventoryItemStruct.CookableData_94_7EFD1F0A4A7EFB44D3D8B9B14581BF36
     AFUtils.LogLiquidStruct(InventoryItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0, Prefix .. "LiquidData.")
-    LogDebug(Prefix .. "StrippedFromBuild: " .. tostring(InventoryItemStruct.StrippedFromBuild_149_8F18A38A4BB983B801C379B47FC5D5A9))
+    LogDebug(Prefix .. "StrippedFromBuild:", tostring(InventoryItemStruct.StrippedFromBuild_149_8F18A38A4BB983B801C379B47FC5D5A9))
 end
 
 ---@param SaveDataDeployableStruct FSaveData_Deployable_Struct
@@ -197,20 +197,20 @@ end
 ---@param RechargeableComponent URechargeableComponent_C
 ---@param Prefix string? Prefix that should be added in front of each line
 function AFUtils.LogRechargeableComponent(RechargeableComponent, Prefix)
-    if not RechargeableComponent then return end
+    if IsNotValid(RechargeableComponent) then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "LightSourceType enum: " .. RechargeableComponent.LightSourceType)
-    LogDebug(Prefix .. "RechargeableActive: " .. tostring(RechargeableComponent.RechargeableActive))
-    LogDebug(Prefix .. "LastBatteryLevel: " .. RechargeableComponent.LastBatteryLevel)
-    LogDebug(Prefix .. "DrainPerTick: " .. RechargeableComponent.DrainPerTick)
-    LogDebug(Prefix .. "ChargeMultiplier: " .. RechargeableComponent.ChargeMultiplier)
-    LogDebug(Prefix .. "Headlamp: " .. tostring(RechargeableComponent.Headlamp))
-    LogDebug(Prefix .. "HeadlampIndex: " .. RechargeableComponent.HeadlampIndex)
-    LogDebug(Prefix .. "LastItemChargePercentage: " .. RechargeableComponent.LastItemChargePercentage)
-    LogDebug(Prefix .. "BatteryNotRequiredToFireWeapon: " .. tostring(RechargeableComponent.BatteryNotRequiredToFireWeapon))
-    LogDebug(Prefix .. "OwnerSlotType: " .. RechargeableComponent.OwnerSlotType)
-    LogDebug(Prefix .. "PlayerOwned: " .. tostring(RechargeableComponent.PlayerOwned))
+    LogDebug(Prefix .. "LightSourceType enum (0-3):", RechargeableComponent.LightSourceType)
+    LogDebug(Prefix .. "RechargeableActive:",  RechargeableComponent.RechargeableActive)
+    LogDebug(Prefix .. "LastBatteryLevel:",  RechargeableComponent.LastBatteryLevel)
+    LogDebug(Prefix .. "DrainPerTick:",  RechargeableComponent.DrainPerTick)
+    LogDebug(Prefix .. "ChargeMultiplier:",  RechargeableComponent.ChargeMultiplier)
+    LogDebug(Prefix .. "Headlamp:",  RechargeableComponent.Headlamp)
+    LogDebug(Prefix .. "HeadlampIndex:",  RechargeableComponent.HeadlampIndex)
+    LogDebug(Prefix .. "LastItemChargePercentage:",  RechargeableComponent.LastItemChargePercentage)
+    LogDebug(Prefix .. "BatteryNotRequiredToFireWeapon:",  RechargeableComponent.BatteryNotRequiredToFireWeapon)
+    LogDebug(Prefix .. "OwnerSlotType:",  RechargeableComponent.OwnerSlotType)
+    LogDebug(Prefix .. "PlayerOwned:",  RechargeableComponent.PlayerOwned)
 end
 
 ---Logs in debug scope all relevant properties of a ADeployed_Battery_ParentBP_C to console 
@@ -220,20 +220,22 @@ function AFUtils.LogDeployedBattery(DeployedBattery, Prefix)
     if not DeployedBattery then return end
     Prefix = Prefix or ""
 
-    LogDebug("PlugStripPowerSockets Count: " .. #DeployedBattery.PlugStripPowerSockets)
-    LogDebug("HasBatteryPower: " .. tostring(DeployedBattery.HasBatteryPower))
-    LogDebug("TimerMode: " .. DeployedBattery.TimerMode)
-    LogDebug("PowerTimerActive: " .. tostring(DeployedBattery.PowerTimerActive))
-    LogDebug("BatteryPercentage: " .. DeployedBattery.BatteryPercentage)
-    LogDebug("DevicesPullingPower: " .. DeployedBattery.DevicesPullingPower)
-    LogDebug("MaxBattery: " .. DeployedBattery.MaxBattery)
-    LogDebug("FreezeBatteryDrain: " .. tostring(DeployedBattery.FreezeBatteryDrain))
+    LogDebug("PlugStripPowerSockets Count:", #DeployedBattery.PlugStripPowerSockets)
+    LogDebug("HasBatteryPower:", tostring(DeployedBattery.HasBatteryPower))
+    LogDebug("TimerMode enum (0-8):", DeployedBattery.TimerMode)
+    LogDebug("PowerTimerActive:", tostring(DeployedBattery.PowerTimerActive))
+    LogDebug("BatteryPercentage:", DeployedBattery.BatteryPercentage)
+    LogDebug("DevicesPullingPower:", DeployedBattery.DevicesPullingPower)
+    LogDebug("MaxBattery:", DeployedBattery.MaxBattery)
+    LogDebug("FreezeBatteryDrain:", tostring(DeployedBattery.FreezeBatteryDrain))
+    LogDebug("BatteryChargeSpeed:", tostring(DeployedBattery.BatteryChargeSpeed))
     -- local outCount = {}
     -- DeployedBattery:GetPluggedInDeviceCount(outCount)
     -- if outCount and outCount.Count then
-    --     LogDebug("PluggedInDeviceCount: " .. outCount.Count)
+    --     LogDebug("PluggedInDeviceCount:", outCount.Count)
     -- end
-    AFUtils.LogRechargeableComponent(DeployedBattery.RechargeableComponent, Prefix, "Rechargeable.")
+    AFUtils.LogRechargeableComponent(DeployedBattery.RechargeableComponent, Prefix .. "Rechargeable.")
+    AFUtils.LogFurnitureParentBP(DeployedBattery, Prefix .. "FurnitureParent.")
 end
 
 ---Logs in debug scope all relevant properties of a AAbiotic_Item_ParentBP_C to console 
@@ -243,24 +245,24 @@ function AFUtils.LogItemParentBP(Item, Prefix)
     if not Item or not Item:IsValid() then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "Class Name: " .. Item:GetClass():GetFullName())
-    LogDebug(Prefix .. "ItemDataRow.RowName: " .. Item.ItemDataRow.RowName:ToString())
+    LogDebug(Prefix .. "Class Name:", Item:GetClass():GetFullName())
+    LogDebug(Prefix .. "ItemDataRow.RowName:", Item.ItemDataRow.RowName:ToString())
     AFUtils.LogInventoryItemStruct(Item.ItemData, Prefix .. "ItemData.")
     AFUtils.LogInventoryChangeableDataStruct(Item.ChangeableData, Prefix .. "ChangeableData.")
-    LogDebug(Prefix .. "HasBeenPickedUp: " .. tostring(Item.HasBeenPickedUp))
-    LogDebug(Prefix .. "To Interact with Text: " .. Item["To Interact with Text"]:ToString())
-    LogDebug(Prefix .. "NoPhysics: " .. tostring(Item.NoPhysics))
-    LogDebug(Prefix .. "NoCollision: " .. tostring(Item.NoCollision))
-    -- LogDebug(Prefix .. "PopupAfterSpawned: " .. tostring(Item.PopupAfterSpawned))
-    -- LogDebug(Prefix .. "ShouldSimulate: " .. tostring(Item.ShouldSimulate))
-    -- LogDebug(Prefix .. "ProjectilePredict_BaseSpeed: " .. Item.ProjectilePredict_BaseSpeed)
-    -- LogDebug(Prefix .. "ProjectilePredict_SpeedMultiplier: " .. Item.ProjectilePredict_SpeedMultiplier)
-    -- LogDebug(Prefix .. "Bounciness: " .. Item.Bounciness)
-    -- LogDebug(Prefix .. "Collision Radius: " .. Item["Collision Radius"])
+    LogDebug(Prefix .. "HasBeenPickedUp:", tostring(Item.HasBeenPickedUp))
+    LogDebug(Prefix .. "To Interact with Text:", Item["To Interact with Text"]:ToString())
+    LogDebug(Prefix .. "NoPhysics:", tostring(Item.NoPhysics))
+    LogDebug(Prefix .. "NoCollision:", tostring(Item.NoCollision))
+    -- LogDebug(Prefix .. "PopupAfterSpawned:", tostring(Item.PopupAfterSpawned))
+    -- LogDebug(Prefix .. "ShouldSimulate:", tostring(Item.ShouldSimulate))
+    -- LogDebug(Prefix .. "ProjectilePredict_BaseSpeed:", Item.ProjectilePredict_BaseSpeed)
+    -- LogDebug(Prefix .. "ProjectilePredict_SpeedMultiplier:", Item.ProjectilePredict_SpeedMultiplier)
+    -- LogDebug(Prefix .. "Bounciness:", Item.Bounciness)
+    -- LogDebug(Prefix .. "Collision Radius:", Item["Collision Radius"])
     -- LogDebug(Prefix .. string.format("ProjectilePredict_Velocity: X: %f Y: %f Z: %f", Item.ProjectilePredict_Velocity.X, Item.ProjectilePredict_Velocity.Y, Item.ProjectilePredict_Velocity.Z))
-    LogDebug(Prefix .. "ItemDecayInterval: " .. Item.ItemDecayInterval)
-    -- LogDebug(Prefix .. "Should Bounce: " .. tostring(Item["Should Bounce"]))
-    -- LogDebug(Prefix .. "SpawnedFromProjectileImpact: " .. tostring(Item.SpawnedFromProjectileImpact))
+    LogDebug(Prefix .. "ItemDecayInterval:", Item.ItemDecayInterval)
+    -- LogDebug(Prefix .. "Should Bounce:", tostring(Item["Should Bounce"]))
+    -- LogDebug(Prefix .. "SpawnedFromProjectileImpact:", tostring(Item.SpawnedFromProjectileImpact))
     -- local rechargeableComponent = GetBlueprintCreatedComponentByClass(Item, AFUtils.GetClassRechargeableComponent_C())
     -- if rechargeableComponent then
     --     AFUtils.LogRechargeableComponent(rechargeableComponent, Prefix .. "RechargeableComponent.")
@@ -298,27 +300,27 @@ function AFUtils.LogInventoryComponent(Inventory, Prefix)
     if not Inventory or not Inventory:IsValid() then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "CurrentInventory.Num: " .. #Inventory.CurrentInventory)
+    LogDebug(Prefix .. "CurrentInventory.Num:", #Inventory.CurrentInventory)
     for i = 1, #Inventory.CurrentInventory, 1 do
         local inventoryItemSlotStruct = Inventory.CurrentInventory[i]
         AFUtils.LogInventoryItemSlotStruct(inventoryItemSlotStruct, Prefix .. "CurrentInventory["..i.."].")
     end
-    LogDebug(Prefix .. "MaxSlots: " .. Inventory.MaxSlots)
-    LogDebug(Prefix .. "InventorySlotType enum: " .. Inventory.InventorySlotType)
-    LogDebug(Prefix .. "DisplayName: " .. Inventory.DisplayName:ToString())
-    LogDebug(Prefix .. "ContainerType enum: " .. Inventory.ContainerType)
-    LogDebug(Prefix .. "SlotAppearance enum: " .. Inventory.SlotAppearance)
-    -- LogDebug(Prefix .. "DestroyParentWhenEmpty: " .. tostring(Inventory.DestroyParentWhenEmpty))
-    LogDebug(Prefix .. "EmptyItemRow.RowName: " .. Inventory.EmptyItemRow.RowName:ToString())
-    LogDebug(Prefix .. "InitialInventorySize: " .. Inventory.InitialInventorySize)
-    LogDebug(Prefix .. "CurrentTotalInventoryWeight: " .. Inventory.CurrentTotalInventoryWeight)
-    LogDebug(Prefix .. "CraftingCheck: " .. tostring(Inventory.CraftingCheck))
-    LogDebug(Prefix .. "ItemDecayInterval: " .. Inventory.ItemDecayInterval)
-    LogDebug(Prefix .. "InternalTemperature enum: " .. Inventory.InternalTemperature)
-    LogDebug(Prefix .. "AutoStartItemDecay: " .. tostring(Inventory.AutoStartItemDecay))
-    LogDebug(Prefix .. "CurrentRadiation: " .. Inventory.CurrentRadiation)
-    LogDebug(Prefix .. "RadioactiveShielding: " .. Inventory.RadioactiveShielding)
-    LogDebug(Prefix .. "InventoryUpdateLocked: " .. tostring(Inventory.InventoryUpdateLocked))
+    LogDebug(Prefix .. "MaxSlots:", Inventory.MaxSlots)
+    LogDebug(Prefix .. "InventorySlotType enum:", Inventory.InventorySlotType)
+    LogDebug(Prefix .. "DisplayName:", Inventory.DisplayName:ToString())
+    LogDebug(Prefix .. "ContainerType enum:", Inventory.ContainerType)
+    LogDebug(Prefix .. "SlotAppearance enum:", Inventory.SlotAppearance)
+    -- LogDebug(Prefix .. "DestroyParentWhenEmpty:", tostring(Inventory.DestroyParentWhenEmpty))
+    LogDebug(Prefix .. "EmptyItemRow.RowName:", Inventory.EmptyItemRow.RowName:ToString())
+    LogDebug(Prefix .. "InitialInventorySize:", Inventory.InitialInventorySize)
+    LogDebug(Prefix .. "CurrentTotalInventoryWeight:", Inventory.CurrentTotalInventoryWeight)
+    LogDebug(Prefix .. "CraftingCheck:", tostring(Inventory.CraftingCheck))
+    LogDebug(Prefix .. "ItemDecayInterval:", Inventory.ItemDecayInterval)
+    LogDebug(Prefix .. "InternalTemperature enum:", Inventory.InternalTemperature)
+    LogDebug(Prefix .. "AutoStartItemDecay:", tostring(Inventory.AutoStartItemDecay))
+    LogDebug(Prefix .. "CurrentRadiation:", Inventory.CurrentRadiation)
+    LogDebug(Prefix .. "RadioactiveShielding:", Inventory.RadioactiveShielding)
+    LogDebug(Prefix .. "InventoryUpdateLocked:", tostring(Inventory.InventoryUpdateLocked))
 end
 
 ---Logs in debug scope all relevant properties of a UW_InventoryItemSlot_C to console 
@@ -331,7 +333,7 @@ function AFUtils.LogInventoryItemSlot(InventoryItemSlot, Prefix)
     AFUtils.LogInventoryItemSlotStruct(InventoryItemSlot.ItemInSlot, Prefix .. "ItemInSlot.")
     LogDebug(Prefix .. "Empty:", InventoryItemSlot.Empty)
     LogDebug(Prefix .. "HasEmptySlotTooltip:", InventoryItemSlot.HasEmptySlotTooltip)
-    LogDebug(Prefix .. "EmptySlotTooltipText: " .. InventoryItemSlot.EmptySlotTooltipText:ToString())
+    LogDebug(Prefix .. "EmptySlotTooltipText:", InventoryItemSlot.EmptySlotTooltipText:ToString())
     LogDebug(Prefix .. "SlotType (enum 0-13):", InventoryItemSlot.SlotType)
     LogDebug(Prefix .. "SlotIndex:", InventoryItemSlot.SlotIndex)
     -- LogDebug(Prefix .. "RepresentationOnly:", InventoryItemSlot.RepresentationOnly)
@@ -341,9 +343,9 @@ function AFUtils.LogInventoryItemSlot(InventoryItemSlot, Prefix)
     LogDebug(Prefix .. "MinWeightShown:", InventoryItemSlot.MinWeightShown)
     LogDebug(Prefix .. "LastItemCanLoseDurability:", InventoryItemSlot.LastItemCanLoseDurability)
     LogDebug(Prefix .. "Same Item:", InventoryItemSlot["Same Item"])
-    LogDebug(Prefix .. "KeyPressed.KeyName: " .. InventoryItemSlot.KeyPressed.KeyName:ToString())
+    LogDebug(Prefix .. "KeyPressed.KeyName:", InventoryItemSlot.KeyPressed.KeyName:ToString())
     -- LogDebug(Prefix .. "ShowTopLeftHotkeyNumber:", InventoryItemSlot.ShowTopLeftHotkeyNumber)
-    -- LogDebug(Prefix .. "TopLeftHotkeyBinding: " .. InventoryItemSlot.TopLeftHotkeyBinding:ToString())
+    -- LogDebug(Prefix .. "TopLeftHotkeyBinding:", InventoryItemSlot.TopLeftHotkeyBinding:ToString())
     LogDebug(Prefix .. "QuickMoveOn:", InventoryItemSlot.QuickMoveOn)
     LogDebug(Prefix .. "Leftovers:", InventoryItemSlot.Leftovers)
     -- LogDebug(Prefix .. "BriefTooltip:", InventoryItemSlot.BriefTooltip)
@@ -362,17 +364,17 @@ function AFUtils.LogAIDirector(AIDirector, Prefix)
     if not AIDirector or not AIDirector:IsValid() then return end
     Prefix = Prefix or ""
 
-    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Tick_PrioritySpawns, Prefix, "Tick_PrioritySpawns.")
-    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Tick_DormantSpawns, Prefix, "Tick_DormantSpawns.")
+    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Tick_PrioritySpawns, Prefix .. "Tick_PrioritySpawns.")
+    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Tick_DormantSpawns, Prefix .. "Tick_DormantSpawns.")
     LogDebug(Prefix .. "CurrentFacilitySpawns:", AIDirector.CurrentFacilitySpawns)
     LogDebug(Prefix .. "DirectorDebugOn:", AIDirector.DirectorDebugOn)
     LogDebug(Prefix .. "DebugNoDayNightManager:", AIDirector.DebugNoDayNightManager)
     LogDebug(Prefix .. "NPCArray.Num:", #AIDirector.NPCArray)
     LogDebug(Prefix .. "NPCCap:", AIDirector.NPCCap)
-    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Assault_Timer, Prefix, "Assault_Timer.")
+    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Assault_Timer, Prefix .. "Assault_Timer.")
     LogDebug(Prefix .. "Assault_CurrentPhase (enum 1-6):", AIDirector.Assault_CurrentPhase)
     -- ToDo Log Assault_CurrentData
-    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Assault_ActiveLogicTimer, Prefix, "Assault_ActiveLogicTimer.")
+    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Assault_ActiveLogicTimer, Prefix .. "Assault_ActiveLogicTimer.")
     LogDebug(Prefix .. "Assault_TimeLastSpawnedNPC:", AIDirector.Assault_TimeLastSpawnedNPC)
     LogDebug(Prefix .. "Assault_BenchTargetLocation:", VectorToString(AIDirector.Assault_BenchTargetLocation))
     LogDebug(Prefix .. "Assault_PatrolTargetLocation:", VectorToString(AIDirector.Assault_PatrolTargetLocation))
@@ -381,7 +383,7 @@ function AFUtils.LogAIDirector(AIDirector, Prefix)
     LogDebug(Prefix .. "Assault_TimeOfInitialWarning:", AIDirector.Assault_TimeOfInitialWarning)
     -- LogDebug(Prefix .. "Assault_PreviousSpawnIndex:", AIDirector.Assault_PreviousSpawnIndex)
     LogDebug(Prefix .. "TimeBeforeAssaults:", AIDirector.TimeBeforeAssaults)
-    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.LeyakTimer, Prefix, "LeyakTimer.")
+    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.LeyakTimer, Prefix .. "LeyakTimer.")
     LogDebug(Prefix .. "LeyakCooldown:", AIDirector.LeyakCooldown)
     LogDebug(Prefix .. "ActiveLeyak IsValid:", AIDirector.ActiveLeyak:IsValid())
     LogDebug(Prefix .. "CurrentLeyakTarget IsValid:", AIDirector.CurrentLeyakTarget:IsValid())
@@ -389,7 +391,7 @@ function AFUtils.LogAIDirector(AIDirector, Prefix)
     LogDebug(Prefix .. "LeyakWorldFlag.RowName:", AIDirector.LeyakWorldFlag.RowName:ToString())
     LogDebug(Prefix .. "LeyakWorldFlag.DataTablePath:", AIDirector.LeyakWorldFlag.DataTablePath:ToString())
     LogDebug(Prefix .. "TimeLastLeyakSpawn:", AIDirector.TimeLastLeyakSpawn)
-    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.CoworkerTimer, Prefix, "CoworkerTimer.")
+    -- AFUtils.LogTimerHandle(AIDirector, AIDirector.CoworkerTimer, Prefix .. "CoworkerTimer.")
     LogDebug(Prefix .. "MaxAssaultPortals:", AIDirector.MaxAssaultPortals)
     LogDebug(Prefix .. "LeyakViewCounter:", AIDirector.LeyakViewCounter)
     LogDebug(Prefix .. "CurrentAssaultPortals:", AIDirector.CurrentAssaultPortals)
@@ -410,12 +412,12 @@ function AFUtils.LogAIControllerLeyak(AIControllerLeyak, Prefix)
     if not AIControllerLeyak then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "ValidTargets.Num: " .. #AIControllerLeyak.ValidTargets)
-    LogDebug(Prefix .. "SkipLeyakLevelCheck: " .. tostring(AIControllerLeyak.SkipLeyakLevelCheck))
-    LogDebug(Prefix .. "MaxLeyakChaseDistance: " .. AIControllerLeyak.MaxLeyakChaseDistance)
-    LogDebug(Prefix .. "LeyakAggroRange: " .. AIControllerLeyak.LeyakAggroRange)
-    LogDebug(Prefix .. "WantsToDespawn: " .. tostring(AIControllerLeyak.WantsToDespawn))
-    LogDebug(Prefix .. "MaxLeyakChaseDistance_Aggrod: " .. AIControllerLeyak.MaxLeyakChaseDistance_Aggrod)
+    LogDebug(Prefix .. "ValidTargets.Num:", #AIControllerLeyak.ValidTargets)
+    LogDebug(Prefix .. "SkipLeyakLevelCheck:", tostring(AIControllerLeyak.SkipLeyakLevelCheck))
+    LogDebug(Prefix .. "MaxLeyakChaseDistance:", AIControllerLeyak.MaxLeyakChaseDistance)
+    LogDebug(Prefix .. "LeyakAggroRange:", AIControllerLeyak.LeyakAggroRange)
+    LogDebug(Prefix .. "WantsToDespawn:", tostring(AIControllerLeyak.WantsToDespawn))
+    LogDebug(Prefix .. "MaxLeyakChaseDistance_Aggrod:", AIControllerLeyak.MaxLeyakChaseDistance_Aggrod)
 end
 
 ---Logs in debug scope all relevant properties of a ANPC_Leyak_C to console 
@@ -425,21 +427,21 @@ function AFUtils.LogNPCLeyak(Leyak, Prefix)
     if not Leyak then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "ActorLocation: " .. VectorToString(Leyak:K2_GetActorLocation()))
-    LogDebug(Prefix .. "Timeline_Dissolve_NewTrack: " .. Leyak.Timeline_Dissolve_NewTrack_1_039C1F844D7D7D0E8CA9FEBA672ECF59)
-    LogDebug(Prefix .. "Timeline_Dissolve__Direction (enum 1-2): " .. Leyak.Timeline_Dissolve__Direction_039C1F844D7D7D0E8CA9FEBA672ECF59)
-    LogDebug(Prefix .. "RequiredMegalightDuration: " .. Leyak.RequiredMegalightDuration)
-    LogDebug(Prefix .. "TargetPlayer IsValid: " .. tostring(Leyak.TargetPlayer:IsValid()))
-    LogDebug(Prefix .. "HasBeenXrayed: " .. tostring(Leyak.HasBeenXrayed))
-    LogDebug(Prefix .. "ViewedByTarget: " .. tostring(Leyak.ViewedByTarget))
-    LogDebug(Prefix .. "CachedTimeSeen: " .. Leyak.CachedTimeSeen)
-    LogDebug(Prefix .. "DistanceDifferenceToDespawn: " .. Leyak.DistanceDifferenceToDespawn)
-    LogDebug(Prefix .. "SeenDespawnTime: " .. Leyak.SeenDespawnTime)
-    LogDebug(Prefix .. "DealDamageInfront: " .. tostring(Leyak.DealDamageInfront))
-    LogDebug(Prefix .. "StuckStartTime: " .. Leyak.StuckStartTime)
-    LogDebug(Prefix .. "PotentiallyStuck: " .. tostring(Leyak.PotentiallyStuck))
-    LogDebug(Prefix .. "AbsolutelyStuck: " .. tostring(Leyak.AbsolutelyStuck))
-    LogDebug(Prefix .. "TimeAllowedToBeStuck: " .. Leyak.TimeAllowedToBeStuck)
+    LogDebug(Prefix .. "ActorLocation:", VectorToString(Leyak:K2_GetActorLocation()))
+    LogDebug(Prefix .. "Timeline_Dissolve_NewTrack:", Leyak.Timeline_Dissolve_NewTrack_1_039C1F844D7D7D0E8CA9FEBA672ECF59)
+    LogDebug(Prefix .. "Timeline_Dissolve__Direction (enum 1-2):", Leyak.Timeline_Dissolve__Direction_039C1F844D7D7D0E8CA9FEBA672ECF59)
+    LogDebug(Prefix .. "RequiredMegalightDuration:", Leyak.RequiredMegalightDuration)
+    LogDebug(Prefix .. "TargetPlayer IsValid:", tostring(Leyak.TargetPlayer:IsValid()))
+    LogDebug(Prefix .. "HasBeenXrayed:", tostring(Leyak.HasBeenXrayed))
+    LogDebug(Prefix .. "ViewedByTarget:", tostring(Leyak.ViewedByTarget))
+    LogDebug(Prefix .. "CachedTimeSeen:", Leyak.CachedTimeSeen)
+    LogDebug(Prefix .. "DistanceDifferenceToDespawn:", Leyak.DistanceDifferenceToDespawn)
+    LogDebug(Prefix .. "SeenDespawnTime:", Leyak.SeenDespawnTime)
+    LogDebug(Prefix .. "DealDamageInfront:", tostring(Leyak.DealDamageInfront))
+    LogDebug(Prefix .. "StuckStartTime:", Leyak.StuckStartTime)
+    LogDebug(Prefix .. "PotentiallyStuck:", tostring(Leyak.PotentiallyStuck))
+    LogDebug(Prefix .. "AbsolutelyStuck:", tostring(Leyak.AbsolutelyStuck))
+    LogDebug(Prefix .. "TimeAllowedToBeStuck:", Leyak.TimeAllowedToBeStuck)
 end
 
 ---Logs in debug scope all relevant properties of a AWeapon_FishingRod_C to console 
@@ -449,32 +451,32 @@ function AFUtils.LogFishingRod(FishingRod, Prefix)
     if not FishingRod then return end
     Prefix = Prefix or ""
 
-    -- LogDebug(Prefix .. "FishingLocation: " .. VectorToString(FishingRod.FishingLocation))
-    -- LogDebug(Prefix .. "ActiveFishingLocation: " .. VectorToString(FishingRod.ActiveFishingLocation))
-    -- LogDebug(Prefix .. "ActiveCompletionZone: " .. VectorToString(FishingRod.ActiveCompletionZone))
-    -- LogDebug(Prefix .. "ActiveFishLocation: " .. VectorToString(FishingRod.ActiveFishLocation))
-    -- LogDebug(Prefix .. "ActivePlayerLocation: " .. VectorToString(FishingRod.ActivePlayerLocation))
-    LogDebug(Prefix .. "ActiveRodTension: " .. FishingRod.ActiveRodTension)
-    LogDebug(Prefix .. "NextDirectionChangeTime: " .. FishingRod.NextDirectionChangeTime)
-    LogDebug(Prefix .. "NextCooldownTime: " .. FishingRod.NextCooldownTime)
-    LogDebug(Prefix .. "FishCaptureProgress: " .. FishingRod.FishCaptureProgress)
-    LogDebug(Prefix .. "FishCaptureDistance: " .. FishingRod.FishCaptureDistance)
-    LogDebug(Prefix .. "FishCaptureStage: " .. FishingRod.FishCaptureStage)
-    LogDebug(Prefix .. "ActiveFishSpeed: " .. FishingRod.ActiveFishSpeed)
-    LogDebug(Prefix .. "TimeToStartMinigame: " .. FishingRod.TimeToStartMinigame)
-    LogDebug(Prefix .. "HasActiveFish: " .. tostring(FishingRod.HasActiveFish))
-    LogDebug(Prefix .. "ReelAnimTime: " .. FishingRod.ReelAnimTime)
-    LogDebug(Prefix .. "Reeling: " .. tostring(FishingRod.Reeling))
-    LogDebug(Prefix .. "HotspotActive: " .. tostring(FishingRod.HotspotActive))
-    LogDebug(Prefix .. "LastTimeFishingEnded: " .. FishingRod.LastTimeFishingEnded)
-    LogDebug(Prefix .. "CatchingJunk: " .. tostring(FishingRod.CatchingJunk))
-    LogDebug(Prefix .. "JunkReward.RowName: " .. FishingRod.JunkReward.RowName:ToString())
-    LogDebug(Prefix .. "FishReward.RowName: " .. FishingRod.FishReward.RowName:ToString())
-    LogDebug(Prefix .. "FishReward.DataTablePath: " .. FishingRod.FishReward.DataTablePath:ToString())
-    LogDebug(Prefix .. "RequiredCaptures: " .. FishingRod.RequiredCaptures)
-    LogDebug(Prefix .. "TackleboxActive: " .. tostring(FishingRod.TackleboxActive))
-    LogDebug(Prefix .. "LuckyHat: " .. tostring(FishingRod.LuckyHat))
-    LogDebug(Prefix .. "OwnerLastKnownLevel: " .. FishingRod.OwnerLastKnownLevel)
+    -- LogDebug(Prefix .. "FishingLocation:", VectorToString(FishingRod.FishingLocation))
+    -- LogDebug(Prefix .. "ActiveFishingLocation:", VectorToString(FishingRod.ActiveFishingLocation))
+    -- LogDebug(Prefix .. "ActiveCompletionZone:", VectorToString(FishingRod.ActiveCompletionZone))
+    -- LogDebug(Prefix .. "ActiveFishLocation:", VectorToString(FishingRod.ActiveFishLocation))
+    -- LogDebug(Prefix .. "ActivePlayerLocation:", VectorToString(FishingRod.ActivePlayerLocation))
+    LogDebug(Prefix .. "ActiveRodTension:", FishingRod.ActiveRodTension)
+    LogDebug(Prefix .. "NextDirectionChangeTime:", FishingRod.NextDirectionChangeTime)
+    LogDebug(Prefix .. "NextCooldownTime:", FishingRod.NextCooldownTime)
+    LogDebug(Prefix .. "FishCaptureProgress:", FishingRod.FishCaptureProgress)
+    LogDebug(Prefix .. "FishCaptureDistance:", FishingRod.FishCaptureDistance)
+    LogDebug(Prefix .. "FishCaptureStage:", FishingRod.FishCaptureStage)
+    LogDebug(Prefix .. "ActiveFishSpeed:", FishingRod.ActiveFishSpeed)
+    LogDebug(Prefix .. "TimeToStartMinigame:", FishingRod.TimeToStartMinigame)
+    LogDebug(Prefix .. "HasActiveFish:", tostring(FishingRod.HasActiveFish))
+    LogDebug(Prefix .. "ReelAnimTime:", FishingRod.ReelAnimTime)
+    LogDebug(Prefix .. "Reeling:", tostring(FishingRod.Reeling))
+    LogDebug(Prefix .. "HotspotActive:", tostring(FishingRod.HotspotActive))
+    LogDebug(Prefix .. "LastTimeFishingEnded:", FishingRod.LastTimeFishingEnded)
+    LogDebug(Prefix .. "CatchingJunk:", tostring(FishingRod.CatchingJunk))
+    LogDebug(Prefix .. "JunkReward.RowName:", FishingRod.JunkReward.RowName:ToString())
+    LogDebug(Prefix .. "FishReward.RowName:", FishingRod.FishReward.RowName:ToString())
+    LogDebug(Prefix .. "FishReward.DataTablePath:", FishingRod.FishReward.DataTablePath:ToString())
+    LogDebug(Prefix .. "RequiredCaptures:", FishingRod.RequiredCaptures)
+    LogDebug(Prefix .. "TackleboxActive:", tostring(FishingRod.TackleboxActive))
+    LogDebug(Prefix .. "LuckyHat:", tostring(FishingRod.LuckyHat))
+    LogDebug(Prefix .. "OwnerLastKnownLevel:", FishingRod.OwnerLastKnownLevel)
 end
 
 ---Logs in debug scope all relevant properties of a ADayNightManager_C to console 
@@ -484,38 +486,38 @@ function AFUtils.LogDayNightManager(DayNightManager, Prefix)
     if not DayNightManager or not DayNightManager:IsValid() then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "DefaultStartingHour: " .. DayNightManager.DefaultStartingHour)
-    LogDebug(Prefix .. "MorningStartHour: " .. DayNightManager.MorningStartHour)
-    LogDebug(Prefix .. "NightfallStartHour: " .. DayNightManager.NightfallStartHour)
-    LogDebug(Prefix .. "AssaultCheckHour: " .. DayNightManager.AssaultCheckHour)
-    LogDebug(Prefix .. "WeatherCheckHour: " .. DayNightManager.WeatherCheckHour)
-    LogDebug(Prefix .. "CurrentTimeInSeconds: " .. DayNightManager.CurrentTimeInSeconds)
-    LogDebug(Prefix .. "24HoursInSeconds: " .. DayNightManager["24HoursInSeconds"])
-    LogDebug(Prefix .. "SecondsPerRealSecond_Day: " .. DayNightManager.SecondsPerRealSecond_Day)
-    LogDebug(Prefix .. "DoNotModify!DayNightTickRate: " .. DayNightManager["DoNotModify!DayNightTickRate"])
-    LogDebug(Prefix .. "CurrentDay: " .. DayNightManager.CurrentDay)
-    LogDebug(Prefix .. "IsNight: " .. tostring(DayNightManager.IsNight))
-    LogDebug(Prefix .. "LastKnownHour: " .. DayNightManager.LastKnownHour)
-    LogDebug(Prefix .. "SecondsPerRealSecond_Night: " .. DayNightManager.SecondsPerRealSecond_Night)
-    LogDebug(Prefix .. "CurrentAnnouncementIndex: " .. DayNightManager.CurrentAnnouncementIndex)
-    LogDebug(Prefix .. "AmbientTemperature_Day: " .. DayNightManager.AmbientTemperature_Day)
-    LogDebug(Prefix .. "AmbientTemperature_Night: " .. DayNightManager.AmbientTemperature_Night)
-    LogDebug(Prefix .. "CurrentAnnouncementJournals.Num: " .. #DayNightManager.CurrentAnnouncementJournals)
-    LogDebug(Prefix .. "HavePlayersLeftStartingZone: " .. tostring(DayNightManager.HavePlayersLeftStartingZone))
-    LogDebug(Prefix .. "LastAssaultDay: " .. DayNightManager.LastAssaultDay)
-    LogDebug(Prefix .. "IsAssaultDay: " .. tostring(DayNightManager.IsAssaultDay))
-    LogDebug(Prefix .. "SleepingPlayers: " .. DayNightManager.SleepingPlayers)
-    LogDebug(Prefix .. "LastWeatherDay: " .. DayNightManager.LastWeatherDay)
-    LogDebug(Prefix .. "CurrentWeatherEvent: " .. DayNightManager.CurrentWeatherEvent:ToString())
-    LogDebug(Prefix .. "RequiredDaysBetweenWeather: " .. DayNightManager.RequiredDaysBetweenWeather)
-    LogDebug(Prefix .. "TimeLastAutoSaved: " .. DayNightManager.TimeLastAutoSaved)
+    LogDebug(Prefix .. "DefaultStartingHour:", DayNightManager.DefaultStartingHour)
+    LogDebug(Prefix .. "MorningStartHour:", DayNightManager.MorningStartHour)
+    LogDebug(Prefix .. "NightfallStartHour:", DayNightManager.NightfallStartHour)
+    LogDebug(Prefix .. "AssaultCheckHour:", DayNightManager.AssaultCheckHour)
+    LogDebug(Prefix .. "WeatherCheckHour:", DayNightManager.WeatherCheckHour)
+    LogDebug(Prefix .. "CurrentTimeInSeconds:", DayNightManager.CurrentTimeInSeconds)
+    LogDebug(Prefix .. "24HoursInSeconds:", DayNightManager["24HoursInSeconds"])
+    LogDebug(Prefix .. "SecondsPerRealSecond_Day:", DayNightManager.SecondsPerRealSecond_Day)
+    LogDebug(Prefix .. "DoNotModify!DayNightTickRate:", DayNightManager["DoNotModify!DayNightTickRate"])
+    LogDebug(Prefix .. "CurrentDay:", DayNightManager.CurrentDay)
+    LogDebug(Prefix .. "IsNight:", tostring(DayNightManager.IsNight))
+    LogDebug(Prefix .. "LastKnownHour:", DayNightManager.LastKnownHour)
+    LogDebug(Prefix .. "SecondsPerRealSecond_Night:", DayNightManager.SecondsPerRealSecond_Night)
+    LogDebug(Prefix .. "CurrentAnnouncementIndex:", DayNightManager.CurrentAnnouncementIndex)
+    LogDebug(Prefix .. "AmbientTemperature_Day:", DayNightManager.AmbientTemperature_Day)
+    LogDebug(Prefix .. "AmbientTemperature_Night:", DayNightManager.AmbientTemperature_Night)
+    LogDebug(Prefix .. "CurrentAnnouncementJournals.Num:", #DayNightManager.CurrentAnnouncementJournals)
+    LogDebug(Prefix .. "HavePlayersLeftStartingZone:", tostring(DayNightManager.HavePlayersLeftStartingZone))
+    LogDebug(Prefix .. "LastAssaultDay:", DayNightManager.LastAssaultDay)
+    LogDebug(Prefix .. "IsAssaultDay:", tostring(DayNightManager.IsAssaultDay))
+    LogDebug(Prefix .. "SleepingPlayers:", DayNightManager.SleepingPlayers)
+    LogDebug(Prefix .. "LastWeatherDay:", DayNightManager.LastWeatherDay)
+    LogDebug(Prefix .. "CurrentWeatherEvent:", DayNightManager.CurrentWeatherEvent:ToString())
+    LogDebug(Prefix .. "RequiredDaysBetweenWeather:", DayNightManager.RequiredDaysBetweenWeather)
+    LogDebug(Prefix .. "TimeLastAutoSaved:", DayNightManager.TimeLastAutoSaved)
     if DayNightManager.ActiveWeatherDirector:IsValid() then
-        LogDebug(Prefix .. "ActiveWeatherDirector.Class: " .. DayNightManager.ActiveWeatherDirector:GetClass():GetFullName())
+        LogDebug(Prefix .. "ActiveWeatherDirector.Class:", DayNightManager.ActiveWeatherDirector:GetClass():GetFullName())
     end
-    LogDebug(Prefix .. "ActiveAmbientRadiation: " .. DayNightManager.ActiveAmbientRadiation)
-    LogDebug(Prefix .. "CurrentAnnouncementCompendium.Num: " .. #DayNightManager.CurrentAnnouncementCompendium)
-    LogDebug(Prefix .. "Weather_RequestByPlayer.RowName: " .. DayNightManager.Weather_RequestByPlayer.RowName:ToString())
-    LogDebug(Prefix .. "Weather_RequestByPlayer.DataTablePath: " .. DayNightManager.Weather_RequestByPlayer.DataTablePath:ToString())
+    LogDebug(Prefix .. "ActiveAmbientRadiation:", DayNightManager.ActiveAmbientRadiation)
+    LogDebug(Prefix .. "CurrentAnnouncementCompendium.Num:", #DayNightManager.CurrentAnnouncementCompendium)
+    LogDebug(Prefix .. "Weather_RequestByPlayer.RowName:", DayNightManager.Weather_RequestByPlayer.RowName:ToString())
+    LogDebug(Prefix .. "Weather_RequestByPlayer.DataTablePath:", DayNightManager.Weather_RequestByPlayer.DataTablePath:ToString())
 end
 
 ---Logs in debug scope all relevant properties of a AAbioticCharacter to console 
@@ -528,17 +530,17 @@ function AFUtils.LogAbioticCharacter(Character, Prefix)
     LogDebug(Prefix .. "ActorLocation:", VectorToString(Character:K2_GetActorLocation()))
     LogDebug(Prefix .. "ActorRotation:", RotatorToString(Character:K2_GetActorRotation()))
     if Character.TetheredBy:IsValid() then
-        LogDebug(Prefix .. "TetheredBy: " .. Character.TetheredBy:GetFullName())
+        LogDebug(Prefix .. "TetheredBy:", Character.TetheredBy:GetFullName())
     end
     LogDebug(Prefix .. "GameplayTags.GameplayTags (", #Character.GameplayTags.GameplayTags .. "):")
     for i = 1, #Character.GameplayTags.GameplayTags, 1 do
         local gameplayTag = Character.GameplayTags.GameplayTags[i]
-        LogDebug(Prefix .. "GameplayTag[" .. i .. "].TagName: " .. gameplayTag.TagName:ToString())
+        LogDebug(Prefix .. "GameplayTag[" .. i .. "].TagName:", gameplayTag.TagName:ToString())
     end
     LogDebug(Prefix .. "GameplayTags.ParentTags (", #Character.GameplayTags.ParentTags .. "):")
     for i = 1, #Character.GameplayTags.ParentTags, 1 do
         local tag = Character.GameplayTags.ParentTags[i]
-        LogDebug(Prefix .. "ParentTags[" .. i .. "].TagName: " .. tag.TagName:ToString())
+        LogDebug(Prefix .. "ParentTags[" .. i .. "].TagName:", tag.TagName:ToString())
     end
     -- ToDo StatModifiers
     LogDebug(Prefix .. "CurrentHealth_Head:", Character.CurrentHealth_Head)
@@ -764,8 +766,8 @@ function AFUtils.LogNarrativeNPC(NarrativeNPC, Prefix)
     if not NarrativeNPC or not NarrativeNPC:IsValid() then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "IsCorpse: " .. tostring(NarrativeNPC.IsCorpse))
-    LogDebug(Prefix .. "NarrativeNPC_ConversationRow.RowName: " .. tostring(NarrativeNPC.NarrativeNPC_ConversationRow.RowName:ToString()))
+    LogDebug(Prefix .. "IsCorpse:", tostring(NarrativeNPC.IsCorpse))
+    LogDebug(Prefix .. "NarrativeNPC_ConversationRow.RowName:", tostring(NarrativeNPC.NarrativeNPC_ConversationRow.RowName:ToString()))
     -- LogDebug(Prefix .. "HeadBoneLookAtTarget:", NarrativeNPC.HeadBoneLookAtTarget)
     LogDebug(Prefix .. "NarrativeState (enum 0-5):", NarrativeNPC.NarrativeState)
     LogDebug(Prefix .. "LastPlayedNarrativeState (enum 0-5):", NarrativeNPC.LastPlayedNarrativeState)
@@ -810,7 +812,7 @@ function AFUtils.LogWorldSettings(WorldSettings, Prefix)
     for i = 1, #WorldSettings.SandboxValues, 1 do
         ---@type FSandboxData
         local data = WorldSettings.SandboxValues[i]
-        LogDebug(Prefix .. " #" .. i .. ": Key: " .. data.Key:ToString() .. ", Value " .. data.Value:ToString())
+        LogDebug(Prefix .. " #" .. i .. ": Key:", data.Key:ToString() .. ", Value " .. data.Value:ToString())
     end
     LogDebug(Prefix .. "ModifiedRuleset (enum 0-3):", WorldSettings.ModifiedRuleset)
 end
@@ -822,23 +824,23 @@ function AFUtils.LogCraftingEntryItem(CraftingEntryItem, Prefix)
     if not CraftingEntryItem or not CraftingEntryItem:IsValid() or not CraftingEntryItem.RecipeRow then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "RecipeRow.RowName: " .. CraftingEntryItem.RecipeRow.RowName:ToString())
+    LogDebug(Prefix .. "RecipeRow.RowName:", CraftingEntryItem.RecipeRow.RowName:ToString())
     LogDebug(Prefix .. "CountToCreate:", CraftingEntryItem.CountToCreate)
-    LogDebug(Prefix .. "RecipeItemName: " .. CraftingEntryItem.RecipeItemName:ToString())
-    LogDebug(Prefix .. "ItemToCreate.RowName: " .. CraftingEntryItem.ItemToCreate.RowName:ToString())
-    LogDebug(Prefix .. "BenchesRequired.Num: " .. #CraftingEntryItem.BenchesRequired)
-    LogDebug(Prefix .. "Category: " .. CraftingEntryItem.Category)
-    LogDebug(Prefix .. "RecipeItems.Num: " .. #CraftingEntryItem.RecipeItems)
+    LogDebug(Prefix .. "RecipeItemName:", CraftingEntryItem.RecipeItemName:ToString())
+    LogDebug(Prefix .. "ItemToCreate.RowName:", CraftingEntryItem.ItemToCreate.RowName:ToString())
+    LogDebug(Prefix .. "BenchesRequired.Num:", #CraftingEntryItem.BenchesRequired)
+    LogDebug(Prefix .. "Category:", CraftingEntryItem.Category)
+    LogDebug(Prefix .. "RecipeItems.Num:", #CraftingEntryItem.RecipeItems)
     for i = 1, #CraftingEntryItem.RecipeItems, 1 do
         local recipeItem = CraftingEntryItem.RecipeItems[i]
-        LogDebug(Prefix .. "RecipeItems[".. i .. "].Item.RowName: " .. recipeItem.Item.RowName:ToString())
-        LogDebug(Prefix .. "RecipeItems[".. i .. "].Count: " .. recipeItem.Count)
+        LogDebug(Prefix .. "RecipeItems[".. i .. "].Item.RowName:", recipeItem.Item.RowName:ToString())
+        LogDebug(Prefix .. "RecipeItems[".. i .. "].Count:", recipeItem.Count)
     end
-    LogDebug(Prefix .. "SubstituteItems.Num: " .. #CraftingEntryItem.SubstituteItems)
+    LogDebug(Prefix .. "SubstituteItems.Num:", #CraftingEntryItem.SubstituteItems)
     for i = 1, #CraftingEntryItem.SubstituteItems, 1 do
         local recipeItem = CraftingEntryItem.SubstituteItems[i]
-        LogDebug(Prefix .. "SubstituteItems[".. i .. "].Item.RowName: " .. recipeItem.Item.RowName:ToString())
-        LogDebug(Prefix .. "SubstituteItems[".. i .. "].Count: " .. recipeItem.Count)
+        LogDebug(Prefix .. "SubstituteItems[".. i .. "].Item.RowName:", recipeItem.Item.RowName:ToString())
+        LogDebug(Prefix .. "SubstituteItems[".. i .. "].Count:", recipeItem.Count)
     end
     LogDebug(Prefix .. "bIsSoupRecipe:", CraftingEntryItem.bIsSoupRecipe)
     LogDebug(Prefix .. "bUnlocked:", CraftingEntryItem.bUnlocked)
@@ -856,13 +858,13 @@ function AFUtils.LogRecipeStruct(RecipeStruct, Prefix)
     if not RecipeStruct or not RecipeStruct.ItemToCreate_4_842F5059497E898D938220BCCC148B08 then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "ItemToCreate.RowName: " .. RecipeStruct.ItemToCreate_4_842F5059497E898D938220BCCC148B08.RowName:ToString())
+    LogDebug(Prefix .. "ItemToCreate.RowName:", RecipeStruct.ItemToCreate_4_842F5059497E898D938220BCCC148B08.RowName:ToString())
     LogDebug(Prefix .. "CountToCreate:", RecipeStruct.CountToCreate_17_9ACBB85C48DCB6769A2331AB7B56E2C8)
     LogDebug(Prefix .. "Category:", RecipeStruct.Category_22_940DB5D6483687DCE5FF63A7711F71C3)
     LogDebug(Prefix .. "RecipeItems Num:", #RecipeStruct.RecipeItems_7_0F13BA7A407C72065EE926B9D41B8B9E)
     for i = 1, #RecipeStruct.RecipeItems_7_0F13BA7A407C72065EE926B9D41B8B9E, 1 do
         local recipeItems = RecipeStruct.RecipeItems_7_0F13BA7A407C72065EE926B9D41B8B9E[i]
-        LogDebug(Prefix .. "RecipeItems["..i.."].Item.RowName: " .. recipeItems.Item_5_5AD3D6B1470ED45BCB2D15BC84BB0F1A.RowName:ToString())
+        LogDebug(Prefix .. "RecipeItems["..i.."].Item.RowName:", recipeItems.Item_5_5AD3D6B1470ED45BCB2D15BC84BB0F1A.RowName:ToString())
         LogDebug(Prefix .. "RecipeItems["..i.."].Count:", recipeItems.Count_6_4C6C5BFB4956F9C29A5C2BB6F28B7690)
     end
     LogDebug(Prefix .. "BenchesRequired Num:", #RecipeStruct.BenchesRequired_10_493C635841D8143BB87BDCA941CD28A6)
@@ -952,6 +954,7 @@ function AFUtils.LogFurnitureParentBP(FurnitureParentBP, Prefix)
     LogDebug(Prefix .. "NPCTargetPriority enum (0-4):", FurnitureParentBP.NPCTargetPriority)
     LogDebug(Prefix .. "SupportOffsetUp:", FurnitureParentBP.SupportOffsetUp)
     LogDebug(Prefix .. "CurrentActorRotation:", RotatorToString(FurnitureParentBP.CurrentActorRotation))
+    AFUtils.LogDeployedParentBP(FurnitureParentBP, Prefix .. "DeployedParentBP.")
 end
 
 ---@param LeyakContainment ADeployed_LeyakContainment_C

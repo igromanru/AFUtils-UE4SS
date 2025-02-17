@@ -428,11 +428,13 @@ end
 ---@param playerCharacter AAbiotic_PlayerCharacter_C Must be a valid object
 ---@return boolean Success
 function AFUtils.FillHeldItemWithEnergy(playerCharacter)
-    if not playerCharacter then return false end
-    
     local itemSlotStruct = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
     if itemSlotStruct then
-        return AFUtils.FillItemSlotStructEnergyFromItem(itemSlotStruct, playerCharacter.ItemInHand_BP)
+        local result = AFUtils.FillItemSlotStructEnergyFromItem(itemSlotStruct, playerCharacter.ItemInHand_BP)
+        if result then
+            playerCharacter:RefreshHotbarState()
+        end
+        return result
     end
     return false
 end

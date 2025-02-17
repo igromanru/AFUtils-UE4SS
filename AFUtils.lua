@@ -376,8 +376,6 @@ end
 ---@param playerCharacter AAbiotic_PlayerCharacter_C Must be a valid object
 ---@return boolean Success
 function AFUtils.FixHeldItemLiquid(playerCharacter)
-    if not playerCharacter then return false end
-    
     local itemSlotStruct = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
     if itemSlotStruct then
         return AFUtils.FixItemSlotStructLiquidFromItem(itemSlotStruct, playerCharacter.ItemInHand_BP)

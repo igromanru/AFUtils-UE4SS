@@ -314,4 +314,16 @@ AFUtils.Factions = {
 	NewEnumerator16 = 14
 };
 
+---@enum FoodCookStates
+AFUtils.FoodCookStates = {
+    Cooking = 0,
+    Cooked = 1,
+    CarefullyCooked = 2,
+    WellCooked = 3,
+    BeautifullyCooked = 4,
+    NewEnumerator7 = 5,
+    Burnt = 6,
+    Ignited = 7
+}
+
 return AFUtils

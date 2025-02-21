@@ -465,6 +465,8 @@ function AFUtils.LogFishingRod(FishingRod, Prefix)
     LogDebug(Prefix .. "ActiveFishSpeed:", FishingRod.ActiveFishSpeed)
     LogDebug(Prefix .. "TimeToStartMinigame:", FishingRod.TimeToStartMinigame)
     LogDebug(Prefix .. "HasActiveFish:", tostring(FishingRod.HasActiveFish))
+    LogDebug(Prefix .. "PossibleFishingZone:", FishingRod.PossibleFishingZone.RowName:ToString())
+    LogDebug(Prefix .. "ActiveFishingZone:", FishingRod.ActiveFishingZone.RowName:ToString())
     LogDebug(Prefix .. "ReelAnimTime:", FishingRod.ReelAnimTime)
     LogDebug(Prefix .. "Reeling:", tostring(FishingRod.Reeling))
     LogDebug(Prefix .. "HotspotActive:", tostring(FishingRod.HotspotActive))
@@ -477,6 +479,7 @@ function AFUtils.LogFishingRod(FishingRod, Prefix)
     LogDebug(Prefix .. "TackleboxActive:", tostring(FishingRod.TackleboxActive))
     LogDebug(Prefix .. "LuckyHat:", tostring(FishingRod.LuckyHat))
     LogDebug(Prefix .. "OwnerLastKnownLevel:", FishingRod.OwnerLastKnownLevel)
+    LogDebug(Prefix .. "ReelingSpeed:", FishingRod.ReelingSpeed)
 end
 
 ---Logs in debug scope all relevant properties of a ADayNightManager_C to console 

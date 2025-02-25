@@ -193,6 +193,25 @@ function AFUtils.LogSaveDataDeployableStruct(SaveDataDeployableStruct, Prefix)
     LogDebug(Prefix .. "NoResetVignette:", SaveDataDeployableStruct.NoResetVignette_161_C76AFFC84B04AA28B73A65836D6BB265)
 end
 
+---@param CookingStruct FAbiotic_Cooking_Struct
+---@param Prefix string?
+function AFUtils.LogCookingStruct(CookingStruct, Prefix)
+    if not CookingStruct then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "Ingredient.Num:", #CookingStruct.Ingredient_26_75A231F54D4ED926835029AE13B322A3)
+    for i = 1, #CookingStruct.Ingredient_26_75A231F54D4ED926835029AE13B322A3 do
+        local ingredient = CookingStruct.Ingredient_26_75A231F54D4ED926835029AE13B322A3[i]
+        LogDebug(Prefix .. string.format("Ingredient[%d].Item:", i), ingredient.Item_5_5AD3D6B1470ED45BCB2D15BC84BB0F1A.RowName:ToString())
+        LogDebug(Prefix .. string.format("Ingredient[%d].Count:", i), ingredient.Count_6_4C6C5BFB4956F9C29A5C2BB6F28B7690)
+    end
+    LogDebug(Prefix .. "CookingState enum (0-7):", CookingStruct.CookingState_32_568AB66645F40DCFF9789698F2B13EA0)
+    LogDebug(Prefix .. "CookedProgress:", CookingStruct.CookedProgress_34_F73379824243A5DFBCABCEB136769B43)
+    LogDebug(Prefix .. "CookDuration:", CookingStruct.CookDuration_37_228EDAD3449116421DDD5D9463A67B6A)
+    LogDebug(Prefix .. "Portions:", CookingStruct.Portions_40_C56BA4F04C09F80070394080F5A7345D)
+    LogDebug(Prefix .. "StovewareType:", CookingStruct.StovewareType_43_E5BC5B244CA4D90B0302288209F7D0C8)
+end
+
 ---Logs in debug scope all relevant properties of URechargeableComponent_C to console 
 ---@param RechargeableComponent URechargeableComponent_C
 ---@param Prefix string? Prefix that should be added in front of each line
@@ -1046,6 +1065,49 @@ function AFUtils.LogGardenPlot(GardenPlot, Prefix)
     LogDebug(Prefix .. "WaterTickRate:", GardenPlot.WaterTickRate)
     LogDebug(Prefix .. "WaterLossPerTick:", GardenPlot.WaterLossPerTick)
     LogDebug(Prefix .. "WaterRequiredLight:", GardenPlot.WaterRequiredLight)
+end
+
+---@param ItemProxy AItemProxyParent_BP_C
+---@param Prefix string?
+function AFUtils.LogItemProxy(ItemProxy, Prefix)
+    if IsNotValid(ItemProxy) then return end
+    Prefix = Prefix or ""
+
+    AFUtils.LogInventoryChangeableDataStruct(ItemProxy.ChangeableData, Prefix .. "ChangeableData.")
+    LogDebug(Prefix .. "ItemRow.RowName:", ItemProxy.ItemRow.RowName:ToString())
+    LogDebug(Prefix .. "SpotIndex:", ItemProxy.SpotIndex)
+end
+
+---@param CookingProxy ACookingProxy_BP_C
+---@param Prefix string?
+function AFUtils.LogCookingProxy(CookingProxy, Prefix)
+    if IsNotValid(CookingProxy) then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "State enum (0-7):", CookingProxy.State)
+    LogDebug(Prefix .. "OriginalItem.RowName:", CookingProxy.OriginalItem.RowName:ToString())
+    LogDebug(Prefix .. "CookwareItem.RowName:", CookingProxy.CookwareItem.RowName:ToString())
+    LogDebug(Prefix .. "TimeToCook:", CookingProxy.TimeToCook)
+    LogDebug(Prefix .. "ChefSkill enum (0-7):", CookingProxy.ChefSkill)
+    LogDebug(Prefix .. "TimeToBurn:", CookingProxy.TimeToBurn)
+    LogDebug(Prefix .. "TimeToIgnite:", CookingProxy.TimeToIgnite)
+    LogDebug(Prefix .. "Cookware:", CookingProxy.Cookware)
+    -- LogDebug(Prefix .. "Cooking Delay GUID:", CookingProxy["Cooking Delay GUID"])
+    LogDebug(Prefix .. "CurrentCookType enum (0-2):", CookingProxy.CurrentCookType)
+    LogDebug(Prefix .. "IsCookingSoup:", CookingProxy.IsCookingSoup)
+    AFUtils.LogCookingStruct(CookingProxy["Soup Data"], Prefix .. "Soup Data.")
+    LogDebug(Prefix .. "CurrentCookedDisplay:", CookingProxy.CurrentCookedDisplay:ToString())
+    LogDebug(Prefix .. "New Ingredient Added:", CookingProxy["New Ingredient Added"])
+    LogDebug(Prefix .. "OriginalChefPlayerID:", CookingProxy.OriginalChefPlayerID:ToString())
+    LogDebug(Prefix .. "MaxLiquid:", CookingProxy.MaxLiquid)
+    LogDebug(Prefix .. "CurrentFoodRowName:", CookingProxy.CurrentFoodRowName:ToString())
+    LogDebug(Prefix .. "Current FXState enum (0-11):", CookingProxy["Current FXState"])
+    LogDebug(Prefix .. "BoilingTaintedWater:", CookingProxy.BoilingTaintedWater)
+    LogDebug(Prefix .. "TaintedWaterBoilDelay:", CookingProxy.TaintedWaterBoilDelay)
+    LogDebug(Prefix .. "LastModifiedTime:", CookingProxy.LastModifiedTime)
+    LogDebug(Prefix .. "StovewareMeshType:", CookingProxy.StovewareMeshType)
+    LogDebug(Prefix .. "FoodRow:", CookingProxy.FoodRow:ToString())
+    AFUtils.LogItemProxy(CookingProxy, Prefix)
 end
 
 return AFUtils

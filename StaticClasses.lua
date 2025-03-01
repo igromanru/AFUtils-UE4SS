@@ -246,4 +246,14 @@ function AFUtils.GetClassGardenPlot_ParentBP_C()
     return GardenPlot_ParentBP_C_Class
 end
 
+local Weapon_FishingRod_C_Class = CreateInvalidObject()
+---@return UClass
+function AFUtils.GetClassWeapon_FishingRod_C()
+    if IsNotValid(Weapon_FishingRod_C_Class) then
+        Weapon_FishingRod_C_Class = StaticFindObject("/Game/Blueprints/Items/Weapons/Guns/Weapon_FishingRod.Weapon_FishingRod_C")
+        ---@cast Weapon_FishingRod_C_Class UClass
+    end
+    return Weapon_FishingRod_C_Class
+end
+
 return AFUtils

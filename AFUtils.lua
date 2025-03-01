@@ -507,7 +507,7 @@ function AFUtils.FillItemSlotStructAmmoFromItem(ItemSlotStruct, Item)
 end
 
 ---@param playerCharacter AAbiotic_PlayerCharacter_C Must be a valid object
----@param weapon AAbiotic_Weapon_ParentBP_C? Must be a valid object
+---@param weapon AAbiotic_Weapon_ParentBP_C?
 ---@return boolean Filled # Returns true if ammo was modified, otherwise false
 function AFUtils.FillHeldWeaponWithAmmo(playerCharacter, weapon)
     if IsNotValid(playerCharacter) or not playerCharacter.ItemInHand_BP then return false end

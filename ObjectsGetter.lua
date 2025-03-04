@@ -290,8 +290,10 @@ end
 ---@return AAbiotic_Weapon_ParentBP_C?
 function AFUtils.GetCurrentWeapon(PlayerCharacter)
     PlayerCharacter = PlayerCharacter or AFUtils.GetMyPlayer()
-    if IsValid(PlayerCharacter) and PlayerCharacter.ItemInHand_BP:IsValid() and PlayerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassAbiotic_Weapon_ParentBP_C()) then
-        local weapon = PlayerCharacter.ItemInHand_BP ---@cast weapon AAbiotic_Weapon_ParentBP_C
+    if IsNotValid(PlayerCharacter) then return nil end
+
+    local weapon = PlayerCharacter.ItemInHand_BP ---@cast weapon AAbiotic_Weapon_ParentBP_C
+    if IsValid(weapon) and weapon:IsA(AFUtils.GetClassAbiotic_Weapon_ParentBP_C()) and not weapon:IsA(AFUtils.GetClassWeapon_FishingRod_C()) then
         return weapon
     end
     return nil

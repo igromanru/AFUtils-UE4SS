@@ -1110,4 +1110,42 @@ function AFUtils.LogCookingProxy(CookingProxy, Prefix)
     AFUtils.LogItemProxy(CookingProxy, Prefix)
 end
 
+---@param StoveParent AStove_ParentBP_C
+---@param Prefix string?
+function AFUtils.LogStoveParent(StoveParent, Prefix)
+    if IsNotValid(StoveParent) then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "IsBakingOven:", StoveParent.IsBakingOven)
+    LogDebug(Prefix .. "Local_LookingAtEmptyStoveSlot:", StoveParent.Local_LookingAtEmptyStoveSlot)
+    LogDebug(Prefix .. "Local_CookableItemInHand:", StoveParent.Local_CookableItemInHand)
+    LogDebug(Prefix .. "CookSpots.Num:", #StoveParent.CookSpots)
+    LogDebug(Prefix .. "CookableProxies.Num:", #StoveParent.CookableProxies)
+    LogDebug(Prefix .. "StovesOn.Num:", #StoveParent.StovesOn)
+    LogDebug(Prefix .. "StoveTopVerticalOffset:", StoveParent.StoveTopVerticalOffset)
+    LogDebug(Prefix .. "Local_LookingAtEmptyCookware:", StoveParent.Local_LookingAtEmptyCookware)
+    LogDebug(Prefix .. "LocalHoldingCookware:", StoveParent.LocalHoldingCookware)
+    LogDebug(Prefix .. "Local Cookware Is A Pot:", StoveParent["Local Cookware Is A Pot"])
+    LogDebug(Prefix .. "Local Holding A Container:", StoveParent["Local Holding A Container"])
+    LogDebug(Prefix .. "Local Start Cooking Soup:", StoveParent["Local Start Cooking Soup"])
+    LogDebug(Prefix .. "TimeStartedCooking.Num:", #StoveParent.TimeStartedCooking)
+    for i = 1, #StoveParent.TimeStartedCooking do
+        local time = StoveParent.TimeStartedCooking[i]
+        LogDebug(Prefix .. string.format("TimeStartedCooking[%d]: %f", i, time))
+    end
+    LogDebug(Prefix .. "LocalHoldingBakeable:", StoveParent.LocalHoldingBakeable)
+    LogDebug(Prefix .. "Current Stove Top State:", StoveParent["Current Stove Top State"])
+    LogDebug(Prefix .. "Current Held Item State:", StoveParent["Current Held Item State"])
+    LogDebug(Prefix .. "SoupWidgetOffset:", StoveParent.SoupWidgetOffset)
+    LogDebug(Prefix .. "RequiredItemName:", StoveParent.RequiredItemName:ToString())
+    LogDebug(Prefix .. "RequiredFixItItem.RowName:", StoveParent.RequiredFixItItem.RowName:ToString())
+    LogDebug(Prefix .. "HasBeenFixed:", StoveParent.HasBeenFixed)
+    LogDebug(Prefix .. "PanRotations.Num:", #StoveParent.PanRotations)
+    for i = 1, #StoveParent.PanRotations do
+        local panRotation = StoveParent.PanRotations[i]
+        LogDebug(Prefix .. string.format("PanRotations[%d]: %f", i, panRotation))
+    end
+    LogDebug(Prefix .. "IsFixingInventorySave:", StoveParent.IsFixingInventorySave)
+end
+
 return AFUtils

@@ -501,6 +501,20 @@ function AFUtils.LogFishingRod(FishingRod, Prefix)
     LogDebug(Prefix .. "ReelingSpeed:", FishingRod.ReelingSpeed)
 end
 
+---Logs in debug scope all relevant properties of a ABP_FishingHotspot_C to console 
+---@param FishingHotspot ABP_FishingHotspot_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogFishingHotspot(FishingHotspot, Prefix)
+    if not FishingHotspot then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "HotspotActive:", FishingHotspot.HotspotActive)
+    LogDebug(Prefix .. "Registered:", FishingHotspot.Registered)
+    LogDebug(Prefix .. "Cooldown:", FishingHotspot.Cooldown)
+    LogDebug(Prefix .. "UseAmount:", FishingHotspot.UseAmount)
+    LogDebug(Prefix .. "CooldownStartTime:", FishingHotspot.CooldownStartTime)
+end
+
 ---Logs in debug scope all relevant properties of a ADayNightManager_C to console 
 ---@param DayNightManager ADayNightManager_C
 ---@param Prefix string? Prefix that should be added in front of each line

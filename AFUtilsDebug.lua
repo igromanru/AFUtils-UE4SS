@@ -81,7 +81,9 @@ function AFUtils.LogInventoryItemSlotStruct(InventoryItemSlotStruct, Prefix)
     Prefix = Prefix or ""
 
     LogDebug(Prefix .. "RowName:", InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName:ToString())
-    LogDebug(Prefix .. "DataTable IsValid:", InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.DataTable:IsValid())
+    if InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.DataTable:IsValid() then
+        LogDebug(Prefix .. "DataTable:", InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.DataTable:GetFullName())
+    end
     AFUtils.LogInventoryChangeableDataStruct(InventoryItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313, Prefix .. "ChangeableData.")
 end
 

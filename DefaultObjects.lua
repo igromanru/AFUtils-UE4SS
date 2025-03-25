@@ -38,4 +38,24 @@ function AFUtils.GetWeatherEventHandleFunctionLibrary()
     return WeatherEventHandleFunctionLibraryCache
 end
 
+local FishHandleFunctionLibraryCache = CreateInvalidObject() ---@cast FishHandleFunctionLibraryCache UFishHandleFunctionLibrary
+---@return UFishHandleFunctionLibrary
+function AFUtils.GetFishHandleFunctionLibrary()
+    if IsNotValid(FishHandleFunctionLibraryCache) then
+        FishHandleFunctionLibraryCache = StaticFindObject("/Script/AbioticFactor.Default__FishHandleFunctionLibrary")
+        ---@cast FishHandleFunctionLibraryCache UFishHandleFunctionLibrary
+    end
+    return FishHandleFunctionLibraryCache
+end
+
+local FishingZoneHandleFunctionLibraryCache = CreateInvalidObject() ---@cast FishingZoneHandleFunctionLibraryCache UFishingZoneHandleFunctionLibrary
+---@return UFishingZoneHandleFunctionLibrary
+function AFUtils.GetFishingZoneHandleFunctionLibrary()
+    if IsNotValid(FishingZoneHandleFunctionLibraryCache) then
+        FishingZoneHandleFunctionLibraryCache = StaticFindObject("/Script/AbioticFactor.Default__FishingZoneHandleFunctionLibrary")
+        ---@cast FishingZoneHandleFunctionLibraryCache UFishingZoneHandleFunctionLibrary
+    end
+    return FishingZoneHandleFunctionLibraryCache
+end
+
 return AFUtils

@@ -550,12 +550,20 @@ function AFUtils.TriggerWeatherEvent(EventName)
         ---@type table<LocalUnrealParam>
         local outRowHandles = {} ---@type LocalUnrealParam[]
         weatherEventHandleFunctionLibrary:GetAllWeatherEventRowHandles(outRowHandles)
+
+        if #outRowHandles > 0 and EventName == AFUtils.WeatherEvents.None then
+            local rowHandle = outRowHandles[1]:get() ---@type FWeatherEventRowHandle
+            rowHandle.RowName = NAME_None
+            myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToTable(rowHandle))
+            LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
+            return true
+        end
+
         for i = 1, #outRowHandles, 1 do
             local param = outRowHandles[i]
-            LogDebug(i..": "..param:type())
-
             local rowHandle = param:get() ---@type FWeatherEventRowHandle
             local rowName = rowHandle.RowName:ToString()
+            LogDebug(i..":", rowName)
             if rowName == EventName then
                 myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToTable(rowHandle))
                 LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
@@ -583,17 +591,19 @@ function AFUtils.SetNextWeatherEvent(EventName)
     return false
 end
 
----@param playerCharacter AAbiotic_PlayerCharacter_C
-function AFUtils.HealAllLimbs(playerCharacter)
-    playerCharacter.CurrentHealth_Head = 70.0
-    playerCharacter.CurrentHealth_Torso = 100.0
-    playerCharacter.CurrentHealth_LeftArm= 100.0
-    playerCharacter.CurrentHealth_RightArm = 100.0
-    playerCharacter.CurrentHealth_LeftLeg = 100.0
-    playerCharacter.CurrentHealth_RightLeg = 100.0
+---@param playerCharacter AAbiotic_PlayerCharacter_C # Target player
+---@param healAmount number? # Amount to heal, default 100.0
+function AFUtils.HealAllLimbs(playerCharacter, healAmount)
+    healAmount = healAmount or 100.0
+    -- playerCharacter.CurrentHealth_Head = 70.0
+    -- playerCharacter.CurrentHealth_Torso = 100.0
+    -- playerCharacter.CurrentHealth_LeftArm = 100.0
+    -- playerCharacter.CurrentHealth_RightArm = 100.0
+    -- playerCharacter.CurrentHealth_LeftLeg = 100.0
+    -- playerCharacter.CurrentHealth_RightLeg = 100.0
     for i = 1, 6, 1 do
         local outSuccess = { Success = false }
-        playerCharacter:Server_HealRandomLimb(100.0, outSuccess)
+        playerCharacter:Server_HealRandomLimb(healAmount, outSuccess)
     end
 end
 

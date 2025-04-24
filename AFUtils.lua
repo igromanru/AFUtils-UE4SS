@@ -601,10 +601,26 @@ function AFUtils.HealAllLimbs(playerCharacter, healAmount)
     -- playerCharacter.CurrentHealth_RightArm = 100.0
     -- playerCharacter.CurrentHealth_LeftLeg = 100.0
     -- playerCharacter.CurrentHealth_RightLeg = 100.0
-    for i = 1, 6, 1 do
-        local outSuccess = { Success = false }
+    local outSuccess = { Success = false }
+    for i = 1, 6 do
         playerCharacter:Server_HealRandomLimb(healAmount, outSuccess)
     end
+    playerCharacter:OnRep_CurrentHealth()
+end
+
+---@param playerCharacter AAbiotic_PlayerCharacter_C # Target player
+function AFUtils.HealFullAllLimbs(playerCharacter)
+    playerCharacter.CurrentHealth_Head = 70.0
+    playerCharacter.CurrentHealth_Torso = 100.0
+    playerCharacter.CurrentHealth_LeftArm = 100.0
+    playerCharacter.CurrentHealth_RightArm = 100.0
+    playerCharacter.CurrentHealth_LeftLeg = 100.0
+    playerCharacter.CurrentHealth_RightLeg = 100.0
+    local outSuccess = { Success = false }
+    for i = 1, 6 do
+        playerCharacter:Server_HealRandomLimb(100.0, outSuccess)
+    end
+    playerCharacter:OnRep_CurrentHealth()
 end
 
 ---Teleports a player to a close location of another

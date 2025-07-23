@@ -77,7 +77,8 @@ function AFUtils.DisplayTextChatMessage(Message, Prefix, Color)
     if not Message then return end
 
     local myPlayerController = AFUtils.GetMyPlayerController()
-    if IsValid(myPlayerController) then
+    local myPlayerState = AFUtils.GetMyPlayerState()
+    if IsValid(myPlayerController) and IsValid(myPlayerState) then
         Prefix = Prefix or ""
         if not Color or type(Color) ~= 'table' then
             Color = { -- White
@@ -87,7 +88,7 @@ function AFUtils.DisplayTextChatMessage(Message, Prefix, Color)
                 A = 1.0
             }
         end
-        myPlayerController:Local_DisplayTextChatMessage(Prefix, Color, Message, Color)
+        myPlayerController:Local_DisplayTextChatMessage(Prefix, Color, Message, Color, myPlayerState, false)
     end
 end
 

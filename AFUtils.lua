@@ -745,20 +745,22 @@ function AFUtils.AddGameTime(Hours, Minutes)
     return false
 end
 
+local FoodGreyeb = UEHelpers.FindFName("food_greyeb")
+local LeyakRowName = UEHelpers.FindFName("Leyak")
 ---@param LeyakContainment ADeployed_LeyakContainment_C
 ---@return boolean Success
 function AFUtils.TrapLeyak(LeyakContainment)
-    if IsNotValid(LeyakContainment) or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak then return false end
+    if IsNotValid(LeyakContainment) or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak:GetComparisonIndex() > 0 then return false end
 
     local gameState = AFUtils.GetSurvivalGameState()
     if IsValid(gameState) then
         local assetId = LeyakContainment.SpawnedAssetID:ToString()
         LogDebug("TrapLeyak: SpawnedAssetID:", assetId)
-        LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability)
-        LeyakContainment:TrapLeyak(0.0)
+        LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, FoodGreyeb)
+        LeyakContainment:TrapLeyak(0.0, LeyakRowName)
         gameState['Set Leyak Containment ID'](assetId)
         LogDebug("TrapLeyak: ActiveLeyakContainmentID:", gameState.ActiveLeyakContainmentID:ToString())
-        LogDebug("TrapLeyak: ContainsLeyak:", LeyakContainment.ContainsLeyak)
+        LogDebug("TrapLeyak: ContainsLeyak.ComparisonIndex:", LeyakContainment.ContainsLeyak:GetComparisonIndex())
         return gameState.ActiveLeyakContainmentID:ToString() == assetId
     end
     return false
@@ -767,7 +769,7 @@ end
 ---@param LeyakContainment ADeployed_LeyakContainment_C
 ---@return boolean Success
 function AFUtils.FreeLeyak(LeyakContainment)
-    if IsNotValid(LeyakContainment) or LeyakContainment.DeployableDestroyed or not LeyakContainment.ContainsLeyak then return false end
+    if IsNotValid(LeyakContainment) or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak:GetComparisonIndex() == 0 then return false end
 
     local gameState = AFUtils.GetSurvivalGameState()
     if IsValid(gameState) then

@@ -1004,7 +1004,11 @@ function AFUtils.LogDeployedLeyakContainment(LeyakContainment, Prefix)
     LogDebug(Prefix .. "SpawnedAssetID:", LeyakContainment.SpawnedAssetID:ToString())
     LogDebug(Prefix .. "FrostGlassTimeline:", LeyakContainment.FrostGlassTimeline_NewTrack_0_08756EC44A134A401814C5B93A4A86D5)
     LogDebug(Prefix .. "FrostGlassTimeline Direction:", LeyakContainment.FrostGlassTimeline__Direction_08756EC44A134A401814C5B93A4A86D5)
-    LogDebug(Prefix .. "ContainsLeyak:", LeyakContainment.ContainsLeyak)
+    local comparisonIndex = LeyakContainment.ContainsLeyak:GetComparisonIndex()
+    LogDebug(Prefix .. "ContainsLeyak ComparisonIndex:", comparisonIndex)
+    if comparisonIndex > 0 then
+        LogDebug(Prefix .. "ContainsLeyak:", LeyakContainment.ContainsLeyak:ToString())
+    end
     LogDebug(Prefix .. "Stability Level:", LeyakContainment["Stability Level"])
     LogDebug(Prefix .. "StabilityDecreasePerNight:", LeyakContainment.StabilityDecreasePerNight)
     LogDebug(Prefix .. "MaxStability:", LeyakContainment.MaxStability)

@@ -378,6 +378,20 @@ function AFUtils.LogInventoryItemSlot(InventoryItemSlot, Prefix)
     -- LogDebug(Prefix .. "SlotAppearance (enum 0-3):", InventoryItemSlot.SlotAppearance)
 end
 
+---Logs in debug scope all relevant properties of a ULeyakDirectorComponent_C to console 
+---@param LeyakDirectorComponent ULeyakDirectorComponent_C
+---@param Prefix string? Prefix that should be added in front of each line
+function AFUtils.LogLeyakDirectorComponent(LeyakDirectorComponent, Prefix)
+    if IsNotValid(LeyakDirectorComponent) then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "TimeLastLeyakSpawn:", LeyakDirectorComponent.TimeLastLeyakSpawn)
+    LogDebug(Prefix .. "LeyakViewCounter:", LeyakDirectorComponent.LeyakViewCounter)
+    LogDebug(Prefix .. "LeyakTauntCooldownMultiplier:", LeyakDirectorComponent.LeyakTauntCooldownMultiplier)
+    LogDebug(Prefix .. "LeyakCooldown:", LeyakDirectorComponent.LeyakCooldown)
+    LogDebug(Prefix .. "ActiveLeyakContainmentID:", LeyakDirectorComponent.ActiveLeyakContainmentID)
+end
+
 ---Logs in debug scope all relevant properties of a AAbiotic_AIDirector_C to console 
 ---@param AIDirector AAbiotic_AIDirector_C
 ---@param Prefix string? Prefix that should be added in front of each line
@@ -385,6 +399,7 @@ function AFUtils.LogAIDirector(AIDirector, Prefix)
     if not AIDirector or not AIDirector:IsValid() then return end
     Prefix = Prefix or ""
 
+    AFUtils.LogLeyakDirectorComponent(AIDirector.LeyakDirectorComponent)
     -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Tick_PrioritySpawns, Prefix .. "Tick_PrioritySpawns.")
     -- AFUtils.LogTimerHandle(AIDirector, AIDirector.Tick_DormantSpawns, Prefix .. "Tick_DormantSpawns.")
     LogDebug(Prefix .. "CurrentFacilitySpawns:", AIDirector.CurrentFacilitySpawns)

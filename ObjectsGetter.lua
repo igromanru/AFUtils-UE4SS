@@ -203,6 +203,17 @@ function AFUtils.GetAIDirector()
     return AIDirectorCache
 end
 
+---Returns current ULeyakDirectorComponent_C
+---@return ULeyakDirectorComponent_C
+function AFUtils.GetLeyakDirectorComponent()
+    local aiDirector = AFUtils.GetAIDirector()
+    if IsValid(aiDirector) then
+        return aiDirector.LeyakDirectorComponent
+    end
+    
+    return CreateInvalidObject() ---@type ULeyakDirectorComponent_C
+end
+
 local DayNightManagerCache = CreateInvalidObject() ---@cast DayNightManagerCache ADayNightManager_C
 ---Retruns current ADayNightManager_C
 ---@return ADayNightManager_C

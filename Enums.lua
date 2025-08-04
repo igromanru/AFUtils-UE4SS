@@ -116,7 +116,10 @@ AFUtils.WeatherEvents = {
     None = "None",
     Fog = "Fog",
     RadLeak = "RadLeak",
-    Spores = "Spores"
+    Spores = "Spores",
+	ColdSnap = "ColdSnap",
+	Blackout = "Blackout",
+	BlackFog = "BlackFog",
 }
 
 ---Map of Traits. Key is trait's FName<br>

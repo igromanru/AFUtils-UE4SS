@@ -780,4 +780,25 @@ function AFUtils.FreeLeyak(LeyakContainment)
     return false
 end
 
+local IceCream = UEHelpers.FindFName("icecream")
+local KrasueRowName = UEHelpers.FindFName("Krasue")
+---@param LeyakContainment ADeployed_LeyakContainment_C
+---@return boolean Success
+function AFUtils.TrapKrasue(LeyakContainment)
+    if IsNotValid(LeyakContainment) or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak:GetComparisonIndex() > 0 then return false end
+
+    local gameState = AFUtils.GetSurvivalGameState()
+    if IsValid(gameState) then
+        local assetId = LeyakContainment.SpawnedAssetID:ToString()
+        LogDebug("KrasueLeyak: SpawnedAssetID:", assetId)
+        LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, IceCream)
+        LeyakContainment:TrapLeyak(0.0, KrasueRowName)
+        gameState['Set Leyak Containment ID'](assetId)
+        LogDebug("KrasueLeyak: ActiveLeyakContainmentID:", gameState.ActiveLeyakContainmentID:ToString())
+        LogDebug("KrasueLeyak: ContainsLeyak.ComparisonIndex:", LeyakContainment.ContainsLeyak:GetComparisonIndex())
+        return gameState.ActiveLeyakContainmentID:ToString() == assetId
+    end
+    return false
+end
+
 return AFUtils

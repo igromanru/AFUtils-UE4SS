@@ -139,7 +139,7 @@ end
 ---Returns current AAbiotic_Survival_GameMode_C
 ---@return AAbiotic_Survival_GameMode_C
 function AFUtils.GetSurvivalGameMode()
-    local gameMode = UEHelpers.GetGameModeBase() ---@cast gameMode AAbiotic_Survival_GameMode_C
+    local gameMode = GetGameModeBase() ---@cast gameMode AAbiotic_Survival_GameMode_C
     if IsValid(gameMode) and gameMode:IsA(AFUtils.GetClassAbiotic_Survival_GameMode_C()) then
         return gameMode
     end
@@ -149,7 +149,7 @@ end
 ---Returns current AAbiotic_Survival_GameMode_C
 ---@return AAbiotic_Survival_GameState_C
 function AFUtils.GetSurvivalGameState()
-    local gameState = UEHelpers.GetGameStateBase() ---@cast gameState AAbiotic_Survival_GameState_C
+    local gameState = GetGameStateBase() ---@cast gameState AAbiotic_Survival_GameState_C
     if IsValid(gameState) and gameState:IsA(AFUtils.GetClassAbiotic_Survival_GameState_C()) then
         return gameState
     end
@@ -212,6 +212,17 @@ function AFUtils.GetLeyakDirectorComponent()
     end
     
     return CreateInvalidObject() ---@type ULeyakDirectorComponent_C
+end
+
+---Returns current UKrasueDirectorComponent_C
+---@return UKrasueDirectorComponent_C
+function AFUtils.GetKrasueDirectorComponent()
+    local aiDirector = AFUtils.GetAIDirector()
+    if IsValid(aiDirector) then
+        return aiDirector.KrasueDirectorComponent
+    end
+    
+    return CreateInvalidObject() ---@type UKrasueDirectorComponent_C
 end
 
 local DayNightManagerCache = CreateInvalidObject() ---@cast DayNightManagerCache ADayNightManager_C

@@ -7,6 +7,7 @@
 local UEHelpers = require("UEHelpers")
 require("AFUtils.AFBase")
 require("AFUtils.Enums")
+require("AFUtils.Names")
 require("AFUtils.StaticClasses")
 require("AFUtils.DefaultObjects")
 require("AFUtils.ObjectsGetter")
@@ -745,8 +746,6 @@ function AFUtils.AddGameTime(Hours, Minutes)
     return false
 end
 
-local FoodGreyeb = UEHelpers.FindFName("food_greyeb")
-local LeyakRowName = UEHelpers.FindFName("Leyak")
 ---@param LeyakContainment ADeployed_LeyakContainment_C
 ---@return boolean Success
 function AFUtils.TrapLeyak(LeyakContainment)
@@ -756,8 +755,8 @@ function AFUtils.TrapLeyak(LeyakContainment)
     if IsValid(gameState) then
         local assetId = LeyakContainment.SpawnedAssetID:ToString()
         LogDebug("TrapLeyak: SpawnedAssetID:", assetId)
-        LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, FoodGreyeb)
-        LeyakContainment:TrapLeyak(0.0, LeyakRowName)
+        LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, AFUtils.FoodGreyebName)
+        LeyakContainment:TrapLeyak(0.0, AFUtils.LeyakRowName)
         gameState['Set Leyak Containment ID'](assetId)
         LogDebug("TrapLeyak: ActiveLeyakContainmentID:", gameState.ActiveLeyakContainmentID:ToString())
         LogDebug("TrapLeyak: ContainsLeyak.ComparisonIndex:", LeyakContainment.ContainsLeyak:GetComparisonIndex())
@@ -780,8 +779,6 @@ function AFUtils.FreeLeyak(LeyakContainment)
     return false
 end
 
-local IceCream = UEHelpers.FindFName("icecream")
-local KrasueRowName = UEHelpers.FindFName("Krasue")
 ---@param LeyakContainment ADeployed_LeyakContainment_C
 ---@return boolean Success
 function AFUtils.TrapKrasue(LeyakContainment)
@@ -791,8 +788,8 @@ function AFUtils.TrapKrasue(LeyakContainment)
     if IsValid(gameState) then
         local assetId = LeyakContainment.SpawnedAssetID:ToString()
         LogDebug("KrasueLeyak: SpawnedAssetID:", assetId)
-        LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, IceCream)
-        LeyakContainment:TrapLeyak(0.0, KrasueRowName)
+        LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, AFUtils.IceCreamName)
+        LeyakContainment:TrapLeyak(0.0, AFUtils.KrasueRowName)
         gameState['Set Leyak Containment ID'](assetId)
         LogDebug("KrasueLeyak: ActiveLeyakContainmentID:", gameState.ActiveLeyakContainmentID:ToString())
         LogDebug("KrasueLeyak: ContainsLeyak.ComparisonIndex:", LeyakContainment.ContainsLeyak:GetComparisonIndex())

@@ -747,55 +747,63 @@ function AFUtils.AddGameTime(Hours, Minutes)
 end
 
 ---@param LeyakContainment ADeployed_LeyakContainment_C
+---@param LeyakDirectorComponen ULeyakDirectorComponent_C
+---@param NpcRowName FName # Row name of the NPC to trap, e.g. AFUtils.LeyakRowName
+---@param FoodName FName # Name of the food to use for trapping, e.g. AFUtils.FoodGreyebName
 ---@return boolean Success
-function AFUtils.TrapLeyak(LeyakContainment)
-    if IsNotValid(LeyakContainment) or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak:GetComparisonIndex() > 0 then return false end
-
-    local gameState = AFUtils.GetSurvivalGameState()
-    if IsValid(gameState) then
-        local assetId = LeyakContainment.SpawnedAssetID:ToString()
-        LogDebug("TrapLeyak: SpawnedAssetID:", assetId)
-        LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, AFUtils.FoodGreyebName)
-        LeyakContainment:TrapLeyak(0.0, AFUtils.LeyakRowName)
-        gameState['Set Leyak Containment ID'](assetId)
-        LogDebug("TrapLeyak: ActiveLeyakContainmentID:", gameState.ActiveLeyakContainmentID:ToString())
-        LogDebug("TrapLeyak: ContainsLeyak.ComparisonIndex:", LeyakContainment.ContainsLeyak:GetComparisonIndex())
-        return gameState.ActiveLeyakContainmentID:ToString() == assetId
+local function TrapLeyakTypeNpc(LeyakContainment, LeyakDirectorComponen, NpcRowName, FoodName)
+    if IsNotValid(LeyakContainment) or IsNotValid(LeyakDirectorComponen) or not NpcRowName or NpcRowName == NAME_None or not FoodName or FoodName == NAME_None
+        or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak:GetComparisonIndex() > 0 then
+        return false
     end
-    return false
+    
+    local assetId = LeyakContainment.SpawnedAssetID:ToString()
+    LogDebug("TrapLeyakTypeNpc: SpawnedAssetID:", assetId)
+    LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, FoodName)
+    LeyakContainment:TrapLeyak(0.0, NpcRowName)
+    LeyakDirectorComponen:SetLeyakContainmentID(assetId)
+    LogDebug("TrapLeyakTypeNpc: ActiveLeyakContainmentID:", LeyakDirectorComponen.ActiveLeyakContainmentID:ToString())
+    LogDebug("TrapLeyakTypeNpc: ContainsLeyak.ComparisonIndex:", LeyakContainment.ContainsLeyak:GetComparisonIndex())
+    return LeyakDirectorComponen.ActiveLeyakContainmentID:ToString() == assetId
 end
 
 ---@param LeyakContainment ADeployed_LeyakContainment_C
 ---@return boolean Success
-function AFUtils.FreeLeyak(LeyakContainment)
-    if IsNotValid(LeyakContainment) or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak:GetComparisonIndex() == 0 then return false end
-
-    local gameState = AFUtils.GetSurvivalGameState()
-    if IsValid(gameState) then
-        LeyakContainment['Free Leyak']()
-        gameState['Set Leyak Containment ID']("")
-        return gameState.ActiveLeyakContainmentID:ToString() == ""
-    end
-    return false
+function AFUtils.TrapLeyak(LeyakContainment)
+    return TrapLeyakTypeNpc(LeyakContainment, AFUtils.GetLeyakDirectorComponent(), AFUtils.LeyakRowName, AFUtils.FoodGreyebName)
 end
 
 ---@param LeyakContainment ADeployed_LeyakContainment_C
 ---@return boolean Success
 function AFUtils.TrapKrasue(LeyakContainment)
-    if IsNotValid(LeyakContainment) or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak:GetComparisonIndex() > 0 then return false end
-
-    local gameState = AFUtils.GetSurvivalGameState()
-    if IsValid(gameState) then
-        local assetId = LeyakContainment.SpawnedAssetID:ToString()
-        LogDebug("KrasueLeyak: SpawnedAssetID:", assetId)
-        LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, AFUtils.IceCreamName)
-        LeyakContainment:TrapLeyak(0.0, AFUtils.KrasueRowName)
-        gameState['Set Leyak Containment ID'](assetId)
-        LogDebug("KrasueLeyak: ActiveLeyakContainmentID:", gameState.ActiveLeyakContainmentID:ToString())
-        LogDebug("KrasueLeyak: ContainsLeyak.ComparisonIndex:", LeyakContainment.ContainsLeyak:GetComparisonIndex())
-        return gameState.ActiveLeyakContainmentID:ToString() == assetId
-    end
-    return false
+    return TrapLeyakTypeNpc(LeyakContainment, AFUtils.GetKrasueDirectorComponent(), AFUtils.KrasueRowName, AFUtils.IceCreamName)
 end
+
+---@param LeyakContainment ADeployed_LeyakContainment_C
+---@param LeyakDirectorComponen ULeyakDirectorComponent_C
+---@return boolean Success
+local function FreeLeyakTypeNpc(LeyakContainment, LeyakDirectorComponen)
+    if IsNotValid(LeyakContainment) or IsNotValid(LeyakDirectorComponen)
+        or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak:GetComparisonIndex() == 0 then
+        return false
+    end
+    
+    LeyakContainment['Free Leyak']()
+    LeyakDirectorComponen:SetLeyakContainmentID("")
+    return LeyakDirectorComponen.ActiveLeyakContainmentID:ToString() == ""
+end
+
+---@param LeyakContainment ADeployed_LeyakContainment_C
+---@return boolean Success
+function AFUtils.FreeLeyak(LeyakContainment)
+    return FreeLeyakTypeNpc(LeyakContainment, AFUtils.GetLeyakDirectorComponent())
+end
+
+---@param LeyakContainment ADeployed_LeyakContainment_C
+---@return boolean Success
+function AFUtils.FreeKrasue(LeyakContainment)
+    return FreeLeyakTypeNpc(LeyakContainment, AFUtils.GetKrasueDirectorComponent())
+end
+
 
 return AFUtils

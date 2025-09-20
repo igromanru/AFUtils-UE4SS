@@ -547,8 +547,8 @@ function AFUtils.TriggerWeatherEvent(EventName)
     if type(EventName) ~= "string" then return false end
 
     local weatherEventHandleFunctionLibrary = AFUtils.GetWeatherEventHandleFunctionLibrary()
-    local myPlayerController = AFUtils.GetMyPlayerController()
-    if IsValid(weatherEventHandleFunctionLibrary) and IsValid(myPlayerController) and IsValid(myPlayerController.DayNightManager) then
+    local dayNightManager = FindFirstOf("DayNightManager_C")
+    if IsValid(weatherEventHandleFunctionLibrary) and IsValid(dayNightManager) then
         ---@type table<LocalUnrealParam>
         local outRowHandles = {} ---@type LocalUnrealParam[]
         weatherEventHandleFunctionLibrary:GetAllWeatherEventRowHandles(outRowHandles)
@@ -556,7 +556,7 @@ function AFUtils.TriggerWeatherEvent(EventName)
         if #outRowHandles > 0 and EventName == AFUtils.WeatherEvents.None then
             local rowHandle = outRowHandles[1]:get() ---@type FWeatherEventRowHandle
             rowHandle.RowName = NAME_None
-            myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToTable(rowHandle))
+            dayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToTable(rowHandle))
             LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
             return true
         end
@@ -567,7 +567,7 @@ function AFUtils.TriggerWeatherEvent(EventName)
             local rowName = rowHandle.RowName:ToString()
             LogDebug(i..":", rowName)
             if rowName == EventName then
-                myPlayerController.DayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToTable(rowHandle))
+                dayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToTable(rowHandle))
                 LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
                 return true
             end
@@ -582,12 +582,12 @@ end
 function AFUtils.SetNextWeatherEvent(EventName)
     if type(EventName) ~= "string" then return false end
 
-    local myPlayerController = AFUtils.GetMyPlayerController()
-    if IsValid(myPlayerController) and myPlayerController.DayNightManager:IsValid() then
+    local dayNightManager = FindFirstOf("DayNightManager_C")
+    if IsValid(dayNightManager) then
         local RowName = FName(EventName, EFindName.FNAME_Find)
-        myPlayerController.DayNightManager.RequiredDaysBetweenWeather = 0
-        myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName = RowName
-        LogDebug("SetNextWeatherEvent: Weather_RequestByPlayer.RowName: "..myPlayerController.DayNightManager.Weather_RequestByPlayer.RowName:ToString())
+        dayNightManager.RequiredDaysBetweenWeather = 0
+        dayNightManager.Weather_RequestByPlayer.RowName = RowName
+        LogDebug("SetNextWeatherEvent: Weather_RequestByPlayer.RowName:", dayNightManager.Weather_RequestByPlayer.RowName:ToString())
         return true
     end
     return false

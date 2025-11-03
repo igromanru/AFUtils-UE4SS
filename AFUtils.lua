@@ -666,13 +666,15 @@ end
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@param SlotIndex integer
 ---@param StackToAdd integer
+---@param Durability number? # Default 100
 ---@return boolean Executed # Returns false if PlayerController doesn't exists or one of parameters is wrong
-function AFUtils.AddToItemStack(Inventory, SlotIndex, StackToAdd)
+function AFUtils.AddToItemStack(Inventory, SlotIndex, StackToAdd, Durability)
     if IsNotValid(Inventory) or not SlotIndex or not StackToAdd then return false end
+    Durability = Durability or 100
 
     local myPlayerController = AFUtils.GetMyPlayerController()
     if IsValid(myPlayerController) then
-        myPlayerController:Server_AddToItemStack(Inventory, SlotIndex, StackToAdd)
+        myPlayerController:Server_AddToItemStack(Inventory, SlotIndex, StackToAdd, Durability)
         return true
     end
 

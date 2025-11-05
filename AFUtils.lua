@@ -653,14 +653,15 @@ function AFUtils.TeleportPlayerToPlayer(Player, TargetPlayer, Behind, DistanceTo
 end
 
 ---@param InventoryItemSlot UW_InventoryItemSlot_C
----@return UAbiotic_InventoryComponent_C? Inventory, integer SlotIndex
+---@return UAbiotic_InventoryComponent_C? Inventory, integer SlotIndex, FAbiotic_InventoryChangeableDataStruct? ChangeableData
 function AFUtils.GetInventoryAndSlotIndexFromItemSlot(InventoryItemSlot)
     if IsNotValid(InventoryItemSlot) then return nil, 0 end
 
     if InventoryItemSlot.ParentInventoryGrid:IsValid() and InventoryItemSlot.ParentInventoryGrid.MainInventoryComponent:IsValid() then
-        return InventoryItemSlot.ParentInventoryGrid.MainInventoryComponent, InventoryItemSlot.SlotIndex
+        local changeableData = InventoryItemSlot.ItemInSlot and InventoryItemSlot.ItemInSlot.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313 or nil
+        return InventoryItemSlot.ParentInventoryGrid.MainInventoryComponent, InventoryItemSlot.SlotIndex, changeableData
     end
-    return nil, 0
+    return nil, 0, nil
 end
 
 ---@param Inventory UAbiotic_InventoryComponent_C

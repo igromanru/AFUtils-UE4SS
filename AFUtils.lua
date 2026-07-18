@@ -63,11 +63,18 @@ function AFUtils.SetControlRotation(Rotation)
     return false
 end
 
----@param PlayerCharacter AAbiotic_PlayerCharacter_C? # In nil, using MyPlayer
+---@param PlayerCharacter AAbiotic_PlayerCharacter_C? # If nil, using MyPlayer
 ---@return boolean
 function AFUtils.IsHoldingKeypadHacker(PlayerCharacter)
     PlayerCharacter = PlayerCharacter or AFUtils.GetMyPlayer()
     return IsValid(PlayerCharacter) and IsValid(PlayerCharacter.ItemInHand_BP) and PlayerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassItem_Gear_KeypadHacker_C())
+end
+
+---@param PlayerCharacter AAbiotic_PlayerCharacter_C? # If nil, using MyPlayer
+---@return boolean
+function AFUtils.IsHoldingFishingRod(PlayerCharacter)
+    PlayerCharacter = PlayerCharacter or AFUtils.GetMyPlayer()
+    return IsValid(PlayerCharacter) and IsValid(PlayerCharacter.ItemInHand_BP) and PlayerCharacter.ItemInHand_BP:IsA(AFUtils.GetClassWeapon_FishingRod_C())
 end
 
 ---Prints a colored message to local player's chat (only visible to the player)

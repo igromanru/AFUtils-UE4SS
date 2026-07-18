@@ -308,7 +308,7 @@ function AFUtils.GetSelectedHotbarInventoryItemSlot(PlayerCharacter)
 end
 
 ---Get current held weapon for a player
----@param PlayerCharacter AAbiotic_PlayerCharacter_C #If nil, will use the local player
+---@param PlayerCharacter AAbiotic_PlayerCharacter_C? #If nil, will use the local player
 ---@return AAbiotic_Weapon_ParentBP_C?
 function AFUtils.GetCurrentWeapon(PlayerCharacter)
     PlayerCharacter = PlayerCharacter or AFUtils.GetMyPlayer()
@@ -317,6 +317,20 @@ function AFUtils.GetCurrentWeapon(PlayerCharacter)
     local weapon = PlayerCharacter.ItemInHand_BP ---@cast weapon AAbiotic_Weapon_ParentBP_C
     if IsValid(weapon) and weapon:IsA(AFUtils.GetClassAbiotic_Weapon_ParentBP_C()) and not weapon:IsA(AFUtils.GetClassWeapon_FishingRod_C()) then
         return weapon
+    end
+    return nil
+end
+
+---Get current held fishing rod for a player
+---@param PlayerCharacter AAbiotic_PlayerCharacter_C? #If nil, will use the local player
+---@return AWeapon_FishingRod_C?
+function AFUtils.GetCurrentFishingRod(PlayerCharacter)
+    PlayerCharacter = PlayerCharacter or AFUtils.GetMyPlayer()
+    if IsNotValid(PlayerCharacter) then return nil end
+
+    local fishingRod = PlayerCharacter.ItemInHand_BP ---@cast fishingRod AWeapon_FishingRod_C
+    if IsValid(fishingRod) and fishingRod:IsA(AFUtils.GetClassWeapon_FishingRod_C()) then
+        return fishingRod
     end
     return nil
 end

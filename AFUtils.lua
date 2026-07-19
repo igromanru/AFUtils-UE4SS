@@ -757,24 +757,26 @@ function AFUtils.AddGameTime(Hours, Minutes)
 end
 
 ---@param LeyakContainment ADeployed_LeyakContainment_C
----@param LeyakDirectorComponen ULeyakDirectorComponent_C
+---@param LeyakDirectorComponent ULeyakDirectorComponent_C
 ---@param NpcRowName FName # Row name of the NPC to trap, e.g. AFUtils.LeyakRowName
 ---@param FoodName FName # Name of the food to use for trapping, e.g. AFUtils.FoodGreyebName
 ---@return boolean Success
-local function TrapLeyakTypeNpc(LeyakContainment, LeyakDirectorComponen, NpcRowName, FoodName)
-    if IsNotValid(LeyakContainment) or IsNotValid(LeyakDirectorComponen) or not NpcRowName or NpcRowName == NAME_None or not FoodName or FoodName == NAME_None
-        or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak:GetComparisonIndex() > 0 then
+local function TrapLeyakTypeNpc(LeyakContainment, LeyakDirectorComponent, NpcRowName, FoodName)
+    if IsNotValid(LeyakContainment) or IsNotValid(LeyakDirectorComponent)
+        or not NpcRowName or NpcRowName == NAME_None
+        or not FoodName or FoodName == NAME_None
+        or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak ~= NAME_None then
         return false
     end
     
     local assetId = LeyakContainment.SpawnedAssetID:ToString()
     LogDebug("TrapLeyakTypeNpc: SpawnedAssetID:", assetId)
     LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, FoodName)
-    LeyakContainment:TrapLeyak(0.0, NpcRowName)
-    LeyakDirectorComponen:SetLeyakContainmentID(assetId)
-    LogDebug("TrapLeyakTypeNpc: ActiveLeyakContainmentID:", LeyakDirectorComponen.ActiveLeyakContainmentID:ToString())
+    LeyakContainment:TrapLeyak(NpcRowName)
+    LeyakDirectorComponent:SetLeyakContainmentID(assetId)
+    LogDebug("TrapLeyakTypeNpc: ActiveLeyakContainmentID:", LeyakDirectorComponent.ActiveLeyakContainmentID:ToString())
     LogDebug("TrapLeyakTypeNpc: ContainsLeyak.ComparisonIndex:", LeyakContainment.ContainsLeyak:GetComparisonIndex())
-    return LeyakDirectorComponen.ActiveLeyakContainmentID:ToString() == assetId
+    return LeyakDirectorComponent.ActiveLeyakContainmentID:ToString() == assetId
 end
 
 ---@param LeyakContainment ADeployed_LeyakContainment_C

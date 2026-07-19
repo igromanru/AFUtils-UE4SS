@@ -211,6 +211,7 @@ function AFUtils.GetLeyakDirectorComponent()
         return aiDirector.LeyakDirectorComponent
     end
     
+    LogDebug("GetLeyakDirectorComponent: Failed to get the AIDirector")
     return CreateInvalidObject() ---@type ULeyakDirectorComponent_C
 end
 

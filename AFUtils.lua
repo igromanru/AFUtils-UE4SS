@@ -817,5 +817,15 @@ function AFUtils.FreeKrasue(LeyakContainment)
     return FreeLeyakTypeNpc(LeyakContainment, AFUtils.GetKrasueDirectorComponent())
 end
 
+---@param BodyLimbs number|EBodyLimbs|BodyLimbs
+---@return string
+function AFUtils.BodyLimbsToString(BodyLimbs)
+    for key, value in pairs(AFUtils.BodyLimbs) do
+        if value == BodyLimbs then
+            return key
+        end
+    end
+    return "Unknown"
+end
 
 return AFUtils

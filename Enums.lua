@@ -329,4 +329,18 @@ AFUtils.FoodCookStates = {
     Ignited = 7
 }
 
+---@enum BodyLimbs
+AFUtils.BodyLimbs = {
+    AllBones = 0,
+    RandomBone = 1,
+    RandomBoneExceptHead = 2,
+    Head = 3,
+    Torso = 4,
+    LeftArm = 5,
+    RightArm = 6,
+    LeftLeg = 7,
+    RightLeg = 8,
+    EBodyLimbs_MAX = 9
+}
+
 return AFUtils

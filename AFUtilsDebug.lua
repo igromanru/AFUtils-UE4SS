@@ -55,6 +55,28 @@ function AFUtils.LogTimelineComponent(TimelineComponent, Prefix)
     LogDebug(Prefix .. "bIgnoreTimeDilation:", tostring(TimelineComponent.bIgnoreTimeDilation))
 end
 
+---@param CharacterBuffComponent UCharacterBuffComponent
+---@param Prefix string?
+function AFUtils.LogCharacterBuffComponent(CharacterBuffComponent, Prefix)
+    if not CharacterBuffComponent or not CharacterBuffComponent:IsValid() then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "ImmuneToBuffs.Num:", #CharacterBuffComponent.ImmuneToBuffs)
+    for i = 1, #CharacterBuffComponent.ImmuneToBuffs do
+        local buffDebuffRowHandle = CharacterBuffComponent.ImmuneToBuffs[i] ---@type FBuffDebuffRowHandle
+        LogDebug(Prefix .. string.format("ImmuneToBuffs[%d]: RowName: %s, DataTablePath: %s", i, buffDebuffRowHandle.RowName:ToString(), buffDebuffRowHandle.DataTablePath:ToString()))
+    end
+    LogDebug(Prefix .. "CurrentBuffs.Num:", #CharacterBuffComponent.CurrentBuffs)
+    for i = 1, #CharacterBuffComponent.CurrentBuffs do
+        local buffDebuffRowHandle = CharacterBuffComponent.CurrentBuffs[i] ---@type FBuffDebuffEntry
+        LogDebug(Prefix .. string.format("CurrentBuffs[%d]: BuffRow.RowName: %s, BuffRow.DataTablePath: %s", i, buffDebuffRowHandle.BuffRow.RowName:ToString(), buffDebuffRowHandle.BuffRow.DataTablePath:ToString()))
+        LogDebug(Prefix .. string.format("CurrentBuffs[%d]: ParentLimb: %s, BuffExpireTime: %f", i, AFUtils.BodyLimbsToString(buffDebuffRowHandle.ParentLimb), buffDebuffRowHandle.BuffExpireTime))
+    end
+    LogDebug(Prefix .. "BuffParticles.Num:", #CharacterBuffComponent.BuffParticles)
+    LogDebug(Prefix .. "BuffMaterials.Num:", #CharacterBuffComponent.BuffMaterials)
+    LogDebug(Prefix .. "BuffTints.Num:", #CharacterBuffComponent.BuffTints)
+end
+
 ---Logs in debug scope all relevant properties of FAbiotic_InventoryChangeableDataStruct to console 
 ---@param ChangeableData FAbiotic_InventoryChangeableDataStruct
 ---@param Prefix string? Prefix that should be added in front of each line

@@ -16,6 +16,9 @@ AFUtils.DebuffLegBroken = UEHelpers.FindFName("Debuff_LegBroken")
 AFUtils.DebuffDamaged = UEHelpers.FindFName("Debuff_Damaged")
 AFUtils.DebuffInCombat = UEHelpers.FindFName("Debuff_InCombat")
 AFUtils.DebuffBleeding = UEHelpers.FindFName("Debuff_Bleeding")
+AFUtils.DebuffUnderwater = UEHelpers.FindFName("Debuff_Underwater")
+AFUtils.DebuffWading = UEHelpers.FindFName("Debuff_Wading")
+AFUtils.DebuffDrowning = UEHelpers.FindFName("Debuff_Drowning")
 
 ---- Food ----
 AFUtils.IceCreamName = UEHelpers.FindFName("icecream")

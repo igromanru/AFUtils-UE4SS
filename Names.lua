@@ -9,23 +9,23 @@ require("AFUtils.AFBase")
 local UEHelpers = require("UEHelpers")
 
 ---- Buffs ----
-AFUtils.DebuffLegSprain = UEHelpers.FindFName("Debuff_LegSprain")
-AFUtils.DebuffRecentLegInjury = UEHelpers.FindFName("Debuff_RecentLegInjury")
-AFUtils.DebuffLegFracture = UEHelpers.FindFName("Debuff_LegFracture")
-AFUtils.DebuffLegBroken = UEHelpers.FindFName("Debuff_LegBroken")
-AFUtils.DebuffDamaged = UEHelpers.FindFName("Debuff_Damaged")
-AFUtils.DebuffInCombat = UEHelpers.FindFName("Debuff_InCombat")
-AFUtils.DebuffBleeding = UEHelpers.FindFName("Debuff_Bleeding")
-AFUtils.DebuffUnderwater = UEHelpers.FindFName("Debuff_Underwater")
-AFUtils.DebuffWading = UEHelpers.FindFName("Debuff_Wading")
-AFUtils.DebuffDrowning = UEHelpers.FindFName("Debuff_Drowning")
+AFUtils.DebuffLegSprain = UEHelpers.FindOrAddFName("Debuff_LegSprain")
+AFUtils.DebuffRecentLegInjury = UEHelpers.FindOrAddFName("Debuff_RecentLegInjury")
+AFUtils.DebuffLegFracture = UEHelpers.FindOrAddFName("Debuff_LegFracture")
+AFUtils.DebuffLegBroken = UEHelpers.FindOrAddFName("Debuff_LegBroken")
+AFUtils.DebuffDamaged = UEHelpers.FindOrAddFName("Debuff_Damaged")
+AFUtils.DebuffInCombat = UEHelpers.FindOrAddFName("Debuff_InCombat")
+AFUtils.DebuffBleeding = UEHelpers.FindOrAddFName("Debuff_Bleeding")
+AFUtils.DebuffUnderwater = UEHelpers.FindOrAddFName("Debuff_Underwater")
+AFUtils.DebuffWading = UEHelpers.FindOrAddFName("Debuff_Wading")
+AFUtils.DebuffDrowning = UEHelpers.FindOrAddFName("Debuff_Drowning")
 
 ---- Food ----
-AFUtils.IceCreamName = UEHelpers.FindFName("icecream")
-AFUtils.FoodGreyebName = UEHelpers.FindFName("food_greyeb")
+AFUtils.IceCreamName = UEHelpers.FindOrAddFName("icecream")
+AFUtils.FoodGreyebName = UEHelpers.FindOrAddFName("food_greyeb")
 
 ---- NPCs ----
-AFUtils.LeyakRowName = UEHelpers.FindFName("Leyak")
-AFUtils.KrasueRowName = UEHelpers.FindFName("Krasue")
+AFUtils.LeyakRowName = UEHelpers.FindOrAddFName("Leyak")
+AFUtils.KrasueRowName = UEHelpers.FindOrAddFName("Krasue")
 
 return AFUtils

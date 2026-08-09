@@ -1205,4 +1205,28 @@ function AFUtils.LogStoveParent(StoveParent, Prefix)
     LogDebug(Prefix .. "IsFixingInventorySave:", StoveParent.IsFixingInventorySave)
 end
 
+---@param SleepRunner AMinigame_SleepRunner_BP_C
+---@param Prefix string?
+function AFUtils.LogMinigameSleepRunner(SleepRunner, Prefix)
+    if IsNotValid(SleepRunner) then return end
+    Prefix = Prefix or ""
+
+    LogDebug(Prefix .. "Score:", SleepRunner.Score)
+    LogDebug(Prefix .. "MaxObstacleCount:", SleepRunner.MaxObstacleCount)
+    LogDebug(Prefix .. "CharacterGroundLocation:", VectorToString(SleepRunner.CharacterGroundLocation))
+    LogDebug(Prefix .. "CharacterCurrentLocation:", VectorToString(SleepRunner.CharacterCurrentLocation))
+    LogDebug(Prefix .. "CharacterJumpApexLocation:", VectorToString(SleepRunner.CharacterJumpApexLocation))
+    LogDebug(Prefix .. "MinigameActive:", SleepRunner.MinigameActive)
+    LogDebug(Prefix .. "EnableMinigame:", SleepRunner.EnableMinigame)
+    LogDebug(Prefix .. "StartJump:", SleepRunner.StartJump)
+    LogDebug(Prefix .. "FallingDown:", SleepRunner.FallingDown)
+    LogDebug(Prefix .. "Obstacles.Num:", #SleepRunner.Obstacles)
+    LogDebug(Prefix .. "AvoidedObstacles.Num:", #SleepRunner.AvoidedObstacles)
+    LogDebug(Prefix .. "JumpHeight:", SleepRunner.JumpHeight)
+    LogDebug(Prefix .. "MinHorizontalDistBetweenObstacles:", SleepRunner.MinHorizontalDistBetweenObstacles)
+    LogDebug(Prefix .. "MovementRate:", SleepRunner.MovementRate)
+    LogDebug(Prefix .. "SpawnFrequency:", SleepRunner.SpawnFrequency)
+    LogDebug(Prefix .. "SuccessfulJumpsInRow:", SleepRunner.SuccessfulJumpsInRow)
+end
+
 return AFUtils

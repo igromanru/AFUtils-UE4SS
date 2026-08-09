@@ -28,4 +28,7 @@ AFUtils.FoodGreyebName = UEHelpers.FindOrAddFName("food_greyeb")
 AFUtils.LeyakRowName = UEHelpers.FindOrAddFName("Leyak")
 AFUtils.KrasueRowName = UEHelpers.FindOrAddFName("Krasue")
 
+--- Class Names ---
+AFUtils.PowerSocket_ParentBP_C = UEHelpers.FindOrAddFName("PowerSocket_ParentBP_C")
+
 return AFUtils

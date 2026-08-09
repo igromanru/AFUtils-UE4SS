@@ -828,4 +828,46 @@ function AFUtils.BodyLimbsToString(BodyLimbs)
     return "Unknown"
 end
 
+---@param Player AAbiotic_PlayerCharacter_C? Uses local player, if nil
+---@param Item AAbiotic_Item_Dropped_C
+---@return boolean Success
+function AFUtils.PickUpItem(Player, Item)
+    Player = Player or AFUtils.GetMyPlayer()
+    if IsNotValid(Player) then
+        LogError("PickUpItem: The Player object is invalid!")
+        return false
+    end
+
+    if IsNotValid(Item) then
+        LogError("PickUpItem: Item parameter is a not a valid object!")
+        return false
+    end
+
+    local hasAuthority = IsActorHasAuthority(Player)
+    if hasAuthority then
+        local refPickedUpEntireStack = { PickedUpEntireStack = false }
+        local refNumberOfItemsLeftOver = { NumberOfItemsLeftOver = 0 }
+        local success, result = pcall(Player.TryPickupItemAndFindBestSlotForIt, Player, Item.ItemDataRow, Item.ChangeableData, refPickedUpEntireStack, refNumberOfItemsLeftOver)
+        if success then
+            LogDebug("PickedUpEntireStack:", refPickedUpEntireStack.PickedUpEntireStack)
+            LogDebug("NumberOfItemsLeftOver:", refNumberOfItemsLeftOver.NumberOfItemsLeftOver)
+            if refPickedUpEntireStack.PickedUpEntireStack and refNumberOfItemsLeftOver.NumberOfItemsLeftOver == 0 then
+                Item:K2_DestroyActor()
+            end
+            return true
+        else
+            LogError("PickUpItem: Failed to call function TryPickupItemAndFindBestSlotForIt. Error:", result)
+        end
+    else
+        local success, result = pcall(Player.Request_InteractA, Player, Item, Item.WorldMesh, false)
+        if success then
+            return true
+        else
+            LogError("PickUpItem: Failed to call function Request_InteractA. Error:", result)
+        end
+    end
+
+    return false
+end
+
 return AFUtils

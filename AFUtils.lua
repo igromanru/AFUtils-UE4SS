@@ -89,12 +89,7 @@ function AFUtils.DisplayTextChatMessage(Message, Prefix, Color)
     if IsValid(myPlayerController) and IsValid(myPlayerState) then
         Prefix = Prefix or ""
         if not Color or type(Color) ~= 'table' then
-            Color = { -- White
-                R = 1.0,
-                G = 1.0,
-                B = 1.0,
-                A = 1.0
-            }
+            Color = LinearColors.White
         end
         myPlayerController:Local_DisplayTextChatMessage(Prefix, Color, Message, Color, myPlayerState, false)
     end

@@ -1221,6 +1221,13 @@ function AFUtils.LogMinigameSleepRunner(SleepRunner, Prefix)
     LogDebug(Prefix .. "StartJump:", SleepRunner.StartJump)
     LogDebug(Prefix .. "FallingDown:", SleepRunner.FallingDown)
     LogDebug(Prefix .. "Obstacles.Num:", #SleepRunner.Obstacles)
+    for i = 1, #SleepRunner.Obstacles do
+        local obstacle = SleepRunner.Obstacles[i]
+        LogDebug(Prefix .. i .. ": Obstacle")
+        if IsValid(obstacle.Box) then
+            LogDebug(Prefix, "Box.Location:", VectorToString(obstacle.Box:K2_GetComponentLocation()))
+        end
+    end
     LogDebug(Prefix .. "AvoidedObstacles.Num:", #SleepRunner.AvoidedObstacles)
     LogDebug(Prefix .. "JumpHeight:", SleepRunner.JumpHeight)
     LogDebug(Prefix .. "MinHorizontalDistBetweenObstacles:", SleepRunner.MinHorizontalDistBetweenObstacles)

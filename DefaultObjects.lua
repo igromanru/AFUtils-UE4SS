@@ -58,4 +58,14 @@ function AFUtils.GetFishingZoneHandleFunctionLibrary()
     return FishingZoneHandleFunctionLibraryCache
 end
 
+local BuffDebuffHandleFunctionLibraryCache = CreateInvalidObject() ---@cast BuffDebuffHandleFunctionLibraryCache UBuffDebuffHandleFunctionLibrary
+---@return UBuffDebuffHandleFunctionLibrary
+function AFUtils.GetBuffDebuffHandleFunctionLibrary()
+    if IsNotValid(BuffDebuffHandleFunctionLibraryCache) then
+        BuffDebuffHandleFunctionLibraryCache = StaticFindObject("/Script/AbioticFactor.Default__BuffDebuffHandleFunctionLibrary")
+        ---@cast BuffDebuffHandleFunctionLibraryCache UBuffDebuffHandleFunctionLibrary
+    end
+    return BuffDebuffHandleFunctionLibraryCache
+end
+
 return AFUtils

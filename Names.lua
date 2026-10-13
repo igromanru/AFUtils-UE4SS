@@ -23,6 +23,7 @@ AFUtils.DebuffDrowning = UEHelpers.FindOrAddFName("Debuff_Drowning")
 ---- Food ----
 AFUtils.IceCreamName = UEHelpers.FindOrAddFName("icecream")
 AFUtils.FoodGreyebName = UEHelpers.FindOrAddFName("food_greyeb")
+AFUtils.FoodMilkName = UEHelpers.FindOrAddFName("food_milk")
 
 ---- NPCs ----
 AFUtils.LeyakRowName = UEHelpers.FindOrAddFName("Leyak")

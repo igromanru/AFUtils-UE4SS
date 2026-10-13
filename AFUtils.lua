@@ -764,16 +764,14 @@ local function TrapLeyakTypeNpc(LeyakContainment, LeyakDirectorComponent, NpcRow
 
     local assetId = LeyakContainment.SpawnedAssetID:ToString()
     LogDebug("TrapLeyakTypeNpc: SpawnedAssetID:", assetId)
-
-    if not IsNameNone(LeyakContainment.CurrentStabilisingFoodRowName) then
-        FoodName = LeyakContainment.CurrentStabilisingFoodRowName
-    end
+    LogDebug("TrapLeyakTypeNpc: FoodName:", FoodName:ToString())
 
     LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, FoodName)
     LeyakContainment:TrapLeyak(NpcRowName)
     LeyakDirectorComponent:SetLeyakContainmentID(assetId)
     LogDebug("TrapLeyakTypeNpc: ActiveLeyakContainmentID:", LeyakDirectorComponent.ActiveLeyakContainmentID:ToString())
     LogDebug("TrapLeyakTypeNpc: ContainsLeyak.ComparisonIndex:", LeyakContainment.ContainsLeyak:GetComparisonIndex())
+    LogDebug("TrapLeyakTypeNpc: LeyakContainment.CurrentStabilisingFoodRowName:", LeyakContainment.CurrentStabilisingFoodRowName:ToString())
     return LeyakDirectorComponent.ActiveLeyakContainmentID:ToString() == assetId
 end
 
@@ -786,7 +784,7 @@ end
 ---@param LeyakContainment ADeployed_LeyakContainment_C
 ---@return boolean Success
 function AFUtils.TrapKrasue(LeyakContainment)
-    return TrapLeyakTypeNpc(LeyakContainment, AFUtils.GetKrasueDirectorComponent(), AFUtils.KrasueRowName, AFUtils.IceCreamName)
+    return TrapLeyakTypeNpc(LeyakContainment, AFUtils.GetKrasueDirectorComponent(), AFUtils.KrasueRowName, AFUtils.FoodMilkName)
 end
 
 ---@param LeyakContainment ADeployed_LeyakContainment_C

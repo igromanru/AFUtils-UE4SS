@@ -26,7 +26,7 @@ function AFUtils.IsDedicatedServer(UpdateCache)
             IsDedicatedServerCache = IsDedicatedServer()
         end
     end
-    
+
     return IsDedicatedServerCache
 end
 
@@ -39,7 +39,6 @@ function AFUtils.IsSinglepalyer()
     end
     return false
 end
-
 
 ---Gets Control Rotation
 ---@return FRotator
@@ -119,7 +118,7 @@ function AFUtils.ClientDisplayWarningMessage(Message, CriticalityLevel, WarningB
         if fText then
             myPlayer:Client_DisplayWarningMessage(fText, CriticalityLevel, WarningBeep)
         else
-            LogError('ClientDisplayWarningMessage: Couldn\'t get a FText out of "'..Message..'"')
+            LogError('ClientDisplayWarningMessage: Couldn\'t get a FText out of "' .. Message .. '"')
         end
     end
 end
@@ -134,13 +133,13 @@ function AFUtils.DisplayWarningMessage(Message, CriticalityLevel)
 
     local playerHud = AFUtils.GetMyPlayerHUD()
     if playerHud then
-        LogDebug("DisplayWarningMessage: Message: "..Message.." CriticalityLevel: "..CriticalityLevel)
-        
+        LogDebug("DisplayWarningMessage: Message: " .. Message .. " CriticalityLevel: " .. CriticalityLevel)
+
         local fText = FText(Message)
         if fText then
             playerHud:DisplayWarningMessage(fText, CriticalityLevel)
         else
-            LogError('ClientDisplayWarningMessage: Couldn\'t get a FText out of "'..Message..'"')
+            LogError('ClientDisplayWarningMessage: Couldn\'t get a FText out of "' .. Message .. '"')
         end
     end
 end
@@ -150,10 +149,9 @@ end
 function AFUtils.GetCurrentCombinedHealth(playerCharacter)
     if IsNotValid(playerCharacter) then return 0 end
     return playerCharacter.CurrentHealth_Head + playerCharacter.CurrentHealth_Torso
-            + playerCharacter.CurrentHealth_LeftArm + playerCharacter.CurrentHealth_RightArm
-            + playerCharacter.CurrentHealth_LeftLeg + playerCharacter.CurrentHealth_RightLeg
+        + playerCharacter.CurrentHealth_LeftArm + playerCharacter.CurrentHealth_RightArm
+        + playerCharacter.CurrentHealth_LeftLeg + playerCharacter.CurrentHealth_RightLeg
 end
-
 
 ---@param LiquidType number|LiquidType|E_LiquidType
 ---@return string
@@ -190,7 +188,7 @@ function AFUtils.IsAllowedLiquidType(LiquidStruct, LiquidType)
         for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3, 1 do
             local allowedLiquid = LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[i]
             if allowedLiquid == LiquidType then
-               return true 
+                return true
             end
         end
     end
@@ -283,14 +281,14 @@ end
 ---@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct
 ---@return boolean Success
 function AFUtils.FillItemSlotStructDurability(ItemSlotStruct)
-   if not ItemSlotStruct or not ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313 then return false end 
+    if not ItemSlotStruct or not ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313 then return false end
 
-   local maxItemDurability = ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B
-   if maxItemDurability > 0 then
+    local maxItemDurability = ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B
+    if maxItemDurability > 0 then
         ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8 = maxItemDurability
         return true
-   end
-   return false
+    end
+    return false
 end
 
 ---@param Inventory UAbiotic_InventoryComponent_C
@@ -331,7 +329,7 @@ end
 ---@param ChangeableData FAbiotic_InventoryChangeableDataStruct
 function AFUtils.ResetChangeableDataLiquid(ChangeableData)
     if not ChangeableData then return end
-    
+
     ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = AFUtils.LiquidType.None
     ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = 0
 end
@@ -536,10 +534,10 @@ end
 ---@param EventRow FWeatherEventRowHandle
 ---@return FWeatherEventRowHandle # It creates table that represent FWeatherEventRowHandle
 function AFUtils.ConvertWeatherEventRowHandleToTable(EventRow)
-    return { 
+    return {
         RowName = EventRow.RowName,
         DataTablePath = EventRow.DataTablePath
-     }
+    }
 end
 
 ---Triggers a weather event
@@ -567,7 +565,7 @@ function AFUtils.TriggerWeatherEvent(EventName)
             local param = outRowHandles[i]
             local rowHandle = param:get() ---@type FWeatherEventRowHandle
             local rowName = rowHandle.RowName:ToString()
-            LogDebug(i..":", rowName)
+            LogDebug(i .. ":", rowName)
             if rowName == EventName then
                 dayNightManager:TriggerWeatherEvent(AFUtils.ConvertWeatherEventRowHandleToTable(rowHandle))
                 LogDebug("TriggerWeatherEvent: Triggering event: " .. EventName)
@@ -638,7 +636,7 @@ function AFUtils.TeleportPlayerToPlayer(Player, TargetPlayer, Behind, DistanceTo
 
     Behind = Behind or false
     DistanceToActor = DistanceToActor or 100 -- 1m
-    
+
     local direction = TargetPlayer:GetActorForwardVector()
     local tagetLocation = TargetPlayer:K2_GetActorLocation()
     tagetLocation.Z = tagetLocation.Z + 20
@@ -650,7 +648,7 @@ function AFUtils.TeleportPlayerToPlayer(Player, TargetPlayer, Behind, DistanceTo
     end
     local locationOffset = GetKismetMathLibrary():Multiply_VectorVector(direction, FVector(DistanceToActor, DistanceToActor, 0))
     tagetLocation = GetKismetMathLibrary():Add_VectorVector(tagetLocation, locationOffset)
-    
+
     return Player:TeleportPlayer(tagetLocation, targetRotation, true, false, true)
 end
 
@@ -712,7 +710,7 @@ function AFUtils.CalculateAndSetDaytime(DayNightManager)
         DayNightManager:OnRep_IsNight()
     end
     return true
-end 
+end
 
 ---Set in game time
 ---@param Hours integer? # Default: 0
@@ -763,9 +761,14 @@ local function TrapLeyakTypeNpc(LeyakContainment, LeyakDirectorComponent, NpcRow
         or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak ~= NAME_None then
         return false
     end
-    
+
     local assetId = LeyakContainment.SpawnedAssetID:ToString()
     LogDebug("TrapLeyakTypeNpc: SpawnedAssetID:", assetId)
+
+    if not IsNameNone(LeyakContainment.CurrentStabilisingFoodRowName) then
+        FoodName = LeyakContainment.CurrentStabilisingFoodRowName
+    end
+
     LeyakContainment:ServerUpdateStabilityLevel(LeyakContainment.MaxStability, FoodName)
     LeyakContainment:TrapLeyak(NpcRowName)
     LeyakDirectorComponent:SetLeyakContainmentID(assetId)
@@ -794,7 +797,7 @@ local function FreeLeyakTypeNpc(LeyakContainment, LeyakDirectorComponen)
         or LeyakContainment.DeployableDestroyed or LeyakContainment.ContainsLeyak:GetComparisonIndex() == 0 then
         return false
     end
-    
+
     LeyakContainment['Free Leyak']()
     LeyakDirectorComponen:SetLeyakContainmentID("")
     return LeyakDirectorComponen.ActiveLeyakContainmentID:ToString() == ""

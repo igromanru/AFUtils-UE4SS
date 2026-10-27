@@ -64,12 +64,12 @@ function AFUtils.LogCharacterBuffComponent(CharacterBuffComponent, Prefix)
     LogDebug(Prefix .. "ImmuneToBuffs.Num:", #CharacterBuffComponent.ImmuneToBuffs)
     for i = 1, #CharacterBuffComponent.ImmuneToBuffs do
         local buffDebuffRowHandle = CharacterBuffComponent.ImmuneToBuffs[i] ---@type FBuffDebuffRowHandle
-        LogDebug(Prefix .. string.format("ImmuneToBuffs[%d]: RowName: %s, DataTablePath: %s", i, buffDebuffRowHandle.RowName:ToString(), buffDebuffRowHandle.DataTablePath:ToString()))
+        LogDebug(Prefix .. string.format("ImmuneToBuffs[%d]: RowName: %s", i, buffDebuffRowHandle.RowName:ToString()))
     end
     LogDebug(Prefix .. "CurrentBuffs.Num:", #CharacterBuffComponent.CurrentBuffs)
     for i = 1, #CharacterBuffComponent.CurrentBuffs do
         local buffDebuffRowHandle = CharacterBuffComponent.CurrentBuffs[i] ---@type FBuffDebuffEntry
-        LogDebug(Prefix .. string.format("CurrentBuffs[%d]: BuffRow.RowName: %s, BuffRow.DataTablePath: %s", i, buffDebuffRowHandle.BuffRow.RowName:ToString(), buffDebuffRowHandle.BuffRow.DataTablePath:ToString()))
+        LogDebug(Prefix .. string.format("CurrentBuffs[%d]: BuffRow.RowName: %s", i, buffDebuffRowHandle.BuffRow.RowName:ToString()))
         LogDebug(Prefix .. string.format("CurrentBuffs[%d]: ParentLimb: %s, BuffExpireTime: %f", i, AFUtils.BodyLimbsToString(buffDebuffRowHandle.ParentLimb), buffDebuffRowHandle.BuffExpireTime))
     end
     LogDebug(Prefix .. "BuffParticles.Num:", #CharacterBuffComponent.BuffParticles)
@@ -84,8 +84,8 @@ function AFUtils.LogInventoryChangeableDataStruct(ChangeableData, Prefix)
     if not ChangeableData then return end
     Prefix = Prefix or ""
 
-    if ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB then
-        LogDebug(Prefix .. "AssetID:", ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB:ToString())
+    if ChangeableData.AssetID then
+        LogDebug(Prefix .. "AssetID:", ChangeableData.AssetID:ToString())
     end
     LogDebug(Prefix .. "CurrentItemDurability:", ChangeableData.CurrentItemDurability)
     LogDebug(Prefix .. "MaxItemDurability:", ChangeableData.MaxItemDurability)
@@ -103,9 +103,6 @@ function AFUtils.LogInventoryItemSlotStruct(InventoryItemSlotStruct, Prefix)
     Prefix = Prefix or ""
 
     LogDebug(Prefix .. "RowName:", InventoryItemSlotStruct.ItemDataTable.RowName:ToString())
-    if InventoryItemSlotStruct.ItemDataTable.DataTable:IsValid() then
-        LogDebug(Prefix .. "DataTable:", InventoryItemSlotStruct.ItemDataTable.DataTable:GetFullName())
-    end
     AFUtils.LogInventoryChangeableDataStruct(InventoryItemSlotStruct.ChangeableData, Prefix .. "ChangeableData.")
 end
 
@@ -122,39 +119,39 @@ function AFUtils.LogLiquidStruct(LiquidStruct, Prefix)
         local liquiedType = LiquidStruct.AllowedLiquids[i]
         LogDebug(Prefix .. string.format("AllowedLiquids[%d]: %s (%d)", i, AFUtils.LiquidTypeToString(liquiedType), liquiedType))
     end
-    LogDebug(Prefix .. "PercentageLiquidToStartWith:", LiquidStruct.PercentageLiquidToStartWith_11_835A4C4F440C319874D3EFA75CAFA4C5)
-    LogDebug(Prefix .. "LiquidToStartWith.Num:", #LiquidStruct.LiquidToStartWith_15_F7D753A24D2130B92AF312AB9192AD9C)
-    for i = 1, #LiquidStruct.LiquidToStartWith_15_F7D753A24D2130B92AF312AB9192AD9C do
-        local liquiedType = LiquidStruct.LiquidToStartWith_15_F7D753A24D2130B92AF312AB9192AD9C[i]
+    LogDebug(Prefix .. "PercentageLiquidToStartWith:", LiquidStruct.PercentageLiquidToStartWith)
+    LogDebug(Prefix .. "LiquidToStartWith.Num:", #LiquidStruct.LiquidToStartWith)
+    for i = 1, #LiquidStruct.LiquidToStartWith do
+        local liquiedType = LiquidStruct.LiquidToStartWith[i]
         LogDebug(Prefix .. string.format("LiquidToStartWith[%d]:", i), liquiedType)
     end
 end
 
----Logs in debug scope all relevant properties of FAbiotic_WeaponStruct to console 
----@param WeaponStruct FAbiotic_WeaponStruct
+---Logs in debug scope all relevant properties of FAbioticWeapon to console 
+---@param WeaponStruct FAbioticWeapon
 ---@param Prefix string? Prefix that should be added in front of each line
 function AFUtils.LogWeaponStruct(WeaponStruct, Prefix)
     if not WeaponStruct then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "Melee:", tostring(WeaponStruct.Melee_1_AB17935A4F944DCEEB1AB3A5B598E702))
-    LogDebug(Prefix .. "MeleeSwingData.RowName:", WeaponStruct.MeleeSwingData_80_EA5C63F44178A08106BE41B8F7D8DE36.RowName:ToString())
-    LogDebug(Prefix .. "TimeBetweenShots:", tostring(WeaponStruct.TimeBetweenShots_8_71ACC9414B36314DEF34B3A54649941C))
-    LogDebug(Prefix .. "MaximumHitscanRange:", tostring(WeaponStruct.MaximumHitscanRange_26_F36D29CA48831A6C3AD49EB94F5D2BE2))
-    LogDebug(Prefix .. "DamagePerHit:", tostring(WeaponStruct.DamagePerHit_16_F95199D1425C37191C55CDA0DC07BDDC))
-    LogDebug(Prefix .. "BulletSpread_Min:", tostring(WeaponStruct.BulletSpread_Min_38_08ADC0BA4BEA02135BE0438A60AE5725))
-    LogDebug(Prefix .. "BulletSpread_Max:", tostring(WeaponStruct.BulletSpread_Max_39_4AE2E5744A934A3FFCEC2A9D7A1A6963))
-    LogDebug(Prefix .. "RecoilAmount:", tostring(WeaponStruct.RecoilAmount_42_85AFA9834A1CABF8183C088D857840EE))
-    LogDebug(Prefix .. "PelletCount:", tostring(WeaponStruct.PelletCount_77_4504318146345E7029C78790B317E074))
+    LogDebug(Prefix .. "Melee:", tostring(WeaponStruct.Melee))
+    LogDebug(Prefix .. "MeleeSwingData.RowName:", WeaponStruct.MeleeSwingData.RowName:ToString())
+    LogDebug(Prefix .. "TimeBetweenShots:", tostring(WeaponStruct.TimeBetweenShots))
+    LogDebug(Prefix .. "MaximumHitscanRange:", tostring(WeaponStruct.MaximumHitscanRange))
+    LogDebug(Prefix .. "DamagePerHit:", tostring(WeaponStruct.DamagePerHit))
+    LogDebug(Prefix .. "BulletSpread_Min:", tostring(WeaponStruct.BulletSpread_Min))
+    LogDebug(Prefix .. "BulletSpread_Max:", tostring(WeaponStruct.BulletSpread_Max))
+    LogDebug(Prefix .. "RecoilAmount:", tostring(WeaponStruct.RecoilAmount))
+    LogDebug(Prefix .. "PelletCount:", tostring(WeaponStruct.PelletCount))
     LogDebug(Prefix .. "MagazineSize:", tostring(WeaponStruct.MagazineSize))
     LogDebug(Prefix .. "RequireAmmo:", tostring(WeaponStruct.RequireAmmo))
-    LogDebug(Prefix .. "AmmoType.RowName:", WeaponStruct.AmmoType_54_D19EDD9E48E4252D492757BFAAC23A73.RowName:ToString())
-    LogDebug(Prefix .. "AmmoTypes.Num:", #WeaponStruct.AmmoTypes_99_6514B50249092C020B24F9ABF9AF0E37)
-    LogDebug(Prefix .. "SecondaryAttack (enum 0-5):", WeaponStruct.SecondaryAttack_82_0ADE2DC74388F34F125F0DB6D9AAC1CD)
-    LogDebug(Prefix .. "LoudnessOnPrimaryUse:", WeaponStruct.LoudnessOnPrimaryUse_74_7829648A4C3F44A62DCA09B3817DF796)
-    LogDebug(Prefix .. "LoudnessOnSecondaryUse:", WeaponStruct.LoudnessOnSecondaryUse_73_89AB59C84EBC77DEB5DD2C9C88E9C237)
-    LogDebug(Prefix .. "UnderwaterState (enum 0-2):", WeaponStruct.UnderwaterState_95_972463794CBCCEA48AC987A7FA4C0118)
-    LogDebug(Prefix .. "BurstFireCount:", WeaponStruct.BurstFireCount_102_880FB81B4CA5EC7F7B5D6FBDE68275B8)
+    LogDebug(Prefix .. "AmmoType.RowName:", WeaponStruct.AmmoType.RowName:ToString())
+    LogDebug(Prefix .. "AmmoTypes.Num:", #WeaponStruct.AmmoTypes)
+    LogDebug(Prefix .. "SecondaryAttack (enum 0-5):", WeaponStruct.SecondaryAttack)
+    LogDebug(Prefix .. "LoudnessOnPrimaryUse:", WeaponStruct.LoudnessOnPrimaryUse)
+    LogDebug(Prefix .. "LoudnessOnSecondaryUse:", WeaponStruct.LoudnessOnSecondaryUse)
+    LogDebug(Prefix .. "UnderwaterState (enum 0-2):", WeaponStruct.UnderwaterState)
+    LogDebug(Prefix .. "BurstFireCount:", WeaponStruct.BurstFireCount)
 end
 
 ---Logs in debug scope all relevant properties of FAbioticInventoryItem to console 
@@ -164,9 +161,9 @@ function AFUtils.LogInventoryItemStruct(InventoryItemStruct, Prefix)
     if not InventoryItemStruct then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "ItemName:", InventoryItemStruct.ItemName_51_B88648C048EE5BC2885E4E95F3E13F0A:ToString())
-    LogDebug(Prefix .. "ItemDescription:", InventoryItemStruct.ItemDescription_38_E5F7B38A4F3C41EB9DA52CA14654D303:ToString())
-    LogDebug(Prefix .. "ItemFlavorText:", InventoryItemStruct.ItemFlavorText_39_12D05DD74EA145A5E7D1159C7F326177:ToString())
+    LogDebug(Prefix .. "ItemName:", InventoryItemStruct.ItemName:ToString())
+    LogDebug(Prefix .. "ItemDescription:", InventoryItemStruct.ItemDescription:ToString())
+    LogDebug(Prefix .. "ItemFlavorText:", InventoryItemStruct.ItemFlavorText:ToString())
     -- LogDebug(Prefix .. "ToInteractWith_Text:", InventoryItemStruct.ToInteractWith_Text_66_C2148289464D5AAA4D19BBA13F15FE41:ToString())
     -- LogDebug(Prefix .. "ToLongInteractWith_Text:", InventoryItemStruct.ToLongInteractWith_Text_68_4FBE88F341B6A020E3216CA026A1E4E8:ToString())
     -- LogDebug(Prefix .. "ToPackage_Text:", InventoryItemStruct.ToPackage_Text_71_5094104748FCB4BD2F90C99A2C4C49A8:ToString())
@@ -174,21 +171,20 @@ function AFUtils.LogInventoryItemStruct(InventoryItemStruct, Prefix)
     -- LogDebug(Prefix .. "Scale_WorldMesh:", InventoryItemStruct.Scale_WorldMesh_143_AF66D856410026FCC19E70AC421B3667)
     -- LogDebug(Prefix .. "Scale_FirstPersonMesh:", InventoryItemStruct.Scale_FirstPersonMesh_146_6AFCDB94484AE7625E73C6AFB835D21F)
     -- LogDebug(Prefix .. "Scale_TPHeldMesh:", InventoryItemStruct.Scale_TPHeldMesh_145_6826D00A4F30AEDBF62E02892E4261E6)
-    LogDebug(Prefix .. "PlacementOrientationsAllowed enum:", InventoryItemStruct.PlacementOrientationsAllowed_122_75894D7C4B93F103C06AB18421167757)
-    LogDebug(Prefix .. "CanLoseDurability:", tostring(InventoryItemStruct.CanLoseDurability_29_42EA515F4AC1EC69D8480DB36C01D5E1))
-    LogDebug(Prefix .. "MaxItemDurability:", InventoryItemStruct.MaxItemDurability_31_6EBCEFC943F9E85DE9350BBC0E249447)
-    LogDebug(Prefix .. "ChanceToLoseDurability:", InventoryItemStruct.ChanceToLoseDurability_97_DF967C464092E2E6AEEBFE84C536ACAB)
+    LogDebug(Prefix .. "PlacementOrientationsAllowed enum:", InventoryItemStruct.PlacementOrientationsAllowed)
+    LogDebug(Prefix .. "CanLoseDurability:", tostring(InventoryItemStruct.CanLoseDurability))
+    LogDebug(Prefix .. "MaxItemDurability:", InventoryItemStruct.MaxItemDurability)
+    LogDebug(Prefix .. "ChanceToLoseDurability:", InventoryItemStruct.ChanceToLoseDurability)
     -- ToDo log FAbiotic_ItemDropStruct, InventoryItemStruct.RepairItem_106_C2E89B0B4B7F39FC3B2B828BBD13A391
-    LogDebug(Prefix .. "StackSize:", InventoryItemStruct.StackSize_47_D124F11B4B6D9766B2B33699795845A9)
-    LogDebug(Prefix .. "Weight:", InventoryItemStruct.Weight_119_CE7DB430417207921D739CAF458D4D7C)
-    LogDebug(Prefix .. "TryPlaceInHotbar:", tostring(InventoryItemStruct.TryPlaceInHotbar_128_F78F6AA34A238AEAB278F48066C080BF))
-    LogDebug(Prefix .. "IsWeapon:", tostring(InventoryItemStruct.IsWeapon_63_57F6A703413EA260B1455CA81F2D4911))
+    LogDebug(Prefix .. "StackSize:", InventoryItemStruct.StackSize)
+    LogDebug(Prefix .. "Weight:", InventoryItemStruct.Weight)
+    LogDebug(Prefix .. "TryPlaceInHotbar:", tostring(InventoryItemStruct.TryPlaceInHotbar))
+    LogDebug(Prefix .. "IsWeapon:", tostring(InventoryItemStruct.IsWeapon))
     AFUtils.LogWeaponStruct(InventoryItemStruct.WeaponData, Prefix .. "WeaponData.")
     -- ToDo log FAbiotic_Equipment_Struct, InventoryItemStruct.EquipmentData_100_576D05464F36104AFE501B878255E318
     -- ToDo log FAbiotic_Consumable_Struct, InventoryItemStruct.ConsumableData_84_757B6B114FF23016981BEF888A31C670
     -- ToDo log FAbiotic_CookableStruct, InventoryItemStruct.CookableData_94_7EFD1F0A4A7EFB44D3D8B9B14581BF36
     AFUtils.LogLiquidStruct(InventoryItemStruct.LiquidData, Prefix .. "LiquidData.")
-    LogDebug(Prefix .. "StrippedFromBuild:", tostring(InventoryItemStruct.StrippedFromBuild_149_8F18A38A4BB983B801C379B47FC5D5A9))
 end
 
 ---@param SaveDataDeployableStruct FSaveData_Deployable_Struct
@@ -223,17 +219,18 @@ function AFUtils.LogCookingStruct(CookingStruct, Prefix)
     if not CookingStruct then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "Ingredient.Num:", #CookingStruct.Ingredient_26_75A231F54D4ED926835029AE13B322A3)
-    for i = 1, #CookingStruct.Ingredient_26_75A231F54D4ED926835029AE13B322A3 do
-        local ingredient = CookingStruct.Ingredient_26_75A231F54D4ED926835029AE13B322A3[i]
-        LogDebug(Prefix .. string.format("Ingredient[%d].Item:", i), ingredient.Item_5_5AD3D6B1470ED45BCB2D15BC84BB0F1A.RowName:ToString())
-        LogDebug(Prefix .. string.format("Ingredient[%d].Count:", i), ingredient.Count_6_4C6C5BFB4956F9C29A5C2BB6F28B7690)
-    end
-    LogDebug(Prefix .. "CookingState enum (0-7):", CookingStruct.CookingState_32_568AB66645F40DCFF9789698F2B13EA0)
-    LogDebug(Prefix .. "CookedProgress:", CookingStruct.CookedProgress_34_F73379824243A5DFBCABCEB136769B43)
-    LogDebug(Prefix .. "CookDuration:", CookingStruct.CookDuration_37_228EDAD3449116421DDD5D9463A67B6A)
-    LogDebug(Prefix .. "Portions:", CookingStruct.Portions_40_C56BA4F04C09F80070394080F5A7345D)
-    LogDebug(Prefix .. "StovewareType:", CookingStruct.StovewareType_43_E5BC5B244CA4D90B0302288209F7D0C8)
+    LogDebug(Prefix .. "MemberVar:", #CookingStruct.MemberVar_44_4A23DC7F40911CE20D48FBBF5395F881)
+    -- LogDebug(Prefix .. "Ingredient.Num:", #CookingStruct.Ingredient_26_75A231F54D4ED926835029AE13B322A3)
+    -- for i = 1, #CookingStruct.Ingredient_26_75A231F54D4ED926835029AE13B322A3 do
+    --     local ingredient = CookingStruct.Ingredient_26_75A231F54D4ED926835029AE13B322A3[i]
+    --     LogDebug(Prefix .. string.format("Ingredient[%d].Item:", i), ingredient.Item.RowName:ToString())
+    --     LogDebug(Prefix .. string.format("Ingredient[%d].Count:", i), ingredient.Count)
+    -- end
+    -- LogDebug(Prefix .. "CookingState enum (0-7):", CookingStruct.CookingState_32_568AB66645F40DCFF9789698F2B13EA0)
+    -- LogDebug(Prefix .. "CookedProgress:", CookingStruct.CookedProgress_34_F73379824243A5DFBCABCEB136769B43)
+    -- LogDebug(Prefix .. "CookDuration:", CookingStruct.CookDuration_37_228EDAD3449116421DDD5D9463A67B6A)
+    -- LogDebug(Prefix .. "Portions:", CookingStruct.Portions_40_C56BA4F04C09F80070394080F5A7345D)
+    -- LogDebug(Prefix .. "StovewareType:", CookingStruct.StovewareType_43_E5BC5B244CA4D90B0302288209F7D0C8)
 end
 
 ---Logs in debug scope all relevant properties of URechargeableComponent_C to console 
@@ -353,8 +350,7 @@ function AFUtils.LogInventoryComponent(Inventory, Prefix)
     LogDebug(Prefix .. "DisplayName:", Inventory.DisplayName:ToString())
     LogDebug(Prefix .. "ContainerType enum:", Inventory.ContainerType)
     LogDebug(Prefix .. "SlotAppearance enum:", Inventory.SlotAppearance)
-    -- LogDebug(Prefix .. "DestroyParentWhenEmpty:", tostring(Inventory.DestroyParentWhenEmpty))
-    LogDebug(Prefix .. "EmptyItemRow.RowName:", Inventory.EmptyItemRow.RowName:ToString())
+    LogDebug(Prefix .. "DestroyParentWhenEmpty:", Inventory.DestroyParentWhenEmpty)
     LogDebug(Prefix .. "InitialInventorySize:", Inventory.InitialInventorySize)
     LogDebug(Prefix .. "CurrentTotalInventoryWeight:", Inventory.CurrentTotalInventoryWeight)
     LogDebug(Prefix .. "CraftingCheck:", tostring(Inventory.CraftingCheck))
@@ -436,7 +432,7 @@ function AFUtils.LogAIDirector(AIDirector, Prefix)
     LogDebug(Prefix .. "Assault_TimeLastSpawnedNPC:", AIDirector.Assault_TimeLastSpawnedNPC)
     LogDebug(Prefix .. "Assault_BenchTargetLocation:", VectorToString(AIDirector.Assault_BenchTargetLocation))
     LogDebug(Prefix .. "Assault_PatrolTargetLocation:", VectorToString(AIDirector.Assault_PatrolTargetLocation))
-    LogDebug(Prefix .. "Assault_CurrentRow:", AIDirector.Assault_CurrentRow:ToString())
+    LogDebug(Prefix .. "Assault_CurrentRow:", AIDirector.Assault_CurrentRow.RowName:ToString())
     LogDebug(Prefix .. "Assault_CurrentSpawnIndex:", AIDirector.Assault_CurrentSpawnIndex)
     LogDebug(Prefix .. "Assault_TimeOfInitialWarning:", AIDirector.Assault_TimeOfInitialWarning)
     -- LogDebug(Prefix .. "Assault_PreviousSpawnIndex:", AIDirector.Assault_PreviousSpawnIndex)
@@ -445,9 +441,7 @@ function AFUtils.LogAIDirector(AIDirector, Prefix)
     LogDebug(Prefix .. "LeyakCooldown:", AIDirector.LeyakCooldown)
     LogDebug(Prefix .. "ActiveLeyak IsValid:", AIDirector.ActiveLeyak:IsValid())
     LogDebug(Prefix .. "CurrentLeyakTarget IsValid:", AIDirector.CurrentLeyakTarget:IsValid())
-    LogDebug(Prefix .. "LeyakSpawnAttempts:", AIDirector.LeyakSpawnAttempts)
     LogDebug(Prefix .. "LeyakWorldFlag.RowName:", AIDirector.LeyakWorldFlag.RowName:ToString())
-    LogDebug(Prefix .. "LeyakWorldFlag.DataTablePath:", AIDirector.LeyakWorldFlag.DataTablePath:ToString())
     LogDebug(Prefix .. "TimeLastLeyakSpawn:", AIDirector.TimeLastLeyakSpawn)
     -- AFUtils.LogTimerHandle(AIDirector, AIDirector.CoworkerTimer, Prefix .. "CoworkerTimer.")
     LogDebug(Prefix .. "MaxAssaultPortals:", AIDirector.MaxAssaultPortals)
@@ -532,7 +526,6 @@ function AFUtils.LogFishingRod(FishingRod, Prefix)
     LogDebug(Prefix .. "CatchingJunk:", tostring(FishingRod.CatchingJunk))
     LogDebug(Prefix .. "JunkReward.RowName:", FishingRod.JunkReward.RowName:ToString())
     LogDebug(Prefix .. "FishReward.RowName:", FishingRod.FishReward.RowName:ToString())
-    LogDebug(Prefix .. "FishReward.DataTablePath:", FishingRod.FishReward.DataTablePath:ToString())
     LogDebug(Prefix .. "RequiredCaptures:", FishingRod.RequiredCaptures)
     LogDebug(Prefix .. "TackleboxActive:", tostring(FishingRod.TackleboxActive))
     LogDebug(Prefix .. "LuckyHat:", tostring(FishingRod.LuckyHat))
@@ -592,7 +585,6 @@ function AFUtils.LogDayNightManager(DayNightManager, Prefix)
     LogDebug(Prefix .. "ActiveAmbientRadiation:", DayNightManager.ActiveAmbientRadiation)
     LogDebug(Prefix .. "CurrentAnnouncementCompendium.Num:", #DayNightManager.CurrentAnnouncementCompendium)
     LogDebug(Prefix .. "Weather_RequestByPlayer.RowName:", DayNightManager.Weather_RequestByPlayer.RowName:ToString())
-    LogDebug(Prefix .. "Weather_RequestByPlayer.DataTablePath:", DayNightManager.Weather_RequestByPlayer.DataTablePath:ToString())
 end
 
 ---Logs in debug scope all relevant properties of a AAbioticCharacter to console 
@@ -926,28 +918,28 @@ function AFUtils.LogCraftingEntryItem(CraftingEntryItem, Prefix)
     LogDebug(Prefix .. "bFavorited:", CraftingEntryItem.bFavorited)
 end
 
----Logs in debug scope all relevant properties of a FAbioticRecipe_Struct to console 
----@param RecipeStruct FAbioticRecipe_Struct
+---Logs in debug scope all relevant properties of a FAbioticRecipe to console 
+---@param RecipeStruct FAbioticRecipe
 ---@param Prefix string? Prefix that should be added in front of each line
 function AFUtils.LogRecipeStruct(RecipeStruct, Prefix)
-    if not RecipeStruct or not RecipeStruct.ItemToCreate_4_842F5059497E898D938220BCCC148B08 then return end
+    if not RecipeStruct or not RecipeStruct.ItemToCreate then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "ItemToCreate.RowName:", RecipeStruct.ItemToCreate_4_842F5059497E898D938220BCCC148B08.RowName:ToString())
-    LogDebug(Prefix .. "CountToCreate:", RecipeStruct.CountToCreate_17_9ACBB85C48DCB6769A2331AB7B56E2C8)
-    LogDebug(Prefix .. "Category:", RecipeStruct.Category_22_940DB5D6483687DCE5FF63A7711F71C3)
-    LogDebug(Prefix .. "RecipeItems Num:", #RecipeStruct.RecipeItems_7_0F13BA7A407C72065EE926B9D41B8B9E)
-    for i = 1, #RecipeStruct.RecipeItems_7_0F13BA7A407C72065EE926B9D41B8B9E, 1 do
-        local recipeItems = RecipeStruct.RecipeItems_7_0F13BA7A407C72065EE926B9D41B8B9E[i]
-        LogDebug(Prefix .. "RecipeItems["..i.."].Item.RowName:", recipeItems.Item_5_5AD3D6B1470ED45BCB2D15BC84BB0F1A.RowName:ToString())
-        LogDebug(Prefix .. "RecipeItems["..i.."].Count:", recipeItems.Count_6_4C6C5BFB4956F9C29A5C2BB6F28B7690)
+    LogDebug(Prefix .. "ItemToCreate.RowName:", RecipeStruct.ItemToCreate.RowName:ToString())
+    LogDebug(Prefix .. "CountToCreate:", RecipeStruct.CountToCreate)
+    LogDebug(Prefix .. "Category:", RecipeStruct.Category)
+    LogDebug(Prefix .. "RecipeItems Num:", #RecipeStruct.RecipeItems)
+    for i = 1, #RecipeStruct.RecipeItems, 1 do
+        local recipeItems = RecipeStruct.RecipeItems[i]
+        LogDebug(Prefix .. "RecipeItems["..i.."].Item.RowName:", recipeItems.Item.RowName:ToString())
+        LogDebug(Prefix .. "RecipeItems["..i.."].Count:", recipeItems.Count)
     end
-    LogDebug(Prefix .. "BenchesRequired Num:", #RecipeStruct.BenchesRequired_10_493C635841D8143BB87BDCA941CD28A6)
-    LogDebug(Prefix .. "CraftDuration:", RecipeStruct.CraftDuration_13_BFC1ED4A429775D36D12E683816868D6)
-    LogDebug(Prefix .. "LinkedRecipesToUnlock Num:", #RecipeStruct.LinkedRecipesToUnlock_28_EAECA1EA4C69C00231A206961B10737D)
-    LogDebug(Prefix .. "NotUnlockableByPickup:", RecipeStruct.NotUnlockableByPickup_24_B20B4A1149D919E221126BA38DB0D6C2)
-    LogDebug(Prefix .. "StatModifier.RowName:" .. RecipeStruct.StatModifier_41_48EF866B4719B527AA6212AD8AC21DFE.RowName:ToString())
-    LogDebug(Prefix .. "StrippedFromBuild:", RecipeStruct.StrippedFromBuild_46_61BC23684470C1F8417C2CB501AE385D)
+    LogDebug(Prefix .. "BenchesRequired Num:", #RecipeStruct.BenchesRequired)
+    LogDebug(Prefix .. "CraftDuration:", RecipeStruct.CraftDuration)
+    LogDebug(Prefix .. "LinkedRecipesToUnlock Num:", #RecipeStruct.LinkedRecipesToUnlock)
+    LogDebug(Prefix .. "NotUnlockableByPickup:", RecipeStruct.NotUnlockableByPickup)
+    LogDebug(Prefix .. "StatModifier.RowName:" .. RecipeStruct.StatModifier.RowName:ToString())
+    -- ToDo: add RecipeStruct.RecipeTags
 end
 
 ---@param DeployedParentBP AAbioticDeployed_ParentBP_C

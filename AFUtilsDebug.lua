@@ -77,8 +77,8 @@ function AFUtils.LogCharacterBuffComponent(CharacterBuffComponent, Prefix)
     LogDebug(Prefix .. "BuffTints.Num:", #CharacterBuffComponent.BuffTints)
 end
 
----Logs in debug scope all relevant properties of FAbiotic_InventoryChangeableDataStruct to console 
----@param ChangeableData FAbiotic_InventoryChangeableDataStruct
+---Logs in debug scope all relevant properties of FAbioticInventoryChangeableData to console 
+---@param ChangeableData FAbioticInventoryChangeableData
 ---@param Prefix string? Prefix that should be added in front of each line
 function AFUtils.LogInventoryChangeableDataStruct(ChangeableData, Prefix)
     if not ChangeableData then return end
@@ -87,39 +87,39 @@ function AFUtils.LogInventoryChangeableDataStruct(ChangeableData, Prefix)
     if ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB then
         LogDebug(Prefix .. "AssetID:", ChangeableData.AssetID_25_06DB7A12469849D19D5FC3BA6BEDEEAB:ToString())
     end
-    LogDebug(Prefix .. "CurrentItemDurability:", ChangeableData.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8)
-    LogDebug(Prefix .. "MaxItemDurability:", ChangeableData.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B)
-    LogDebug(Prefix .. "CurrentStack:", ChangeableData.CurrentStack_9_D443B69044D640B0989FD8A629801A49)
-    LogDebug(Prefix .. "CurrentAmmoInMagazine:", ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D)
-    LogDebug(Prefix .. "LiquidLevel:", ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A)
-    LogDebug(Prefix .. "CurrentLiquid (enum 0-13):", AFUtils.LiquidTypeToString(ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109) .. " (" .. ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 .. ")")
+    LogDebug(Prefix .. "CurrentItemDurability:", ChangeableData.CurrentItemDurability)
+    LogDebug(Prefix .. "MaxItemDurability:", ChangeableData.MaxItemDurability)
+    LogDebug(Prefix .. "CurrentStack:", ChangeableData.CurrentStack)
+    LogDebug(Prefix .. "CurrentAmmoInMagazine:", ChangeableData.CurrentAmmoInMagazine)
+    LogDebug(Prefix .. "LiquidLevel:", ChangeableData.LiquidLevel)
+    LogDebug(Prefix .. "CurrentLiquid (enum 0-13):", AFUtils.LiquidTypeToString(ChangeableData.CurrentLiquid) .. " (" .. ChangeableData.CurrentLiquid .. ")")
 end
 
----Logs in debug scope all relevant properties of FAbiotic_InventoryItemSlotStruct to console 
----@param InventoryItemSlotStruct FAbiotic_InventoryItemSlotStruct
+---Logs in debug scope all relevant properties of FAbioticInventoryItemSlot to console 
+---@param InventoryItemSlotStruct FAbioticInventoryItemSlot
 ---@param Prefix string?
 function AFUtils.LogInventoryItemSlotStruct(InventoryItemSlotStruct, Prefix)
     if not InventoryItemSlotStruct then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "RowName:", InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName:ToString())
-    if InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.DataTable:IsValid() then
-        LogDebug(Prefix .. "DataTable:", InventoryItemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.DataTable:GetFullName())
+    LogDebug(Prefix .. "RowName:", InventoryItemSlotStruct.ItemDataTable.RowName:ToString())
+    if InventoryItemSlotStruct.ItemDataTable.DataTable:IsValid() then
+        LogDebug(Prefix .. "DataTable:", InventoryItemSlotStruct.ItemDataTable.DataTable:GetFullName())
     end
-    AFUtils.LogInventoryChangeableDataStruct(InventoryItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313, Prefix .. "ChangeableData.")
+    AFUtils.LogInventoryChangeableDataStruct(InventoryItemSlotStruct.ChangeableData, Prefix .. "ChangeableData.")
 end
 
----Logs in debug scope all relevant properties of FAbiotic_LiquidStruct to console 
----@param LiquidStruct FAbiotic_LiquidStruct
+---Logs in debug scope all relevant properties of FAbioticLiquid to console 
+---@param LiquidStruct FAbioticLiquid
 ---@param Prefix string? Prefix that should be added in front of each line
 function AFUtils.LogLiquidStruct(LiquidStruct, Prefix)
     if not LiquidStruct then return end
     Prefix = Prefix or ""
 
-    LogDebug(Prefix .. "MaxLiquid:", LiquidStruct.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4)
-    LogDebug(Prefix .. "AllowedLiquids.Num:", #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3)
-    for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 do
-        local liquiedType = LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[i]
+    LogDebug(Prefix .. "MaxLiquid:", LiquidStruct.MaxLiquid)
+    LogDebug(Prefix .. "AllowedLiquids.Num:", #LiquidStruct.AllowedLiquids)
+    for i = 1, #LiquidStruct.AllowedLiquids do
+        local liquiedType = LiquidStruct.AllowedLiquids[i]
         LogDebug(Prefix .. string.format("AllowedLiquids[%d]: %s (%d)", i, AFUtils.LiquidTypeToString(liquiedType), liquiedType))
     end
     LogDebug(Prefix .. "PercentageLiquidToStartWith:", LiquidStruct.PercentageLiquidToStartWith_11_835A4C4F440C319874D3EFA75CAFA4C5)
@@ -146,8 +146,8 @@ function AFUtils.LogWeaponStruct(WeaponStruct, Prefix)
     LogDebug(Prefix .. "BulletSpread_Max:", tostring(WeaponStruct.BulletSpread_Max_39_4AE2E5744A934A3FFCEC2A9D7A1A6963))
     LogDebug(Prefix .. "RecoilAmount:", tostring(WeaponStruct.RecoilAmount_42_85AFA9834A1CABF8183C088D857840EE))
     LogDebug(Prefix .. "PelletCount:", tostring(WeaponStruct.PelletCount_77_4504318146345E7029C78790B317E074))
-    LogDebug(Prefix .. "MagazineSize:", tostring(WeaponStruct.MagazineSize_57_E890A3944240BB8D07EF0B9251F1FBD4))
-    LogDebug(Prefix .. "RequireAmmo:", tostring(WeaponStruct.RequireAmmo_85_8BB1C1954D2A83BB1994549DDEEBA306))
+    LogDebug(Prefix .. "MagazineSize:", tostring(WeaponStruct.MagazineSize))
+    LogDebug(Prefix .. "RequireAmmo:", tostring(WeaponStruct.RequireAmmo))
     LogDebug(Prefix .. "AmmoType.RowName:", WeaponStruct.AmmoType_54_D19EDD9E48E4252D492757BFAAC23A73.RowName:ToString())
     LogDebug(Prefix .. "AmmoTypes.Num:", #WeaponStruct.AmmoTypes_99_6514B50249092C020B24F9ABF9AF0E37)
     LogDebug(Prefix .. "SecondaryAttack (enum 0-5):", WeaponStruct.SecondaryAttack_82_0ADE2DC74388F34F125F0DB6D9AAC1CD)
@@ -157,8 +157,8 @@ function AFUtils.LogWeaponStruct(WeaponStruct, Prefix)
     LogDebug(Prefix .. "BurstFireCount:", WeaponStruct.BurstFireCount_102_880FB81B4CA5EC7F7B5D6FBDE68275B8)
 end
 
----Logs in debug scope all relevant properties of FAbiotic_InventoryItemStruct to console 
----@param InventoryItemStruct FAbiotic_InventoryItemStruct
+---Logs in debug scope all relevant properties of FAbioticInventoryItem to console 
+---@param InventoryItemStruct FAbioticInventoryItem
 ---@param Prefix string?
 function AFUtils.LogInventoryItemStruct(InventoryItemStruct, Prefix)
     if not InventoryItemStruct then return end
@@ -183,11 +183,11 @@ function AFUtils.LogInventoryItemStruct(InventoryItemStruct, Prefix)
     LogDebug(Prefix .. "Weight:", InventoryItemStruct.Weight_119_CE7DB430417207921D739CAF458D4D7C)
     LogDebug(Prefix .. "TryPlaceInHotbar:", tostring(InventoryItemStruct.TryPlaceInHotbar_128_F78F6AA34A238AEAB278F48066C080BF))
     LogDebug(Prefix .. "IsWeapon:", tostring(InventoryItemStruct.IsWeapon_63_57F6A703413EA260B1455CA81F2D4911))
-    AFUtils.LogWeaponStruct(InventoryItemStruct.WeaponData_61_3C29CF6C4A7F9DD435F9318FEE4B033D, Prefix .. "WeaponData.")
+    AFUtils.LogWeaponStruct(InventoryItemStruct.WeaponData, Prefix .. "WeaponData.")
     -- ToDo log FAbiotic_Equipment_Struct, InventoryItemStruct.EquipmentData_100_576D05464F36104AFE501B878255E318
     -- ToDo log FAbiotic_Consumable_Struct, InventoryItemStruct.ConsumableData_84_757B6B114FF23016981BEF888A31C670
     -- ToDo log FAbiotic_CookableStruct, InventoryItemStruct.CookableData_94_7EFD1F0A4A7EFB44D3D8B9B14581BF36
-    AFUtils.LogLiquidStruct(InventoryItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0, Prefix .. "LiquidData.")
+    AFUtils.LogLiquidStruct(InventoryItemStruct.LiquidData, Prefix .. "LiquidData.")
     LogDebug(Prefix .. "StrippedFromBuild:", tostring(InventoryItemStruct.StrippedFromBuild_149_8F18A38A4BB983B801C379B47FC5D5A9))
 end
 

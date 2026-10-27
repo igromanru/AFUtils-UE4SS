@@ -293,7 +293,7 @@ end
 
 ---Retruns struct that represents the current selected Hotbar item slot, it's inventory component and SlotIndex. The item can be modified through ChangeableData.
 ---@param PlayerCharacter AAbiotic_PlayerCharacter_C
----@return FAbiotic_InventoryItemSlotStruct? # Can be used to modify item's data though ChangeableData
+---@return FAbioticInventoryItemSlot? # Can be used to modify item's data though ChangeableData
 ---@return UAbiotic_InventoryComponent_C? # Parent InventoryComponent
 ---@return integer? # Slot index
 function AFUtils.GetSelectedHotbarInventoryItemSlot(PlayerCharacter)
@@ -338,7 +338,7 @@ end
 
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@param SlotIndex integer
----@return FAbiotic_InventoryItemSlotStruct?
+---@return FAbioticInventoryItemSlot?
 function AFUtils.GetInventoryItemSlot(Inventory, SlotIndex)
     if IsNotValid(Inventory) or not SlotIndex or SlotIndex < 0 then return nil end
 

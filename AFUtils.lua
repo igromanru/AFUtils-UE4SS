@@ -171,22 +171,22 @@ function AFUtils.IsEnergyLiquidType(LiquidType)
     return LiquidType == AFUtils.LiquidType.Energy or LiquidType == AFUtils.LiquidType.LaserEnergy
 end
 
----Checks if the LiquidType is energy in FAbiotic_InventoryItemStruct
----@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct
+---Checks if the LiquidType is energy in FAbioticInventoryItem
+---@param ItemSlotStruct FAbioticInventoryItemSlot
 function AFUtils.IsEnergyLiquidTypeInItemSlotStruct(ItemSlotStruct)
-    if not ItemSlotStruct or not ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313 then
+    if not ItemSlotStruct or not ItemSlotStruct.ChangeableData then
         return false
     end
-    return AFUtils.IsEnergyLiquidType(ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109)
+    return AFUtils.IsEnergyLiquidType(ItemSlotStruct.ChangeableData.CurrentLiquid)
 end
 
----Checks if LiquidType exists in AllowedLiquids array of FAbiotic_LiquidStruct
----@param LiquidStruct FAbiotic_LiquidStruct
+---Checks if LiquidType exists in AllowedLiquids array of FAbioticLiquid
+---@param LiquidStruct FAbioticLiquid
 ---@param LiquidType number|LiquidType|E_LiquidType
 function AFUtils.IsAllowedLiquidType(LiquidStruct, LiquidType)
-    if LiquidStruct and LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 and LiquidType then
-        for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3, 1 do
-            local allowedLiquid = LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[i]
+    if LiquidStruct and LiquidStruct.AllowedLiquids and LiquidType then
+        for i = 1, #LiquidStruct.AllowedLiquids, 1 do
+            local allowedLiquid = LiquidStruct.AllowedLiquids[i]
             if allowedLiquid == LiquidType then
                 return true
             end
@@ -195,24 +195,24 @@ function AFUtils.IsAllowedLiquidType(LiquidStruct, LiquidType)
     return false
 end
 
----Checks if LiquidType is allowed in FAbiotic_InventoryItemStruct
----@param ItemStruct FAbiotic_InventoryItemStruct
+---Checks if LiquidType is allowed in FAbioticInventoryItem
+---@param ItemStruct FAbioticInventoryItem
 ---@param LiquidType LiquidType|number
 function AFUtils.IsAllowedLiquidTypeInItemStruct(ItemStruct, LiquidType)
-    if ItemStruct and ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0 and LiquidType then
-        return AFUtils.IsAllowedLiquidType(ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0, LiquidType)
+    if ItemStruct and ItemStruct.LiquidData and LiquidType then
+        return AFUtils.IsAllowedLiquidType(ItemStruct.LiquidData, LiquidType)
     end
     return false
 end
 
 ---Checks if AllowedLiquidType array has only energy types in it
----@param LiquidStruct FAbiotic_LiquidStruct
+---@param LiquidStruct FAbioticLiquid
 ---@return boolean # Returns true if only energy liquid types are allowed
 function AFUtils.IsOnlyEnergyLiquidTypeAllowed(LiquidStruct)
     local result = false
-    if LiquidStruct and LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 then
-        for i = 1, #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 do
-            local allowedLiquid = LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[i]
+    if LiquidStruct and LiquidStruct.AllowedLiquids then
+        for i = 1, #LiquidStruct.AllowedLiquids do
+            local allowedLiquid = LiquidStruct.AllowedLiquids[i]
             result = AFUtils.IsEnergyLiquidType(allowedLiquid)
             if not result then
                 return false
@@ -223,69 +223,69 @@ function AFUtils.IsOnlyEnergyLiquidTypeAllowed(LiquidStruct)
 end
 
 ---Checks if AllowedLiquidType array has only energy types in it
----@param ItemStruct FAbiotic_InventoryItemStruct
+---@param ItemStruct FAbioticInventoryItem
 ---@return boolean # Returns true if only energy liquid types are allowed
 function AFUtils.IsOnlyEnergyLiquidTypeAllowedInItemStruct(ItemStruct)
-    if ItemStruct and ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0 then
-        return AFUtils.IsOnlyEnergyLiquidTypeAllowed(ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0)
+    if ItemStruct and ItemStruct.LiquidData then
+        return AFUtils.IsOnlyEnergyLiquidTypeAllowed(ItemStruct.LiquidData)
     end
     return true
 end
 
 ---
----@param LiquidStruct FAbiotic_LiquidStruct
+---@param LiquidStruct FAbioticLiquid
 ---@return LiquidType|number #Returns first allowed LiquidType or None (0)
 function AFUtils.GetFirstAllowedLiquidType(LiquidStruct)
-    if LiquidStruct and LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 then
-        if #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 > 0 then
-            return LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[1]
+    if LiquidStruct and LiquidStruct.AllowedLiquids then
+        if #LiquidStruct.AllowedLiquids > 0 then
+            return LiquidStruct.AllowedLiquids[1]
         end
     end
     return AFUtils.LiquidType.None
 end
 
 ---
----@param ItemStruct FAbiotic_InventoryItemStruct
+---@param ItemStruct FAbioticInventoryItem
 ---@return LiquidType|number #Returns first allowed LiquidType or None (0)
 function AFUtils.GetFirstAllowedLiquidTypeInItemStruct(ItemStruct)
     if ItemStruct then
-        return AFUtils.GetFirstAllowedLiquidType(ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0)
+        return AFUtils.GetFirstAllowedLiquidType(ItemStruct.LiquidData)
     end
     return AFUtils.LiquidType.None
 end
 
 ---
----@param LiquidStruct FAbiotic_LiquidStruct
+---@param LiquidStruct FAbioticLiquid
 ---@return LiquidType|number #Returns last allowed LiquidType or None (0)
 function AFUtils.GetLastAllowedLiquidType(LiquidStruct)
-    if LiquidStruct and LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 then
-        local arrayCount = #LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3
+    if LiquidStruct and LiquidStruct.AllowedLiquids then
+        local arrayCount = #LiquidStruct.AllowedLiquids
         if arrayCount > 0 then
-            return LiquidStruct.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[arrayCount]
+            return LiquidStruct.AllowedLiquids[arrayCount]
         end
     end
     return AFUtils.LiquidType.None
 end
 
 ---
----@param ItemStruct FAbiotic_InventoryItemStruct
+---@param ItemStruct FAbioticInventoryItem
 ---@return LiquidType|E_LiquidType|number #Returns last allowed LiquidType or None (0)
 function AFUtils.GetLastAllowedLiquidTypeInItemStruct(ItemStruct)
     if ItemStruct then
-        return AFUtils.GetLastAllowedLiquidType(ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0)
+        return AFUtils.GetLastAllowedLiquidType(ItemStruct.LiquidData)
     end
     return AFUtils.LiquidType.None
 end
 
 ---Sets CurrentItemDurability in ChangeableData to MaxItemDurability
----@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct
+---@param ItemSlotStruct FAbioticInventoryItemSlot
 ---@return boolean Success
 function AFUtils.FillItemSlotStructDurability(ItemSlotStruct)
-    if not ItemSlotStruct or not ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313 then return false end
+    if not ItemSlotStruct or not ItemSlotStruct.ChangeableData then return false end
 
-    local maxItemDurability = ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B
+    local maxItemDurability = ItemSlotStruct.ChangeableData.MaxItemDurability
     if maxItemDurability > 0 then
-        ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8 = maxItemDurability
+        ItemSlotStruct.ChangeableData.CurrentItemDurability = maxItemDurability
         return true
     end
     return false
@@ -314,9 +314,9 @@ function AFUtils.RepairAllItemsInInvetory(PlayerCharacter, Inventory)
 
     for i = 1, #Inventory.CurrentInventory do
         local itemSlotStruct = Inventory.CurrentInventory[i]
-        if itemSlotStruct.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName:GetComparisonIndex() > 0 then
-            local currentItemDurability = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8
-            local maxItemDurability = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B
+        if itemSlotStruct.ItemDataTable.RowName:GetComparisonIndex() > 0 then
+            local currentItemDurability = itemSlotStruct.ChangeableData.CurrentItemDurability
+            local maxItemDurability = itemSlotStruct.ChangeableData.MaxItemDurability
             if maxItemDurability > 0 and currentItemDurability < maxItemDurability then
                 PlayerCharacter:Request_RepairItem(Inventory, i - 1, maxItemDurability - currentItemDurability, false)
             end
@@ -326,25 +326,25 @@ function AFUtils.RepairAllItemsInInvetory(PlayerCharacter, Inventory)
 end
 
 ---Sets current level and liquid type to 0
----@param ChangeableData FAbiotic_InventoryChangeableDataStruct
+---@param ChangeableData FAbioticInventoryChangeableData
 function AFUtils.ResetChangeableDataLiquid(ChangeableData)
     if not ChangeableData then return end
 
-    ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = AFUtils.LiquidType.None
-    ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = 0
+    ChangeableData.CurrentLiquid = AFUtils.LiquidType.None
+    ChangeableData.LiquidLevel = 0
 end
 
----@param ChangeableData FAbiotic_InventoryChangeableDataStruct Target
----@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull information
+---@param ChangeableData FAbioticInventoryChangeableData Target
+---@param ItemStruct FAbioticInventoryItem Source, LiquidData will be used to pull information
 ---@return boolean Success
 function AFUtils.FixChangeableDataLiquid(ChangeableData, ItemStruct)
-    if not ChangeableData or not ItemStruct or not ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0 then return false end
+    if not ChangeableData or not ItemStruct or not ItemStruct.LiquidData then return false end
 
-    local liquidType = ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109
-    local liquidData = ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0
+    local liquidType = ChangeableData.CurrentLiquid
+    local liquidData = ItemStruct.LiquidData
     local typeMismatch = true
-    for i = 1, #liquidData.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3 do
-        if liquidData.AllowedLiquids_7_1DF3EB8C43F49DA3A1E4A2AF908148D3[i] == liquidType then
+    for i = 1, #liquidData.AllowedLiquids do
+        if liquidData.AllowedLiquids[i] == liquidType then
             typeMismatch = false
             break
         end
@@ -356,17 +356,17 @@ function AFUtils.FixChangeableDataLiquid(ChangeableData, ItemStruct)
     return true
 end
 
----Fix liquid type of FAbiotic_InventoryItemSlotStruct, if there is a mismatch
----@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
----@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull information
+---Fix liquid type of FAbioticInventoryItemSlot, if there is a mismatch
+---@param ItemSlotStruct FAbioticInventoryItemSlot Target, ChangeableData of the struct will be written
+---@param ItemStruct FAbioticInventoryItem Source, LiquidData will be used to pull information
 ---@return boolean Success
 function AFUtils.FixItemSlotStructLiquid(ItemSlotStruct, ItemStruct)
     if not ItemSlotStruct or not ItemStruct then return false end
-    return AFUtils.FixChangeableDataLiquid(ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313, ItemStruct)
+    return AFUtils.FixChangeableDataLiquid(ItemSlotStruct.ChangeableData, ItemStruct)
 end
 
----Fix liquid type of FAbiotic_InventoryItemSlotStruct, if there is a mismatch
----@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---Fix liquid type of FAbioticInventoryItemSlot, if there is a mismatch
+---@param ItemSlotStruct FAbioticInventoryItemSlot Target, ChangeableData of the struct will be written
 ---@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.LiquidData will be used to pull information for ItemSlotStruct and Item.ChangeableData
 ---@return boolean Success
 function AFUtils.FixItemSlotStructLiquidFromItem(ItemSlotStruct, Item)
@@ -385,38 +385,38 @@ function AFUtils.FixHeldItemLiquid(playerCharacter)
     return false
 end
 
----Fill liquid level of FAbiotic_InventoryChangeableDataStruct with best allowed energy liquid type to maximum
----@param ChangeableData FAbiotic_InventoryChangeableDataStruct Target
----@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull information
+---Fill liquid level of FAbioticInventoryChangeableData with best allowed energy liquid type to maximum
+---@param ChangeableData FAbioticInventoryChangeableData Target
+---@param ItemStruct FAbioticInventoryItem Source, LiquidData will be used to pull information
 ---@return boolean Success
 function AFUtils.FillChangeableDataEnergy(ChangeableData, ItemStruct)
     if not ChangeableData or not ItemStruct then return false end
 
-    local liquidData = ItemStruct.LiquidData_110_4D07F09C483C1E65B39024ABC7032FA0
-    if liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4 > 0 and AFUtils.IsOnlyEnergyLiquidTypeAllowedInItemStruct(ItemStruct) then
-        local currentLiquidType = ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109
+    local liquidData = ItemStruct.LiquidData
+    if liquidData.MaxLiquid > 0 and AFUtils.IsOnlyEnergyLiquidTypeAllowedInItemStruct(ItemStruct) then
+        local currentLiquidType = ChangeableData.CurrentLiquid
         if not AFUtils.IsEnergyLiquidType(currentLiquidType) then
             currentLiquidType = AFUtils.GetLastAllowedLiquidTypeInItemStruct(ItemStruct)
         end
-        ChangeableData.CurrentLiquid_19_3E1652F448223AAE5F405FB510838109 = currentLiquidType
-        ChangeableData.LiquidLevel_46_D6414A6E49082BC020AADC89CC29E35A = liquidData.MaxLiquid_16_80D4968B4CACEDD3D4018E87DA67E8B4
+        ChangeableData.CurrentLiquid = currentLiquidType
+        ChangeableData.LiquidLevel = liquidData.MaxLiquid
         return true
     end
 
     return false
 end
 
----Fill liquid level of FAbiotic_InventoryItemSlotStruct with best allowed liquid type to maximum
----@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
----@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull information
+---Fill liquid level of FAbioticInventoryItemSlot with best allowed liquid type to maximum
+---@param ItemSlotStruct FAbioticInventoryItemSlot Target, ChangeableData of the struct will be written
+---@param ItemStruct FAbioticInventoryItem Source, LiquidData will be used to pull information
 ---@return boolean Success
 function AFUtils.FillItemSlotStructEnergy(ItemSlotStruct, ItemStruct)
     if not ItemSlotStruct or not ItemStruct then return false end
-    return AFUtils.FillChangeableDataEnergy(ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313, ItemStruct)
+    return AFUtils.FillChangeableDataEnergy(ItemSlotStruct.ChangeableData, ItemStruct)
 end
 
----Fill liquid level of FAbiotic_InventoryItemSlotStruct with best allowed liquid type to maximum
----@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---Fill liquid level of FAbioticInventoryItemSlot with best allowed liquid type to maximum
+---@param ItemSlotStruct FAbioticInventoryItemSlot Target, ChangeableData of the struct will be written
 ---@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.LiquidData will be used to pull information for ItemSlotStruct and Item.ChangeableData
 ---@return boolean Success
 function AFUtils.FillItemSlotStructEnergyFromItem(ItemSlotStruct, Item)
@@ -470,19 +470,19 @@ function AFUtils.FillAllEquippedItemsWithEnergy(playerCharacter)
     AFUtils.FillItemSlotStructEnergyFromItem(trinket2SlotStruct, playerCharacter.Gear_Trinket2_BP)
 end
 
----Fill CurrentAmmoInMagazine of FAbiotic_InventoryChangeableDataStruct with maximum ammo
----@param ChangeableData FAbiotic_InventoryChangeableDataStruct Target
----@param ItemStruct FAbiotic_InventoryItemStruct Source, WeaponStruct will be used to pull information
+---Fill CurrentAmmoInMagazine of FAbioticInventoryChangeableData with maximum ammo
+---@param ChangeableData FAbioticInventoryChangeableData Target
+---@param ItemStruct FAbioticInventoryItem Source, WeaponStruct will be used to pull information
 ---@return boolean Filled # Returns true if CurrentAmmoInMagazine was modified, otherwise false
 function AFUtils.FillChangeableDataAmmo(ChangeableData, ItemStruct)
     if not ChangeableData or not ItemStruct then return false end
 
-    local weaponData = ItemStruct.WeaponData_61_3C29CF6C4A7F9DD435F9318FEE4B033D
-    if weaponData.RequireAmmo_85_8BB1C1954D2A83BB1994549DDEEBA306 then
-        local currentAmmoInMagazine = ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D
-        local magazineSize = weaponData.MagazineSize_57_E890A3944240BB8D07EF0B9251F1FBD4
+    local weaponData = ItemStruct.WeaponData
+    if weaponData.RequireAmmo then
+        local currentAmmoInMagazine = ChangeableData.CurrentAmmoInMagazine
+        local magazineSize = weaponData.MagazineSize
         if currentAmmoInMagazine < magazineSize then
-            ChangeableData.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D = magazineSize
+            ChangeableData.CurrentAmmoInMagazine = magazineSize
             return true
         end
     end
@@ -490,17 +490,17 @@ function AFUtils.FillChangeableDataAmmo(ChangeableData, ItemStruct)
     return false
 end
 
----Fill CurrentAmmoInMagazine of FAbiotic_InventoryChangeableDataStruct with maximum ammo
----@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
----@param ItemStruct FAbiotic_InventoryItemStruct Source, LiquidData will be used to pull information
+---Fill CurrentAmmoInMagazine of FAbioticInventoryChangeableData with maximum ammo
+---@param ItemSlotStruct FAbioticInventoryItemSlot Target, ChangeableData of the struct will be written
+---@param ItemStruct FAbioticInventoryItem Source, LiquidData will be used to pull information
 ---@return boolean Filled # Returns true if CurrentAmmoInMagazine was modified, otherwise false
 function AFUtils.FillItemSlotStructAmmo(ItemSlotStruct, ItemStruct)
     if not ItemSlotStruct or not ItemStruct then return false end
-    return AFUtils.FillChangeableDataAmmo(ItemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313, ItemStruct)
+    return AFUtils.FillChangeableDataAmmo(ItemSlotStruct.ChangeableData, ItemStruct)
 end
 
----Fill CurrentAmmoInMagazine of FAbiotic_InventoryChangeableDataStruct with maximum ammo
----@param ItemSlotStruct FAbiotic_InventoryItemSlotStruct Target, ChangeableData of the struct will be written
+---Fill CurrentAmmoInMagazine of FAbioticInventoryChangeableData with maximum ammo
+---@param ItemSlotStruct FAbioticInventoryItemSlot Target, ChangeableData of the struct will be written
 ---@param Item AAbiotic_Item_ParentBP_C Source and Target, ItemData.WeaponData will be used to pull information for ItemSlotStruct and Item.ChangeableData
 ---@return boolean Filled # Returns true if CurrentAmmoInMagazine was modified, otherwise false
 function AFUtils.FillItemSlotStructAmmoFromItem(ItemSlotStruct, Item)
@@ -517,13 +517,13 @@ function AFUtils.FillHeldWeaponWithAmmo(playerCharacter, weapon)
     weapon = weapon or AFUtils.GetCurrentWeapon(playerCharacter)
     if not weapon or not weapon:IsValid() then return false end
 
-    local weaponData = weapon.ItemData.WeaponData_61_3C29CF6C4A7F9DD435F9318FEE4B033D
-    if not weaponData.RequireAmmo_85_8BB1C1954D2A83BB1994549DDEEBA306 then return false end
+    local weaponData = weapon.ItemData.WeaponData
+    if not weaponData.RequireAmmo then return false end
 
     local itemSlotStruct, inventory, slotIndex = AFUtils.GetSelectedHotbarInventoryItemSlot(playerCharacter)
     if itemSlotStruct and inventory and slotIndex then
         if AFUtils.FillItemSlotStructAmmoFromItem(itemSlotStruct, weapon) then
-            weapon.CurrentRoundsInMagazine = itemSlotStruct.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentAmmoInMagazine_12_D68C190F4B2FA78A4B1D57835B95C53D
+            weapon.CurrentRoundsInMagazine = itemSlotStruct.ChangeableData.CurrentAmmoInMagazine
             return true
         end
     end
@@ -535,8 +535,7 @@ end
 ---@return FWeatherEventRowHandle # It creates table that represent FWeatherEventRowHandle
 function AFUtils.ConvertWeatherEventRowHandleToTable(EventRow)
     return {
-        RowName = EventRow.RowName,
-        DataTablePath = EventRow.DataTablePath
+        RowName = EventRow.RowName
     }
 end
 
@@ -547,7 +546,7 @@ function AFUtils.TriggerWeatherEvent(EventName)
     if type(EventName) ~= "string" then return false end
 
     local weatherEventHandleFunctionLibrary = AFUtils.GetWeatherEventHandleFunctionLibrary()
-    local dayNightManager = FindFirstOf("DayNightManager_C")
+    local dayNightManager = FindFirstOf("DayNightManager_C") ---@cast dayNightManager ADayNightManager_C
     if IsValid(weatherEventHandleFunctionLibrary) and IsValid(dayNightManager) then
         ---@type table<LocalUnrealParam>
         local outRowHandles = {} ---@type LocalUnrealParam[]
@@ -582,7 +581,7 @@ end
 function AFUtils.SetNextWeatherEvent(EventName)
     if type(EventName) ~= "string" then return false end
 
-    local dayNightManager = FindFirstOf("DayNightManager_C")
+    local dayNightManager = FindFirstOf("DayNightManager_C") ---@cast dayNightManager ADayNightManager_C
     if IsValid(dayNightManager) then
         local RowName = FName(EventName, EFindName.FNAME_Find)
         dayNightManager.RequiredDaysBetweenWeather = 0
@@ -653,12 +652,12 @@ function AFUtils.TeleportPlayerToPlayer(Player, TargetPlayer, Behind, DistanceTo
 end
 
 ---@param InventoryItemSlot UW_InventoryItemSlot_C
----@return UAbiotic_InventoryComponent_C? Inventory, integer SlotIndex, FAbiotic_InventoryChangeableDataStruct? ChangeableData
+---@return UAbiotic_InventoryComponent_C? Inventory, integer SlotIndex, FAbioticInventoryChangeableData? ChangeableData
 function AFUtils.GetInventoryAndSlotIndexFromItemSlot(InventoryItemSlot)
     if IsNotValid(InventoryItemSlot) then return nil, 0 end
 
     if InventoryItemSlot.ParentInventoryGrid:IsValid() and InventoryItemSlot.ParentInventoryGrid.MainInventoryComponent:IsValid() then
-        local changeableData = InventoryItemSlot.ItemInSlot and InventoryItemSlot.ItemInSlot.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313 or nil
+        local changeableData = InventoryItemSlot.ItemInSlot and InventoryItemSlot.ItemInSlot.ChangeableData or nil
         return InventoryItemSlot.ParentInventoryGrid.MainInventoryComponent, InventoryItemSlot.SlotIndex, changeableData
     end
     return nil, 0, nil
@@ -682,17 +681,17 @@ function AFUtils.AddToItemStack(Inventory, SlotIndex, StackToAdd, Durability)
     return false
 end
 
----@param TargetItemSlot FAbiotic_InventoryItemSlotStruct
+---@param TargetItemSlot FAbioticInventoryItemSlot
 ---@param DataTableRowName FName
 ---@param ItemsCount integer
 ---@return boolean
 function AFUtils.SetItemSlot(TargetItemSlot, DataTableRowName, ItemsCount)
-    if not TargetItemSlot or not TargetItemSlot.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B then return false end
+    if not TargetItemSlot or not TargetItemSlot.ItemDataTable then return false end
 
-    TargetItemSlot.ItemDataTable_18_BF1052F141F66A976F4844AB2B13062B.RowName = DataTableRowName
-    TargetItemSlot.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentItemDurability_4_24B4D0E64E496B43FB8D3CA2B9D161C8 = 100
-    TargetItemSlot.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.MaxItemDurability_6_F5D5F0D64D4D6050CCCDE4869785012B = 100
-    TargetItemSlot.ChangeableData_12_2B90E1F74F648135579D39A49F5A2313.CurrentStack_9_D443B69044D640B0989FD8A629801A49 = ItemsCount
+    TargetItemSlot.ItemDataTable.RowName = DataTableRowName
+    TargetItemSlot.ChangeableData.CurrentItemDurability = 100
+    TargetItemSlot.ChangeableData.MaxItemDurability = 100
+    TargetItemSlot.ChangeableData.CurrentStack = ItemsCount
 
     return true
 end

@@ -293,7 +293,7 @@ end
 
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@return boolean Success
-function AFUtils.FillDurabilityOfAllItemsInInvetory(Inventory)
+function AFUtils.FillDurabilityOfAllItemsInInventory(Inventory)
     if not Inventory or not Inventory.CurrentInventory or #Inventory.CurrentInventory <= 0 then return false end
 
     local result = true
@@ -309,12 +309,12 @@ end
 ---@param PlayerCharacter AAbiotic_PlayerCharacter_C
 ---@param Inventory UAbiotic_InventoryComponent_C
 ---@return boolean Success
-function AFUtils.RepairAllItemsInInvetory(PlayerCharacter, Inventory)
+function AFUtils.RepairAllItemsInInventory(PlayerCharacter, Inventory)
     if IsNotValid(PlayerCharacter) or IsNotValid(Inventory) or not Inventory.CurrentInventory or #Inventory.CurrentInventory < 1 then return false end
 
     for i = 1, #Inventory.CurrentInventory do
         local itemSlotStruct = Inventory.CurrentInventory[i]
-        if itemSlotStruct.ItemDataTable.RowName:GetComparisonIndex() > 0 then
+        if not IsNameNone(itemSlotStruct.ItemDataTable.RowName) then
             local currentItemDurability = itemSlotStruct.ChangeableData.CurrentItemDurability
             local maxItemDurability = itemSlotStruct.ChangeableData.MaxItemDurability
             if maxItemDurability > 0 and currentItemDurability < maxItemDurability then
